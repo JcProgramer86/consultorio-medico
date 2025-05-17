@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1747248617 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\programacion ii\consultorio\consultorio\consultorio\persona.cpp
+	"Persona.h"
+	<cstring>
+	<iostream>
+
+1747248617 c:\users\valeriamorandi\onedrive - intramed\escritorio\programacion ii\consultorio\consultorio\consultorio\persona.h
+	<string>
+
+1747249317 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\programacion ii\consultorio\consultorio\consultorio\main.cpp
+	<iostream>
+	"Persona.h"
+	<locale>
+
