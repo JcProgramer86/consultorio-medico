@@ -6,10 +6,10 @@ Paciente::Paciente() : Persona() {
 }
 
 
-Paciente::Paciente(int idPersona, std::string dni, std::string nombre, std::string apellido,
+Paciente::Paciente(int id, std::string dni, std::string nombre, std::string apellido,
                    std::string telefono, std::string email,
                    int idPrestador, Fecha fechaNacimiento)
-    : Persona(idPersona, dni, nombre, apellido, telefono, email, fechaNacimiento)
+    : Persona(id, dni, nombre, apellido, telefono, email, fechaNacimiento)
 {
     _idPrestador = idPrestador;
 }
