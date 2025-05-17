@@ -12,3 +12,33 @@
 	"Persona.h"
 	<locale>
 
+1747510643 source:c:\users\calvo\desktop\nueva carpeta\consultorio-medico\fecha.cpp
+	"Fecha.h"
+	<cstring>
+	<iostream>
+
+1747510644 c:\users\calvo\desktop\nueva carpeta\consultorio-medico\fecha.h
+	<string>
+
+1747510648 source:c:\users\calvo\desktop\nueva carpeta\consultorio-medico\main.cpp
+	<iostream>
+	"Persona.h"
+	<locale>
+
+1747510647 c:\users\calvo\desktop\nueva carpeta\consultorio-medico\persona.h
+	<string>
+	"Fecha.h"
+
+1747515511 source:c:\users\calvo\desktop\nueva carpeta\consultorio-medico\paciente.cpp
+	"Paciente.h"
+
+1747515511 c:\users\calvo\desktop\nueva carpeta\consultorio-medico\paciente.h
+	"Persona.h"
+	"Fecha.h"
+
+1747511704 source:c:\users\calvo\desktop\nueva carpeta\consultorio-medico\persona.cpp
+	"Persona.h"
+	"Fecha.h"
+	<cstring>
+	<iostream>
+

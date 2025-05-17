@@ -9,7 +9,7 @@ private:
 public:
     Paciente();
 
-    Paciente(int idPersona, std::string dni, std::string nombre, std::string apellido,
+    Paciente(int id, std::string dni, std::string nombre, std::string apellido,
              std::string telefono, std::string email,
              int idPrestador, Fecha fechaNacimiento);
 
