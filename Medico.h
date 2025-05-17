@@ -20,4 +20,7 @@ public:
 
     int get_idEspecialidad();
     Fecha get_fechaInicioActividad();
+
+    std::string toCSV();
+
 };

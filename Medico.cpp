@@ -32,3 +32,6 @@ void Medico::set_idEspecialidad(int idEspecialidad) {
 void Medico::set_fechaInicioActividad(Fecha fecha){
     _fechaInicioActividad = fecha;
 }
+
+std::string Medico::toCSV() { return std::to_string(get_id()) + "," + get_dni() + "," + get_nombre() + "," + get_apellido() + "," + get_telefono() + "," + get_email() + "," + get_fechaNacimiento().toString() + "," + std::to_string(get_idEspecialidad()) + "," + get_fechaInicioActividad().toString(); }
+
