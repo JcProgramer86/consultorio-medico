@@ -20,10 +20,10 @@
 1747510644 c:\users\calvo\desktop\nueva carpeta\consultorio-medico\fecha.h
 	<string>
 
-1747510648 source:c:\users\calvo\desktop\nueva carpeta\consultorio-medico\main.cpp
+1747521273 source:c:\users\calvo\desktop\nueva carpeta\consultorio-medico\main.cpp
 	<iostream>
-	"Persona.h"
 	<locale>
+	"Sandbox.h"
 
 1747519990 c:\users\calvo\desktop\nueva carpeta\consultorio-medico\persona.h
 	<string>
@@ -56,4 +56,13 @@
 1747519542 c:\users\calvo\desktop\nueva carpeta\consultorio-medico\archivomedico.h
 	<string>
 	"Medico.h"
+
+1747521258 c:\users\calvo\desktop\nueva carpeta\consultorio-medico\sandbox.h
+	"Sandbox.h"
+
+1747521311 source:c:\users\calvo\desktop\nueva carpeta\consultorio-medico\sandbox.cpp
+	<iostream>
+	"Medico.h"
+	"ArchivoMedico.h"
+	"Fecha.h"
 
