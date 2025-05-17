@@ -25,6 +25,7 @@ Persona::Persona() {
         set_fechaNacimiento(fechaNacimiento);
     }
 
+
     // Getters
     std::string Persona::get_dni() { return std::string(_dni); }
     std::string Persona::get_nombre() { return std::string(_nombre); }
@@ -32,6 +33,7 @@ Persona::Persona() {
     std::string Persona::get_telefono() { return std::string(_telefono); }
     std::string Persona::get_email() { return std::string(_email); }
     Fecha Persona::get_fechaNacimiento() { return _fechaNacimiento; }
+
 
     //Setters
     void Persona::set_idPersona(int id) { _idPersona = id; }
