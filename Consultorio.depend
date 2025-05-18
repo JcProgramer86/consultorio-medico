@@ -66,3 +66,59 @@
 	"ArchivoMedico.h"
 	"Fecha.h"
 
+1747578786 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\archivomedico.cpp
+	"Fecha.h"
+	"ArchivoMedico.h"
+
+1747578786 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\fecha.h
+	<string>
+
+1747578786 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\archivomedico.h
+	<string>
+	"Medico.h"
+
+1747578786 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\medico.h
+	"Persona.h"
+	"Fecha.h"
+
+1747578786 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\persona.h
+	<string>
+	"Fecha.h"
+
+1747578786 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\fecha.cpp
+	"Fecha.h"
+	<cstring>
+	<iostream>
+
+1747595816 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\main.cpp
+	<iostream>
+	<locale>
+	"Sandbox.h"
+
+1747578786 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\sandbox.h
+
+1747578786 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\medico.cpp
+	"Medico.h"
+
+1747597905 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\paciente.cpp
+	"Paciente.h"
+
+1747597905 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\paciente.h
+	"Persona.h"
+	"Fecha.h"
+
+1747578786 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\persona.cpp
+	"Persona.h"
+	"Fecha.h"
+	<cstring>
+	<iostream>
+
+1747578786 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\sandbox.cpp
+	<iostream>
+	"Medico.h"
+	"ArchivoMedico.h"
+	"Fecha.h"
+
+1747598977 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\archivopaciente.cpp
+	<iostream>
+

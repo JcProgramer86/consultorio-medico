@@ -21,4 +21,6 @@ int Paciente::get_idPrestador() {
 
 void Paciente::set_idPrestador(int idPrestador) {
     _idPrestador = idPrestador;
+
+
 }

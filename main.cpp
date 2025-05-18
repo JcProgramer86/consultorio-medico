@@ -6,7 +6,7 @@ using namespace std;
 
 int main() {
 
-    ejecutarSandboxMedico();
+    //ejecutarSandboxMedico();
 
     return 0;
 }

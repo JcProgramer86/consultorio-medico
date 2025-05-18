@@ -36,6 +36,8 @@
 		</Compiler>
 		<Unit filename="ArchivoMedico.cpp" />
 		<Unit filename="ArchivoMedico.h" />
+		<Unit filename="ArchivoPaciente.cpp" />
+		<Unit filename="ArchivoPaciente.h" />
 		<Unit filename="Consultorio.cbp" />
 		<Unit filename="Consultorio.depend" />
 		<Unit filename="Consultorio.layout" />
@@ -43,6 +45,8 @@
 		<Unit filename="Fecha.h" />
 		<Unit filename="Medico.cpp" />
 		<Unit filename="Medico.h" />
+		<Unit filename="Menu.cpp" />
+		<Unit filename="Menu.h" />
 		<Unit filename="Paciente.cpp" />
 		<Unit filename="Paciente.h" />
 		<Unit filename="Persona.cpp" />
@@ -51,7 +55,6 @@
 		<Unit filename="Sandbox.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="medicos.dat" />
-		<Unit filename="sandbox.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
