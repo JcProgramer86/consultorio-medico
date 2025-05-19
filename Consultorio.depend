@@ -122,3 +122,11 @@
 1747598977 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\archivopaciente.cpp
 	<iostream>
 
+1747599525 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\menu.cpp
+	"Menu.h"
+	<iostream>
+
+1747595816 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\menu.h
+	"Paciente.h"
+	"Medico.h"
+

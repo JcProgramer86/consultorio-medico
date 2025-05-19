@@ -43,6 +43,8 @@
 		<Unit filename="Consultorio.layout" />
 		<Unit filename="Fecha.cpp" />
 		<Unit filename="Fecha.h" />
+		<Unit filename="Hora.cpp" />
+		<Unit filename="Hora.h" />
 		<Unit filename="Medico.cpp" />
 		<Unit filename="Medico.h" />
 		<Unit filename="Menu.cpp" />
@@ -53,6 +55,8 @@
 		<Unit filename="Persona.h" />
 		<Unit filename="Sandbox.cpp" />
 		<Unit filename="Sandbox.h" />
+		<Unit filename="Turnos.cpp" />
+		<Unit filename="Turnos.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="medicos.dat" />
 		<Extensions>
