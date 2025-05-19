@@ -15,5 +15,6 @@ class ArchivoPaciente{
         Paciente Leer(int posicion);
         int CantidadRegistros();
         void Leer(int cantidadRegistros, Paciente *vector);
+
 };
 
