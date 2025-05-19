@@ -1,0 +1,26 @@
+# Archivos y carpetas generadas por Code::Blocks
+*.depend
+*.layout
+*.depend.*
+*.layout.*
+
+# Archivos binarios generados por el compilador
+*.exe
+*.o
+
+# Directorios de salida de compilación
+bin/
+obj/
+
+# Archivos temporales de sistema
+*.log
+*.tmp
+*.bak
+*~
+
+# Archivos de sistema (Windows/macOS)
+.DS_Store
+Thumbs.db
+desktop.ini
+Consultorio.layout
+Consultorio.depend
