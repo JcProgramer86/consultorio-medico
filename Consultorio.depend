@@ -122,3 +122,80 @@
 1747598977 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\archivopaciente.cpp
 	<iostream>
 
+1747598977 D
+
+1747675258 source:c:\users\calvo\desktop\consultorio-medico\archivomedico.cpp
+	"Fecha.h"
+	"ArchivoMedico.h"
+
+1747510644 c:\users\calvo\desktop\consultorio-medico\fecha.h
+	<string>
+
+1747675258 c:\users\calvo\desktop\consultorio-medico\archivomedico.h
+	<string>
+	"Medico.h"
+
+1747675258 c:\users\calvo\desktop\consultorio-medico\medico.h
+	"Persona.h"
+	"Fecha.h"
+
+1747675258 c:\users\calvo\desktop\consultorio-medico\persona.h
+	<string>
+	"Fecha.h"
+
+1747677964 source:c:\users\calvo\desktop\consultorio-medico\archivopaciente.cpp
+	"Fecha.h"
+	"ArchivoPaciente.h"
+
+1747510643 source:c:\users\calvo\desktop\consultorio-medico\fecha.cpp
+	"Fecha.h"
+	<cstring>
+	<iostream>
+
+1747691327 source:c:\users\calvo\desktop\consultorio-medico\main.cpp
+	<iostream>
+	<locale>
+	"Sandbox.h"
+
+1747691327 c:\users\calvo\desktop\consultorio-medico\sandbox.h
+
+1747675258 source:c:\users\calvo\desktop\consultorio-medico\medico.cpp
+	"Medico.h"
+
+1747691336 source:c:\users\calvo\desktop\consultorio-medico\menu.cpp
+	"Menu.h"
+	<iostream>
+
+1747691336 c:\users\calvo\desktop\consultorio-medico\menu.h
+	"Paciente.h"
+	"Medico.h"
+
+1747691454 c:\users\calvo\desktop\consultorio-medico\paciente.h
+	"Persona.h"
+	"Fecha.h"
+
+1747691336 source:c:\users\calvo\desktop\consultorio-medico\paciente.cpp
+	"Paciente.h"
+
+1747675258 source:c:\users\calvo\desktop\consultorio-medico\persona.cpp
+	"Persona.h"
+	"Fecha.h"
+	<cstring>
+	<iostream>
+
+1747691327 source:c:\users\calvo\desktop\consultorio-medico\sandbox.cpp
+	<iostream>
+	"Medico.h"
+	"ArchivoMedico.h"
+	"Fecha.h"
+	"Paciente.h"
+	"ArchivoPaciente.h"
+
+1747691476 c:\users\calvo\desktop\consultorio-medico\archivopaciente.h
+	<string>
+	"Paciente.h"
+
+1747677747 h"
+
+1747677747 
+
