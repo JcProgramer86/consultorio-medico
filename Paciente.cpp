@@ -22,3 +22,7 @@ int Paciente::get_idPrestador() {
 void Paciente::set_idPrestador(int idPrestador) {
     _idPrestador = idPrestador;
 }
+
+std::string Paciente::toCSV() { return std::to_string(get_id()) + "," + get_dni() + "," + get_nombre() + "," + get_apellido() + "," + get_telefono() + "," + get_email() + "," + get_fechaNacimiento().toString() + "," + std::to_string(get_idPrestador()); }
+
+
