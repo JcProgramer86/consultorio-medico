@@ -5,7 +5,7 @@
 
 
 Persona::Persona() {
-    _idPersona = 0;
+    _id = 0;
     strcpy(_dni, "");
     strcpy(_nombre, "");
     strcpy(_apellido, "");
@@ -16,7 +16,7 @@ Persona::Persona() {
 
 
    Persona::Persona(int id, std::string dni, std::string nombre, std::string apellido, std::string telefono, std::string email, Fecha fechaNacimiento) {
-        set_idPersona(id);
+        set_id(id);
         set_dni(dni);
         set_nombre(nombre);
         set_apellido(apellido);
@@ -27,6 +27,7 @@ Persona::Persona() {
 
 
     // Getters
+    int Persona::get_id() { return _id; }
     std::string Persona::get_dni() { return std::string(_dni); }
     std::string Persona::get_nombre() { return std::string(_nombre); }
     std::string Persona::get_apellido() { return std::string(_apellido); }
@@ -36,7 +37,7 @@ Persona::Persona() {
 
 
     //Setters
-    void Persona::set_idPersona(int id) { _idPersona = id; }
+    void Persona::set_id(int id) { _id = id; }
 
     void Persona::set_dni(std::string dni) {
         strncpy(_dni, dni.c_str(), sizeof(_dni) - 1);

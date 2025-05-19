@@ -12,3 +12,57 @@
 	"Persona.h"
 	<locale>
 
+1747510643 source:c:\users\calvo\desktop\nueva carpeta\consultorio-medico\fecha.cpp
+	"Fecha.h"
+	<cstring>
+	<iostream>
+
+1747510644 c:\users\calvo\desktop\nueva carpeta\consultorio-medico\fecha.h
+	<string>
+
+1747521273 source:c:\users\calvo\desktop\nueva carpeta\consultorio-medico\main.cpp
+	<iostream>
+	<locale>
+	"Sandbox.h"
+
+1747519990 c:\users\calvo\desktop\nueva carpeta\consultorio-medico\persona.h
+	<string>
+	"Fecha.h"
+
+1747515511 source:c:\users\calvo\desktop\nueva carpeta\consultorio-medico\paciente.cpp
+	"Paciente.h"
+
+1747515511 c:\users\calvo\desktop\nueva carpeta\consultorio-medico\paciente.h
+	"Persona.h"
+	"Fecha.h"
+
+1747520127 source:c:\users\calvo\desktop\nueva carpeta\consultorio-medico\persona.cpp
+	"Persona.h"
+	"Fecha.h"
+	<cstring>
+	<iostream>
+
+1747520422 source:c:\users\calvo\desktop\nueva carpeta\consultorio-medico\medico.cpp
+	"Medico.h"
+
+1747519372 c:\users\calvo\desktop\nueva carpeta\consultorio-medico\medico.h
+	"Persona.h"
+	"Fecha.h"
+
+1747520090 source:c:\users\calvo\desktop\nueva carpeta\consultorio-medico\archivomedico.cpp
+	"Fecha.h"
+	"ArchivoMedico.h"
+
+1747519542 c:\users\calvo\desktop\nueva carpeta\consultorio-medico\archivomedico.h
+	<string>
+	"Medico.h"
+
+1747521258 c:\users\calvo\desktop\nueva carpeta\consultorio-medico\sandbox.h
+	"Sandbox.h"
+
+1747521311 source:c:\users\calvo\desktop\nueva carpeta\consultorio-medico\sandbox.cpp
+	<iostream>
+	"Medico.h"
+	"ArchivoMedico.h"
+	"Fecha.h"
+
