@@ -1,6 +1,17 @@
 #include "Turnos.h"
 #include <cstring>  // Para memcpy si hiciera falta
 
+
+Turno::Turno() {
+    _idTurno = 0;
+    for (int i = 0; i < 10; i++) {
+        _idPaciente[i] = 0;
+        _idMedico[i] = 0;
+    }
+    // Si Fecha y Hora tienen constructores por defecto, se inicializan solos
+    _importeConsulta = 0.0f;
+}
+
 // Constructor parametrizado utilizando setters
 Turno::Turno(int idTurno, int idPaciente[], int idMedico[], Fecha fechaTurno, Hora horaTurno, float importeConsulta) {
     setIdTurno(idTurno);
