@@ -38,6 +38,8 @@
 		<Unit filename="ArchivoMedico.h" />
 		<Unit filename="ArchivoPaciente.cpp" />
 		<Unit filename="ArchivoPaciente.h" />
+		<Unit filename="ArchivoTurno.cpp" />
+		<Unit filename="ArchivoTurno.h" />
 		<Unit filename="Consultorio.cbp" />
 		<Unit filename="Consultorio.depend" />
 		<Unit filename="Consultorio.layout" />

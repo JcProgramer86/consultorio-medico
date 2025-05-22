@@ -4,6 +4,8 @@
 #include "Fecha.h"
 #include "Paciente.h"
 #include "ArchivoPaciente.h"
+#include "Turnos.h"
+#include "ArchivoTurno.h"
 
 
 void ejecutarSandboxMedico() {
@@ -102,3 +104,76 @@ void ejecutarBuscarPacientePorNombre(const std::string& nombreBuscado) {
     }
 }
 
+//turnos
+
+void ejecutarSandboxTurno() {
+    // Crear fecha y hora de ejemplo
+    Fecha fechaTurno(25, 5, 2025);
+    Hora horaTurno(10, 30);
+
+    int pacientes[10];
+    int medicos[10];
+    for (int i = 0; i < 10; i++) {
+        pacientes[i] = i + 1;
+        medicos[i] = 100 + i;
+    }
+
+    Turno turnoTest;
+    turnoTest.setIdTurno(1001);
+    turnoTest.setIdPaciente(pacientes);
+    turnoTest.setIdMedico(medicos);
+    turnoTest.setFechaTurno(fechaTurno);
+    turnoTest.setHoraTurno(horaTurno);
+    turnoTest.setImporteConsulta(7500.0f);
+
+    ArchivoTurno archivo("turnos.dat");
+
+    if (archivo.GuardarTurno(turnoTest)) {
+        std::cout << "Turno guardado correctamente." << std::endl;
+    } else {
+        std::cout << "Error al guardar el turno." << std::endl;
+    }
+
+    std::cout << "\nListado de turnos registrados:" << std::endl;
+    archivo.ListarTurnos();
+}
+
+void ejecutarBuscarTurnoPorId(int idBuscado) {
+    ArchivoTurno archivo("turnos.dat");
+    int posicion = archivo.BuscarTurnoPorId(idBuscado);
+
+    if (posicion == -1) {
+        std::cout << "Turno con ID " << idBuscado << " no encontrado." << std::endl;
+        return;
+    }
+
+    Turno turnoEncontrado;
+    if (archivo.LeerTurno(turnoEncontrado, posicion)) {
+        std::cout << "Turno encontrado:" << std::endl;
+        std::cout << "ID Turno: " << turnoEncontrado.getIdTurno() << std::endl;
+
+        std::cout << "Pacientes IDs: ";
+        const int* pacientes = turnoEncontrado.getIdPaciente();
+        for (int i = 0; i < 10; ++i) {
+            std::cout << pacientes[i] << " ";
+        }
+        std::cout << std::endl;
+
+        std::cout << "Médicos IDs: ";
+        const int* medicos = turnoEncontrado.getIdMedico();
+        for (int i = 0; i < 10; ++i) {
+            std::cout << medicos[i] << " ";
+        }
+        std::cout << std::endl;
+
+        Fecha fecha = turnoEncontrado.getFechaTurno();
+        std::cout << "Fecha del turno: " << fecha.getDia() << "/" << fecha.getMes() << "/" << fecha.getAnio() << std::endl;
+
+        Hora hora = turnoEncontrado.getHoraTurno();
+        std::cout << "Hora del turno: " << hora.getHora() << ":" << hora.getMinuto()  << std::endl;
+
+        std::cout << "Importe consulta: $" << turnoEncontrado.getImporteConsulta() << std::endl;
+    } else {
+        std::cout << "Error al leer el turno desde el archivo." << std::endl;
+    }
+}
