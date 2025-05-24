@@ -1,6 +1,7 @@
 #include "Fecha.h"
 #include <cstring>
 #include <iostream>
+#include <string>
 
 Fecha::Fecha() {
     _dia = 1;
@@ -42,16 +43,17 @@ bool Fecha::esValida(int dia, int mes, int anio) {
     if (anio < 1 || mes < 1 || mes > 12 || dia < 1) return false;
 
     int diasEnMes[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-    bool bisiesto = (anio % 4 == 0 && (anio % 100 != 0 || anio % 400 == 0));
+    bool bisiesto = (anio % 4 == 0 && anio % 100 != 0) || (anio % 400 == 0);
 
-    if (bisiesto && mes == 2) return dia <= 29;
+    if (bisiesto && mes == 2) {
+        if (dia > 29) return false;
+    } else {
+        if (dia > diasEnMes[mes - 1]) return false;
+    }
 
-    return dia <= diasEnMes[mes - 1];
+    return true;
 }
 
 std::string Fecha::toString() const {
-    std::string diaStr = (_dia < 10 ? "0" : "") + std::to_string(_dia);
-    std::string mesStr = (_mes < 10 ? "0" : "") + std::to_string(_mes);
-    std::string anioStr = std::to_string(_anio);
-    return diaStr + "/" + mesStr + "/" + anioStr;
+    return std::to_string(_dia) + "/" + std::to_string(_mes) + "/" + std::to_string(_anio);
 }

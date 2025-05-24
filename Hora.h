@@ -11,10 +11,10 @@ public:
     Hora(int hora, int minuto);
 
     // Setters
-    void setHora(int hora);
-    void setMinuto(int minuto);
+    void setHoraAtencion(int hora);
+    void setMinutoAtencion(int minuto);
 
     // Getters
-    int getHora() const;
-    int getMinuto() const;
+    int getHoraAtencion() const;
+    int getMinutoAtencion() const;
 };

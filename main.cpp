@@ -5,10 +5,14 @@
 using namespace std;
 
 int main() {
+    setlocale(LC_ALL, ""); // Para mostrar acentos correctamente en consola
 
-    //ejecutarSandboxMedico();
-    //ejecutarSandboxPaciente();
+    // ejecutarSandboxMedico();
+    // ejecutarSandboxPaciente();
 
-    ejecutarBuscarPacientePorNombre("luis");
+    ejecutarBuscarPacientePorNombre("Luis");
+    // ejecutarSandboxTurno();
+    // ejecutarBuscarTurnoPorId(1);
+
     return 0;
 }

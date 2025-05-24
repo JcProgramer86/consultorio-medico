@@ -15,7 +15,7 @@ Persona::Persona() {
 }
 
 
-   Persona::Persona(int id, std::string dni, std::string nombre, std::string apellido, std::string telefono, std::string email, Fecha fechaNacimiento) {
+    Persona::Persona(int id, std::string dni, std::string nombre, std::string apellido, std::string telefono, std::string email, Fecha fechaNacimiento) {
         set_id(id);
         set_dni(dni);
         set_nombre(nombre);
@@ -27,13 +27,13 @@ Persona::Persona() {
 
 
     // Getters
-    int Persona::get_id() { return _id; }
-    std::string Persona::get_dni() { return std::string(_dni); }
-    std::string Persona::get_nombre() { return std::string(_nombre); }
-    std::string Persona::get_apellido() { return std::string(_apellido); }
-    std::string Persona::get_telefono() { return std::string(_telefono); }
-    std::string Persona::get_email() { return std::string(_email); }
-    Fecha Persona::get_fechaNacimiento() { return _fechaNacimiento; }
+    int Persona::get_id() const { return _id; }
+    std::string Persona::get_dni() const { return std::string(_dni); }
+    std::string Persona::get_nombre() const { return std::string(_nombre); }
+    std::string Persona::get_apellido() const { return std::string(_apellido); }
+    std::string Persona::get_telefono() const { return std::string(_telefono); }
+    std::string Persona::get_email() const { return std::string(_email); }
+    Fecha Persona::get_fechaNacimiento() const { return _fechaNacimiento; }
 
 
     //Setters
@@ -69,49 +69,68 @@ Persona::Persona() {
     }
 
 
-    bool Persona::validarDNI(std::string dni) {
-        if (dni.length() < 7 || dni.length() > 8) return false;
-        for (char c : dni) {
-            if (c < '0' || c > '9') return false;
-        }
-        return true;
-    }
+  bool Persona::validarDNI(std::string dni) {
+    // Un DNI válido tiene entre 7 y 8 dígitos.
+    // Convertimos la longitud a 'int' para evitar el warning de 'signed/unsigned mismatch'.
+    int largo_dni = dni.length(); // ¡Aquí está el cambio clave!
 
-    bool Persona::validarTelefono(std::string tel) {
-        if(tel.length() <10 || tel.length() > 11){
+    if (largo_dni < 7 || largo_dni > 8) {
+        return false;
+    }
+    // Ahora 'i' (int) se compara con 'largo_dni' (int), eliminando el warning.
+    for (int i = 0; i < largo_dni; i++) { // Usamos largo_dni aquí
+        char c = dni[i];
+        if (c < '0' || c > '9') {
             return false;
         }
-        for(int i = 0 ;i < tel.length();i++){
-            if(tel[i] < '0' || tel[i] > '9'){
-            return false;
-            }
-        }
-        return true;
     }
+    return true;
+}
 
+  bool Persona::validarTelefono(std::string tel) {
+
+    int largo_tel = tel.length();
+
+    if(largo_tel < 10 || largo_tel > 11){
+        return false;
+    }
+    // Ahora 'i' (int) se compara con 'largo_tel' (int), eliminando el warning.
+    for(int i = 0 ;i < largo_tel; i++){
+        if(tel[i] < '0' || tel[i] > '9'){
+            return false;
+        }
+    }
+    return true;
+}
 
     bool Persona::validarEmail(std::string email) {
         int arroba = -1;
+        // Obtenemos la longitud como un 'int'. Esto es para evitar la advertencia
+        // de comparación de tipos (signed vs unsigned), ya que 'length()' devuelve un tipo sin signo.
+        // Para longitudes típicas de emails, un 'int' es suficiente.
         int largo = email.length();
 
-        for(int i = 0;i < largo; i++){
-            char c = email[i];
-            if(c == ' ')return false;
+        // Recorremos la cadena usando un bucle 'for' tradicional con un índice 'i'.
+        for(int i = 0; i < largo; i++){
+            char c = email[i]; // Accedemos al carácter en la posición 'i'.
+            if(c == ' ') return false; // Si encontramos un espacio, el email no es válido.
             if(c == '@'){
-                if(arroba =! -1)return false;
-                arroba = i;
+                if(arroba != -1) return false; // Si ya encontramos una '@', y aparece otra, el email no es válido.
+                arroba = i; // Guardamos la posición de la primera '@'.
             }
         }
-        if(arroba <= 0 || arroba >= largo -1)return false;
+
+        // Verificamos la posición de la '@'. No puede estar al principio o al final.
+        if(arroba <= 0 || arroba >= largo - 1) return false;
+
         bool puntoMail = false;
-        for(int i = arroba + 2 ;i < largo -1; i++){
+        // Buscamos un punto después de la '@'. Empezamos a buscar 2 posiciones después de la '@'.
+        // Esto asume que hay al menos un carácter entre la '@' y el punto, y que el punto no es el último.
+        for(int i = arroba + 2 ;i < largo - 1; i++){
             if(email[i] == '.'){
                 puntoMail = true;
-                break;
+                break; // Si encontramos un punto, ya no necesitamos buscar más.
             }
         }
-        return puntoMail;
+        return puntoMail; // Retornamos si encontramos un punto.
     }
-
-
-

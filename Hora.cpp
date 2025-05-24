@@ -6,12 +6,12 @@ Hora::Hora() {
     _minuto = 0;
 }
 Hora::Hora(int hora, int minuto) {
-    setHora(hora);
-    setMinuto(minuto);
+    setHoraAtencion(hora);
+    setMinutoAtencion(minuto);
 }
 
 // Setters
-void Hora::setHora(int hora) {
+void Hora::setHoraAtencion(int hora) {
     if (hora >= 0 && hora < 24) {
         _hora = hora;
     } else {
@@ -19,7 +19,7 @@ void Hora::setHora(int hora) {
     }
 }
 
-void Hora::setMinuto(int minuto) {
+void Hora::setMinutoAtencion(int minuto) {
     if (minuto >= 0 && minuto < 60) {
         _minuto = minuto;
     } else {
@@ -28,10 +28,10 @@ void Hora::setMinuto(int minuto) {
 }
 
 // Getters
-int Hora::getHora() const {
+int Hora::getHoraAtencion() const {
     return _hora;
 }
 
-int Hora::getMinuto() const {
+int Hora::getMinutoAtencion() const {
     return _minuto;
 }

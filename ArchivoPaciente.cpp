@@ -36,7 +36,7 @@ int ArchivoPaciente::Buscar(int IDPaciente){
     int i = 0;
 
     while(fread(&paciente, sizeof(Paciente), 1, pArchivo)){
-        if(paciente.get_id() == IDPaciente){
+        if(paciente.get_id() == IDPaciente){ // get_id() is now const
             fclose(pArchivo);
             return i;
         }
@@ -56,7 +56,7 @@ int ArchivoPaciente::BuscarPorNombre(std::string& pacienteNombre) {
     int i = 0;
 
     while (fread(&paciente, sizeof(Paciente), 1, pArchivo)) {
-        if (paciente.get_nombre() == pacienteNombre) {
+        if (paciente.get_nombre() == pacienteNombre) { // get_nombre() is now const
             fclose(pArchivo);
             return i;
         }

@@ -11,10 +11,9 @@ class ArchivoPaciente{
         bool Guardar(Paciente paciente);
         bool Guardar(Paciente paciente, int posicion);
         int Buscar(int IDPaciente);
-        BuscarPorNombre(std::string& pacienteNombre);
+        int BuscarPorNombre(std::string& pacienteNombre);
         Paciente Leer(int posicion);
         int CantidadRegistros();
         void Leer(int cantidadRegistros, Paciente *vector);
 
 };
-

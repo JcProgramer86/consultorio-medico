@@ -27,19 +27,16 @@ public:
     void set_email(std::string email);
     void set_fechaNacimiento(Fecha fechaNacimiento);
 
-    int get_id();
-    std::string get_dni();
-    std::string get_nombre();
-    std::string get_apellido();
-    std::string get_telefono();
-    std::string get_email();
-    Fecha get_fechaNacimiento();
+    int get_id() const;
+    std::string get_dni() const;
+    std::string get_nombre() const;
+    std::string get_apellido() const;
+    std::string get_telefono() const;
+    std::string get_email() const;
+    Fecha get_fechaNacimiento() const;
 
 
-
-
-
-    bool validarDNI(std::string dni);
+    static bool validarDNI(std::string dni);
     static bool validarTelefono(std::string telefono);
     static bool validarEmail(std::string email);
 };

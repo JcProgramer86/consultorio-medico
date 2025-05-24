@@ -67,13 +67,12 @@ int ArchivoMedico::CantidadRegistros(){
     return cantidadRegistros;
 }
 
-void ArchivoMedico::Leer(int cantidadRegistros, Medico *vector){
+// Implementación de la función Leer que recibe un vector
+void ArchivoMedico::Leer(int cantidadRegistros, Medico *vector) {
     FILE *pArchivoMedico = fopen(_nombreArchivoMedico.c_str(), "rb");
     if(pArchivoMedico == NULL){
-        return;
+        return; // Retornar si no se puede abrir el archivo
     }
-    for(int i = 0; i < cantidadRegistros; i++){
-        fread(&vector[i], sizeof(Medico), 1, pArchivoMedico);
-    }
+    fread(vector, sizeof(Medico), cantidadRegistros, pArchivoMedico);
     fclose(pArchivoMedico);
 }

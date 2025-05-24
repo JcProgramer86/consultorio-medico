@@ -15,7 +15,7 @@ Paciente::Paciente(int id, std::string dni, std::string nombre, std::string apel
 }
 
 
-int Paciente::get_idPrestador() {
+int Paciente::get_idPrestador() const { // Added const
     return _idPrestador;
 }
 
@@ -25,6 +25,4 @@ void Paciente::set_idPrestador(int idPrestador) {
 
 }
 
-std::string Paciente::toCSV() { return std::to_string(get_id()) + "," + get_dni() + "," + get_nombre() + "," + get_apellido() + "," + get_telefono() + "," + get_email() + "," + get_fechaNacimiento().toString() + "," + std::to_string(get_idPrestador()); }
-
-
+std::string Paciente::toCSV() const { return std::to_string(get_id()) + "," + get_dni() + "," + get_nombre() + "," + get_apellido() + "," + get_telefono() + "," + get_email() + "," + get_fechaNacimiento().toString() + "," + std::to_string(get_idPrestador()); }

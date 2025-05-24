@@ -13,8 +13,8 @@ public:
              std::string telefono, std::string email,
              int idPrestador, Fecha fechaNacimiento);
 
-    int get_idPrestador();
+    int get_idPrestador() const;
     void set_idPrestador(int idPrestador);
-    std::string toCSV();
+    std::string toCSV() const;
 
 };

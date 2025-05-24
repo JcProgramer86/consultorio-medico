@@ -1,99 +1,112 @@
-#include <cstdio>        // fopen, fread, fwrite, fclose, fseek
-#include <iostream>      // cout, endl
-#include <cstring>       // strcpy
+#include <cstdio>
+#include <iostream>
+#include <cstring>
 #include "ArchivoTurno.h"
 
 using namespace std;
 
-// Constructor: guarda el nombre del archivo en el atributo privado
 ArchivoTurno::ArchivoTurno(const char* nombreArchivoTurno) {
-    strcpy(_nombreArchivoTurno, nombreArchivoTurno);  // Copia segura de cadena de C
+    strcpy(_nombreArchivoTurno, nombreArchivoTurno);
 }
 
-// Guarda un turno al final del archivo (modo "append binary")
 bool ArchivoTurno::GuardarTurno(Turno turno) {
-    FILE* pArchivo = fopen(_nombreArchivoTurno, "ab");  // Abrir archivo en modo "agregar binario"
-    if (pArchivo == nullptr) return false;              // Si no se pudo abrir, error
+    FILE* pArchivo = fopen(_nombreArchivoTurno, "ab");
+    if (pArchivo == nullptr) return false;
 
-    bool ok = fwrite(&turno, sizeof(turno), 1, pArchivo) == 1;  // Escribir el turno
-    fclose(pArchivo);                                     // Cerrar archivo
-    return ok;                                            // Retornar si se escribió bien
+    bool ok = fwrite(&turno, sizeof(Turno), 1, pArchivo) == 1;
+    fclose(pArchivo);
+    return ok;
 }
 
-// Modifica un turno existente en una posición específica
 bool ArchivoTurno::ModificarTurno(Turno turno, int posicion) {
-    FILE* pArchivo = fopen(_nombreArchivoTurno, "rb+");  // Abrir en modo lectura/escritura binaria
-    if (pArchivo == nullptr) return false;               // Error si no se abre
-
-    fseek(pArchivo, sizeof(turno) * posicion, SEEK_SET); // Mover el puntero al turno deseado
-    bool ok = fwrite(&turno, sizeof(turno), 1, pArchivo) == 1; // Sobrescribir los datos
-    fclose(pArchivo);                                     // Cerrar archivo
-    return ok;                                            // Retornar si fue correcto
-}
-
-// Lee un turno desde el archivo en una posición dada
-bool ArchivoTurno::LeerTurno(Turno& turno, int posicion) {
-    FILE* pArchivo = fopen(_nombreArchivoTurno, "rb");
+    FILE* pArchivo = fopen(_nombreArchivoTurno, "rb+");
     if (pArchivo == nullptr) return false;
 
     fseek(pArchivo, sizeof(Turno) * posicion, SEEK_SET);
-    bool leyo = fread(&turno, sizeof(Turno), 1, pArchivo) == 1;
+    bool ok = fwrite(&turno, sizeof(Turno), 1, pArchivo) == 1;
     fclose(pArchivo);
-    return leyo;
+    return ok;
 }
 
-// Lista todos los turnos en el archivo imprimiendo sus datos
-void ArchivoTurno::ListarTurnos() {
-    FILE* pArchivo = fopen(_nombreArchivoTurno, "rb");
-    if (pArchivo == nullptr) {
-        cout << "No se pudo abrir el archivo de turnos." << endl;
-        return;
-    }
-
-    Turno turno;
-    int contador = 0;
-    while (fread(&turno, sizeof(Turno), 1, pArchivo) == 1) {
-        cout << "Turno #" << contador << ":" << endl;
-        cout << "  ID Turno: " << turno.getIdTurno() << endl;
-
-        cout << "  IDs Pacientes: ";
-        const int* pacientes = turno.getIdPaciente();
-        for (int i = 0; i < 10; i++) cout << pacientes[i] << " ";
-        cout << endl;
-
-        cout << "  IDs Médicos: ";
-        const int* medicos = turno.getIdMedico();
-        for (int i = 0; i < 10; i++) cout << medicos[i] << " ";
-        cout << endl;
-
-        Fecha fecha = turno.getFechaTurno();
-        cout << "  Fecha: " << fecha.getDia() << "/" << fecha.getMes() << "/" << fecha.getAnio() << endl;
-
-        Hora hora = turno.getHoraTurno();
-        cout << "  Hora: " << hora.getHora() << ":" << hora.getMinuto() << endl;
-
-        cout << "  Importe Consulta: $" << turno.getImporteConsulta() << endl;
-        cout << "-----------------------" << endl;
-        contador++;
-    }
-
-    fclose(pArchivo);
-}
-
-// Busca la posición de un turno por su ID, devuelve -1 si no encuentra
-int ArchivoTurno::BuscarTurnoPorId(int idTurnoBuscado) {
+int ArchivoTurno::BuscarTurnoPorId(int idTurno) {
     FILE* pArchivo = fopen(_nombreArchivoTurno, "rb");
     if (pArchivo == nullptr) return -1;
 
     Turno turno;
-    int posicion = 0;
+    int i = 0;
     while (fread(&turno, sizeof(Turno), 1, pArchivo) == 1) {
-        if (turno.getIdTurno() == idTurnoBuscado) {
+        if (turno.getIdTurno() == idTurno) {
             fclose(pArchivo);
-            return posicion;
+            return i;
         }
-        posicion++;
+        i++;
     }
     fclose(pArchivo);
     return -1;
+}
+
+// Implementación de LeerTurno que retorna el objeto Turno
+Turno ArchivoTurno::LeerTurno(int posicion) {
+    FILE* pArchivo = fopen(_nombreArchivoTurno, "rb");
+    if (pArchivo == nullptr) return Turno(); // Retorna un turno por defecto si falla la apertura
+
+    Turno turno;
+    fseek(pArchivo, sizeof(Turno) * posicion, SEEK_SET);
+    fread(&turno, sizeof(Turno), 1, pArchivo);
+    fclose(pArchivo);
+    return turno;
+}
+
+// Implementación de CantidadRegistros
+int ArchivoTurno::CantidadRegistros() {
+    FILE* pArchivo = fopen(_nombreArchivoTurno, "rb");
+    if (pArchivo == nullptr) return 0;
+
+    fseek(pArchivo, 0, SEEK_END);
+    int cantidad = ftell(pArchivo) / sizeof(Turno);
+    fclose(pArchivo);
+    return cantidad;
+}
+
+// Implementación de ListarTurnos
+void ArchivoTurno::ListarTurnos() {
+    int cantidad = CantidadRegistros();
+
+    if (cantidad == 0) {
+        cout << "No hay turnos registrados." << endl;
+        return;
+    }
+
+    cout << "--- Listado de Turnos ---" << endl;
+    for (int i = 0; i < cantidad; i++) {
+        Turno turno = LeerTurno(i);
+        cout << "-------------------------" << endl;
+        cout << "ID Turno: " << turno.getIdTurno() << endl;
+        cout << "Fecha: " << turno.getFechaAtencion().toString() << endl;
+        cout << "Hora: " << turno.getHoraAtencion().getHoraAtencion() << ":" << turno.getHoraAtencion().getMinutoAtencion() << endl;
+        cout << "Importe: $" << turno.getImporteConsulta() << endl;
+        cout << "Cancelado: " << (turno.getCancelado() ? "Sí" : "No") << endl;
+        cout << "Sobreturno: " << (turno.getSobreturno() ? "Sí" : "No") << endl;
+        cout << "Duración: " << turno.getDuracionTurno().getHoraAtencion() << "h " << turno.getDuracionTurno().getMinutoAtencion() << "min" << endl;
+        cout << "Observaciones: " << turno.getObservaciones() << endl;
+
+        cout << "ID(s) Paciente(s): ";
+        const int* pacientes = turno.getIdPaciente();
+        for (int j = 0; j < 10; ++j) {
+            if (pacientes[j] != -1) { // Asumiendo -1 como valor nulo
+                cout << pacientes[j] << " ";
+            }
+        }
+        cout << endl;
+
+        cout << "ID(s) Medico(s) Especialidad: ";
+        const int* medicosEspecialidad = turno.getIdMedicoEspecialidad();
+        for (int j = 0; j < 10; ++j) {
+            if (medicosEspecialidad[j] != -1) { // Asumiendo -1 como valor nulo
+                cout << medicosEspecialidad[j] << " ";
+            }
+        }
+        cout << endl;
+    }
+    cout << "-------------------------" << endl;
 }
