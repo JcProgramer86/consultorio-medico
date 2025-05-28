@@ -43,6 +43,8 @@
 		<Unit filename="Consultorio.cbp" />
 		<Unit filename="Consultorio.depend" />
 		<Unit filename="Consultorio.layout" />
+		<Unit filename="Especialidad.cpp" />
+		<Unit filename="Especialidad.h" />
 		<Unit filename="Fecha.cpp" />
 		<Unit filename="Fecha.h" />
 		<Unit filename="Hora.cpp" />
