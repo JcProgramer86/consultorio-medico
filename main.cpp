@@ -9,6 +9,7 @@ int main() {
     //ejecutarSandboxMedico();
     //ejecutarSandboxPaciente();
 
-    ejecutarBuscarPacientePorNombre("luis");
+    //ejecutarBuscarPacientePorNombre("luis");
+    //ejecutarSandboxMedicoEspecialidad();
     return 0;
 }

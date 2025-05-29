@@ -1,23 +1,24 @@
 #pragma once
 
-
-class MedicoEspecialidad{
+class MedicoEspecialidad {
 private:
     int _id;
     int _idEspecialidad;
     int _idMedico;
 
 public:
+    // Constructores
     MedicoEspecialidad();
+    MedicoEspecialidad(int id, int idEsp, int idMed);
 
-    MedicoEspecialidad(int id, int idEsp, int idMed){
+    // Getters
+    int getId() const;
+    int getIdEspecialidad() const;
+    int getIdMedico() const;
 
-    void set_id(int id);
-    void set_idEspecialidad(int idEsp);
-    void set_idMedico(int idMed);
-
-    int getId ();
-    int getIdEspecialidad();
-    int getIdMedico();
-
+    // Setters
+    void setId(int id);
+    void setIdEspecialidad(int idEsp);
+    void setIdMedico(int idMed);
 };
+

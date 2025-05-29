@@ -6,6 +6,7 @@
 #include "ArchivoPaciente.h"
 #include "Turnos.h"
 #include "ArchivoTurno.h"
+#include "ArchivoMedicoEspecialidad.h"
 
 
 void ejecutarSandboxMedico() {
@@ -101,6 +102,36 @@ void ejecutarBuscarPacientePorNombre(const std::string& nombreBuscado) {
 
     if (!encontrado) {
         std::cout << "Paciente con nombre '" << nombreBuscado << "' no encontrado." << std::endl;
+    }
+}
+
+
+// prueba de creacion y muestra medico especialidad.
+
+void ejecutarSandboxMedicoEspecialidad(){
+    MedicoEspecialidad me1(1, 101, 201);
+    MedicoEspecialidad me2(2, 102, 202);
+
+    ArchivoMedicoEspecialidad archivo("medicoespecialidades.dat");
+
+
+    if (archivo.Guardar(me1) && archivo.Guardar(me2)) {
+        std::cout << "MedicoEspecialidad guardados correctamente." << std::endl;
+    } else {
+        std::cout << "Error al guardar MedicoEspecialidad." << std::endl;
+        return;
+    }
+
+
+    int cantidad = archivo.CantidadRegistros();
+    for (int i = 0; i < cantidad; ++i) {
+        MedicoEspecialidad m = archivo.Leer(i);
+        std::cout
+            << "Registro " << i << ": "
+            << "ID=" << m.getId()
+            << ", IdEspecialidad=" << m.getIdEspecialidad()
+            << ", IdMedico=" << m.getIdMedico()
+            << std::endl;
     }
 }
 
