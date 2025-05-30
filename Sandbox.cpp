@@ -7,6 +7,7 @@
 #include "Turnos.h"
 #include "ArchivoTurno.h"
 #include "ArchivoMedicoEspecialidad.h"
+#include "ArchivoPrestador.h"
 
 
 void ejecutarSandboxMedico() {
@@ -38,6 +39,39 @@ void ejecutarSandboxMedico() {
     for (int i = 0; i < cant; i++) {
         Medico medico = archivo.Leer(i);
         std::cout << medico.toCSV() << std::endl;
+    }
+}
+
+void ejecutarSandboxPrestador() {
+    // 1) Crear un par de prestadores
+    Prestador pr1(1, "", "Osde",true);
+    pr1.generarCodigo("Osde");
+
+    Prestador pr2(2, "", "Swiss Med",false);
+    pr2.generarCodigo("Swiss Med");
+
+    // 2) Instanciar el manejador de archivo
+    ArchivoPrestador archivo("prestadores.dat");
+
+    // 3) Guardar ambos registros
+    if (archivo.Guardar(pr1) && archivo.Guardar(pr2)) {
+        std::cout << "Prestadores guardados correctamente." << std::endl;
+    } else {
+        std::cout << "Error al guardar los prestadores." << std::endl;
+        return;
+    }
+
+    // 4) Leer y mostrar todos los registros
+    int cantidad = archivo.CantidadRegistros();
+    for (int i = 0; i < cantidad; ++i) {
+        Prestador p = archivo.Leer(i);
+        std::cout
+            << "Registro " << i << ": "
+            << "ID="     << p.getId()
+            << ", Código="  << p.getCodPrestador()
+            << ", Nombre="  << p.getNombrePrestador()
+            << ", Habilitado=" << (p.isEnabled() ? "sí" : "no")
+            << std::endl;
     }
 }
 

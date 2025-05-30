@@ -5,6 +5,7 @@ void ejecutarSandboxMedico();
 void ejecutarSandboxPaciente();
 void ejecutarBuscarPacientePorNombre(const std::string& nombreBuscado);
 void ejecutarSandboxMedicoEspecialidad();
+void ejecutarSandboxPrestador();
 
 // Métodos para testear Turnos
 void ejecutarSandboxTurno();  // Guarda y lista turnos

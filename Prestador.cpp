@@ -56,7 +56,7 @@ void Prestador::setEnabled(bool enabled) {
     _enabled = enabled;
 }
 
-void Prestador::generarCodigo(std::string& nombreObraSocial) {
+void Prestador::generarCodigo(const std::string& nombreObraSocial) {
     // 1) Extraer hasta 4 letras alfabéticas en mayúscula
     char prefijo[5];  // hasta 4 letras + '\0'
     int  prefLen = 0;
