@@ -27,6 +27,6 @@ public:
     void setNombrePrestador(std::string nombrePrestador);
     void setEnabled(bool enabled);
 
-    void generarCodigo(std::string& nombreObraSocial);
+    void generarCodigo(const std::string& nombreObraSocial);
 };
 
