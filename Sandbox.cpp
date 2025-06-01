@@ -14,17 +14,18 @@ void ejecutarSandboxMedico() {
     Fecha fechaNac(15, 6, 1985);
     Fecha fechaIni(1, 3, 2010);
 
-    Medico medicoTest(
-        1,
-        "12345678",
-        "Juan",
-        "Perez",
-        "1123456789",
-        "juan@email.com",
-        fechaNac,
-        3,
-        fechaIni
-    );
+   Medico medicoTest(
+    1,
+    "12345678",
+    "Juan",
+    "Perez",
+    "1123456789",
+    "juan@email.com",
+    fechaNac,
+    3,
+    fechaIni,
+    "MAT12345"    // <-- Aquí va la matrícula, por ejemplo
+);
 
     ArchivoMedico archivo("medicos.dat");
 
