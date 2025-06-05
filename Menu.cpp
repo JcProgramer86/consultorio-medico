@@ -1,4 +1,5 @@
 #include "Menu.h"
+#include "ManagerPaciente.h"
 #include <iostream>
 
 using namespace std;
@@ -37,6 +38,7 @@ void Menu::menuPrincipal() {
 
 // Menú de opciones para pacientes
 void Menu::menuPaciente() {
+    ManagerPaciente managerPaciente;
     int opcion;
     do {
         cout << "---------- MENU PACIENTES ----------" << endl;
@@ -51,8 +53,8 @@ void Menu::menuPaciente() {
         cin >> opcion;
 
         switch (opcion) {
-            case 1:
-                cout << "Cargar nuevo paciente (opción aún no implementada)." << endl;
+            case 1: managerPaciente.crearNuevoPaciente();
+
                 break;
             case 2:
                 cout << "Listar pacientes (opción aún no implementada)." << endl;

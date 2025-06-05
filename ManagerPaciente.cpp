@@ -1,140 +1,66 @@
 #include "ManagerPaciente.h"
+#include "Paciente.h"
+#include "ArchivoPaciente.h"
+#include "Fecha.h"
 #include <iostream>
 
 using namespace std;
 
-ManagerPaciente::ManagerPaciente(const string& nombreArchivo) {
-    int len = nombreArchivo.size();
-    if (len >= 50) len = 49;
-    for (int i = 0; i < len; i++) {
-        _nombreArchivo[i] = nombreArchivo[i];
-    }
-    _nombreArchivo[len] = '\0';
+void ManagerPaciente::crearNuevoPaciente() {
+    Paciente paciente;
+    ArchivoPaciente aPaciente("paciente.dat") ;
 
-    cantidad = 0;
-}
+    string nombre,apellido,dni,telefono,email;
+    int idPrestador,id,dia,mes,anio;
+    bool bandera = false;
 
-bool ManagerPaciente::crearPaciente(const Paciente& paciente) {
-    if (cantidad >= 100) {
-        cout << "No hay espacio para más pacientes\n";
-        return false;
+    while(bandera == false){
+            bandera = true;
+            cout<<"Ingrese el numero de dni: "<<endl;
+            cin>>dni;
+            if(!aPaciente.checkDni(dni)){
+                bandera = false;
+            }
     }
-    for (int i = 0; i < cantidad; i++) {
-        if (pacientes[i].get_id() == paciente.get_id()) {
-            cout << "Paciente con ese ID ya existe\n";
-            return false;
-        }
-    }
-    pacientes[cantidad] = paciente;
-    cantidad++;
-    return true;
-}
 
-bool ManagerPaciente::buscarPacientePorID(int id, Paciente& pacienteEncontrado) {
-    for (int i = 0; i < cantidad; i++) {
-        if (pacientes[i].get_id() == id) {
-            pacienteEncontrado = pacientes[i];
-            return true;
-        }
-    }
-    return false;
-}
 
-bool ManagerPaciente::buscarPacientePorDNI(const string& dni, Paciente& pacienteEncontrado) {
-    for (int i = 0; i < cantidad; i++) {
-        if (pacientes[i].get_dni() == dni) {
-            pacienteEncontrado = pacientes[i];
-            return true;
-        }
-    }
-    return false;
-}
+    cout<<"Ingrese el nombre del paciente: "<<endl;
+    cin.ignore();
+    getline(cin,nombre);
 
-bool ManagerPaciente::modificarPaciente(const Paciente& pacienteModificado) {
-    for (int i = 0; i < cantidad; i++) {
-        if (pacientes[i].get_id() == pacienteModificado.get_id()) {
-            pacientes[i] = pacienteModificado;
-            return true;
-        }
-    }
-    cout << "Paciente no encontrado para modificar\n";
-    return false;
-}
+    cout<<"Ingrese el apellido del paciente: "<<endl;
+    getline(cin,apellido);
 
-bool ManagerPaciente::eliminarPaciente(int id) {
-    for (int i = 0; i < cantidad; i++) {
-        if (pacientes[i].get_id() == id) {
-            pacientes[i] = pacientes[cantidad - 1];
-            cantidad--;
-            return true;
-        }
-    }
-    cout << "Paciente no encontrado para eliminar\n";
-    return false;
-}
+    cout<<"Ingrese el nuemero de telefono: "<<endl;
+    getline(cin,telefono);
 
-void ManagerPaciente::buscarPacientesPorNombre(const string& nombre) const {
-    bool encontrado = false;
-    for (int i = 0; i < cantidad; i++) {
-        if (pacientes[i].get_nombre().find(nombre) != string::npos && pacientes[i].get_enabled()) {
-            cout << "ID: " << pacientes[i].get_id()
-                 << " | Nombre: " << pacientes[i].get_nombre()
-                 << " | DNI: " << pacientes[i].get_dni()
-                 << " | Prestador: " << pacientes[i].get_idPrestador()
-                 << endl;
-            cout << "--------------\n";
-            encontrado = true;
-        }
-    }
-    if (!encontrado) {
-        cout << "No se encontraron pacientes con ese nombre\n";
-    }
-}
+    cout<<"Ingrese el email: "<<endl;
+    getline(cin,email);
 
-void ManagerPaciente::listarPacientes() const {
-    for (int i = 0; i < cantidad; i++) {
-        if (pacientes[i].get_enabled()) {
-            cout << "ID: " << pacientes[i].get_id()
-                 << " | DNI: " << pacientes[i].get_dni()
-                 << " | Prestador: " << pacientes[i].get_idPrestador()
-                 << endl;
-        }
-    }
-}
+    cout<<"ingrese dia del mes en que nacio: "<<endl;
+    cin>>dia;
 
-bool ManagerPaciente::asignarPrestadorAPaciente(int idPaciente, int idPrestador) {
-    for (int i = 0; i < cantidad; i++) {
-        if (pacientes[i].get_id() == idPaciente) {
-            pacientes[i].set_idPrestador(idPrestador);  // CORREGIDO
-            return true;
-        }
-    }
-    cout << "Paciente no encontrado para asignar prestador\n";
-    return false;
-}
+    cout<<"Ingrese mes en el que nacio: "<<endl;
+    cin>>mes;
 
-bool ManagerPaciente::cambiarPrestadorDePaciente(int idPaciente, int nuevoIdPrestador) {
-    return asignarPrestadorAPaciente(idPaciente, nuevoIdPrestador);
-}
+    cout<<"Ingrese año en el que nacio: "<<endl;
+    cin>>anio;
 
-bool ManagerPaciente::activarPaciente(int idPaciente) {
-    for (int i = 0; i < cantidad; i++) {
-        if (pacientes[i].get_id() == idPaciente) {
-            pacientes[i].set_enabled(true);
-            return true;
-        }
-    }
-    cout << "Paciente no encontrado para activar\n";
-    return false;
-}
+    cout<<"Ingrese el prestador: "<<endl;
+    cin>>idPrestador;
 
-bool ManagerPaciente::desactivarPaciente(int idPaciente) {
-    for (int i = 0; i < cantidad; i++) {
-        if (pacientes[i].get_id() == idPaciente) {
-            pacientes[i].set_enabled(false);
-            return true;
-        }
-    }
-    cout << "Paciente no encontrado para desactivar\n";
-    return false;
+    Fecha fechaNacimiento(dia,mes,anio);
+
+
+    id = aPaciente.generarNuevoId();
+
+    paciente = Paciente(id,dni,nombre,apellido,telefono,email,idPrestador,fechaNacimiento);
+
+    if(aPaciente.Guardar(paciente)){
+        cout << "Se guardo correctamente!" << endl;
+      }else{
+        cout << "Hubo un error inesperado, llame al de sistemas..." << endl;
+      }
+
+
 }
