@@ -125,3 +125,5 @@ Consultorio.layout
 Consultorio.depend
 
 
+*.o
+obj/
