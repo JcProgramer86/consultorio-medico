@@ -36,8 +36,12 @@
 		</Compiler>
 		<Unit filename="ArchivoMedico.cpp" />
 		<Unit filename="ArchivoMedico.h" />
+		<Unit filename="ArchivoMedicoEspecialidad.cpp" />
+		<Unit filename="ArchivoMedicoEspecialidad.h" />
 		<Unit filename="ArchivoPaciente.cpp" />
 		<Unit filename="ArchivoPaciente.h" />
+		<Unit filename="ArchivoPrestador.cpp" />
+		<Unit filename="ArchivoPrestador.h" />
 		<Unit filename="ArchivoTurno.cpp" />
 		<Unit filename="ArchivoTurno.h" />
 		<Unit filename="Consultorio.cbp" />
@@ -51,12 +55,16 @@
 		<Unit filename="Hora.h" />
 		<Unit filename="Medico.cpp" />
 		<Unit filename="Medico.h" />
+		<Unit filename="MedicoEspecialidad.cpp" />
+		<Unit filename="MedicoEspecialidad.h" />
 		<Unit filename="Menu.cpp" />
 		<Unit filename="Menu.h" />
 		<Unit filename="Paciente.cpp" />
 		<Unit filename="Paciente.h" />
 		<Unit filename="Persona.cpp" />
 		<Unit filename="Persona.h" />
+		<Unit filename="Prestador.cpp" />
+		<Unit filename="Prestador.h" />
 		<Unit filename="Sandbox.cpp" />
 		<Unit filename="Sandbox.h" />
 		<Unit filename="Turnos.cpp" />

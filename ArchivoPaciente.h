@@ -1,20 +1,24 @@
 #pragma once
+
 #include <string>
 #include "Paciente.h"
 
-class ArchivoPaciente{
-    private:
-        std::string _nombreArchivo;
+class ArchivoPaciente {
+private:
+    std::string _nombreArchivo;
 
-    public:
-        ArchivoPaciente(std::string nombreArchivo);
-        bool Guardar(Paciente paciente);
-        bool Guardar(Paciente paciente, int posicion);
-        int Buscar(int IDPaciente);
-        BuscarPorNombre(std::string& pacienteNombre);
-        Paciente Leer(int posicion);
-        int CantidadRegistros();
-        void Leer(int cantidadRegistros, Paciente *vector);
+public:
+    ArchivoPaciente(std::string nombreArchivo);
 
+    bool Guardar(Paciente paciente);
+    bool Guardar(Paciente paciente, int posicion);
+
+    int Buscar(int IDPaciente);
+    int BuscarPorNombre(std::string& pacienteNombre);
+    int BuscarPorDni(std::string& dniPaciente);
+    Paciente Leer(int posicion);
+    void Leer(int cantidadRegistros, Paciente* vector);
+    int CantidadRegistros();
+    int generarNuevoId();
+    bool checkDni(std::string& dni);
 };
-
