@@ -1,5 +1,6 @@
 #include <iostream>
 #include <locale>
+#include "Menu.h"
 #include "Sandbox.h"
 
 using namespace std;
@@ -11,6 +12,9 @@ int main() {
 
     //ejecutarBuscarPacientePorNombre("luis");
     //ejecutarSandboxMedicoEspecialidad();
-    ejecutarSandboxPrestador();
+    //ejecutarSandboxPrestador();
+
+    Menu menu;
+    menu.menuPrincipal();
     return 0;
 }
