@@ -31,7 +31,7 @@ void ManagerPaciente::crearNuevoPaciente() {
     cout<<"Ingrese el apellido del paciente: "<<endl;
     getline(cin,apellido);
 
-    cout<<"Ingrese el nuemero de telefono: "<<endl;
+    cout<<"Ingrese el numero de telefono: "<<endl;
     getline(cin,telefono);
 
     cout<<"Ingrese el email: "<<endl;
