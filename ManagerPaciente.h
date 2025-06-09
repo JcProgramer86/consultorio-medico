@@ -9,4 +9,5 @@ public:
     void ListarTodos();
     void MostrarPorDni();
     void EditarPaciente();
+
 };
