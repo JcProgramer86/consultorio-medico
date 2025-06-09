@@ -102,7 +102,7 @@ void Menu::menuMedico()
         cout << "1. Registrar nuevo medico" << endl;
         cout << "2. Listar medicos" << endl;
         cout << "3. Modificar medico" << endl;
-        cout << "4. Buscar medico por ID" << endl;
+        cout << "4. Buscar medico por DNI" << endl;
         cout << "0. Volver al menu principal" << endl;
         cout << "Seleccione una opcion: ";
         cin >> opcion;
@@ -116,36 +116,14 @@ void Menu::menuMedico()
             manager.listarMedicos();
             break;
         case 3:
-        {
-            std::string dni;
-            cout << "Ingrese el DNI del médico que desea modificar: ";
-            cin >> dni;
-            cin.ignore();
-
-            bool exito = manager.modificarMedicoPorDni(dni);
-            if (!exito)
-            {
-                cout << "No se pudo modificar el médico." << endl;
-            }
+            manager.modificarMedicoPorDni();
             break;
-        }
+
 
         case 4:
-        {
-            std::string dni;
-            cout << "Ingrese el DNI del medico a buscar:  " << endl;
-            cin >>dni;
-            Medico medicoEncontrado=manager.buscarMedicoPorDni(dni);
-            if (medicoEncontrado.get_id() != -1)
-            {
-                cout << medicoEncontrado.toCSV() << endl;
-            }
-            else
-            {
-                cout << "No se encontró un médico con ese DNI." << endl;
-            }
+            manager.buscarYMostrarMedicoPorDni();
             break;
-        }
+
         case 0:
             cout << "Volviendo al menú principal..." << endl;
             break;
