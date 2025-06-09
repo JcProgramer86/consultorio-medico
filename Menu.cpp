@@ -45,7 +45,7 @@ void Menu::menuPaciente() {
         cout << "1. Cargar nuevo paciente" << endl;
         cout << "2. Listar pacientes" << endl;
         cout << "3. Modificar paciente" << endl;
-        cout << "4. Buscar paciente por ID" << endl;
+        cout << "4. Buscar paciente por DNI" << endl;
         cout << "5. Sacar turno" << endl;
         cout << "6. Ver turnos" << endl;
         cout << "0. Volver al menu principal" << endl;
@@ -54,17 +54,17 @@ void Menu::menuPaciente() {
 
         switch (opcion) {
             case 1: managerPaciente.crearNuevoPaciente();
+                break;
 
+            case 2:managerPaciente.ListarTodos();
                 break;
-            case 2:
-                cout << "Listar pacientes (opción aún no implementada)." << endl;
+
+            case 3:managerPaciente.EditarPaciente();
                 break;
-            case 3:
-                cout << "Modificar paciente (opción aún no implementada)." << endl;
+
+            case 4:managerPaciente.MostrarPorDni();
                 break;
-            case 4:
-                cout << "Buscar paciente por ID (opción aún no implementada)." << endl;
-                break;
+
             case 5:
                 cout << "Sacar turno (opción aún no implementada)." << endl;
                 break;
