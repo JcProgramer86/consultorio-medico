@@ -42,6 +42,9 @@ void ManagerMedico::registrarNuevoMedico()
     cout<<"Ingrese el email: "<<endl;
     getline(cin,email);
 
+    cout << "Ingrese la matrícula del médico: " << endl;
+    getline(cin, matricula);
+
     cout<<"Ingrese dia del mes en que nacio: "<<endl;
     cin>>dia;
 
@@ -61,8 +64,11 @@ void ManagerMedico::registrarNuevoMedico()
     cin>>anio;
     Fecha fechaInicioActividad(dia, mes,anio);
 
+    bool enabled = true;
+
     id = aMedico.generarNuevoId();
-    medico= Medico( id, dni,  nombre,  apellido, telefono, email,  fechaNacimiento, idEspecialidad, fechaInicioActividad,  matricula);
+
+    medico= Medico( id, dni,  nombre,  apellido, telefono, email,  fechaNacimiento, idEspecialidad, fechaInicioActividad,  matricula,  enabled);
 
     if(aMedico.Guardar(medico))
     {
@@ -91,22 +97,46 @@ Medico ManagerMedico::buscarMedicoPorDni(const std::string& dni)
         return medicoEncontrado;
     }
 }
-bool ManagerMedico::modificarMedicoPorDni(const std::string& dni)
+void ManagerMedico::buscarYMostrarMedicoPorDni()
 {
-    ArchivoMedico aMedico("medico.dat");
- int posicion=aMedico.BuscarPorDni(dni);//posicion en la que esta este medico en el archivo dat
+    string dni;
+    cout << "Ingrese el DNI del médico a buscar: ";
+    cin >> dni;
 
-    if (posicion==   -1)
+    Medico medicoEncontrado = buscarMedicoPorDni(dni);
+
+    if (medicoEncontrado.get_id() != -1)
     {
-        cout << "No se encontro un medico con ese DNI"<< endl;
-       return false;
-     }
-        Medico medicoEncontrado= aMedico.Leer(posicion);
-        cout << "Datos actuales del medico:  " << endl;
-        cout << medicoEncontrado.toCSV()<< endl;//muestro datos actuales
-     //aca pregunto que campo quiero modificar
+        cout << medicoEncontrado.toCSV() << endl;
+    }
+    else
+    {
+        cout << "No se encontró un médico con ese DNI." << endl;
+    }
+}
+
+bool ManagerMedico::modificarMedicoPorDni()
+{
+    std::string dni;
+    cout << "Ingrese el DNI del médico que desea modificar: ";
+    cin >> dni;
+    cin.ignore();
+
+    ArchivoMedico aMedico("medico.dat");
+    int posicion = aMedico.BuscarPorDni(dni);
+
+    if (posicion == -1)
+    {
+        cout << "No se encontro un medico con ese DNI" << endl;
+        return false;
+    }
+    Medico medicoEncontrado = aMedico.Leer(posicion);
+    cout << "Datos actuales del medico:  " << endl;
+    cout << medicoEncontrado.toCSV() << endl;
+
     int opcion;
-    do {
+    do
+    {
         cout << "\n--- Menú de modificación ---" << endl;
         cout << "1. Modificar teléfono" << endl;
         cout << "2. Modificar email" << endl;
@@ -115,48 +145,51 @@ bool ManagerMedico::modificarMedicoPorDni(const std::string& dni)
         cout << "0. Guardar y salir" << endl;
         cout << "Seleccione una opción: ";
         cin >> opcion;
-        cin.ignore();  // limpiar el buffer
+        cin.ignore();
 
         switch (opcion)
         {
-            case 1: {
-                string nuevoTelefono;
-                cout << "Ingrese el nuevo teléfono: ";
-                getline(cin, nuevoTelefono);
-                medicoEncontrado.set_telefono(nuevoTelefono);
-                break;
-            }
-            case 2: {
-                string nuevoEmail;
-                cout << "Ingrese el nuevo email: ";
-                getline(cin, nuevoEmail);
-                medicoEncontrado.set_email(nuevoEmail);
-                break;
-            }
-            case 3: {
-                string nuevoApellido;
-                cout << "Ingrese el nuevo apellido: ";
-                getline(cin, nuevoApellido);
-                medicoEncontrado.set_apellido(nuevoApellido);
-                break;
-            }
-            case 4: {
-                cout << "Datos actuales del médico:" << endl;
-                cout << medicoEncontrado.toCSV() << endl;
-                break;
-            }
-            case 0:
-                cout << "Guardando cambios..." << endl;
-                break;
-            default:
-                cout << "Opción inválida." << endl;
+        case 1:
+        {
+            string nuevoTelefono;
+            cout << "Ingrese el nuevo teléfono: ";
+            getline(cin, nuevoTelefono);
+            medicoEncontrado.set_telefono(nuevoTelefono);
+            break;
+        }
+        case 2:
+        {
+            string nuevoEmail;
+            cout << "Ingrese el nuevo email: ";
+            getline(cin, nuevoEmail);
+            medicoEncontrado.set_email(nuevoEmail);
+            break;
+        }
+        case 3:
+        {
+            string nuevoApellido;
+            cout << "Ingrese el nuevo apellido: ";
+            getline(cin, nuevoApellido);
+            medicoEncontrado.set_apellido(nuevoApellido);
+            break;
+        }
+        case 4:
+        {
+            cout << "Datos actuales del médico:" << endl;
+            cout << medicoEncontrado.toCSV() << endl;
+            break;
+        }
+        case 0:
+            cout << "Guardando cambios..." << endl;
+            break;
+        default:
+            cout << "Opción inválida." << endl;
         }
 
-    } while (opcion != 0);
+    }
+    while (opcion != 0);
 
-    //salgo del menú, guardotodo el registro modificado
-    bool guardado = aMedico.Guardar(medicoEncontrado, posicion);//metodo del archivo ya hecho
-    if (guardado)
+    if (aMedico.Guardar(medicoEncontrado, posicion))
     {
         cout << "Datos actualizados correctamente." << endl;
         return true;
@@ -167,10 +200,13 @@ bool ManagerMedico::modificarMedicoPorDni(const std::string& dni)
         return false;
     }
 }
-void ManagerMedico::listarMedicos() {
+
+void ManagerMedico::listarMedicos()
+{
     ArchivoMedico archivo("medico.dat");
     int cantidad = archivo.CantidadRegistros();
-    if (cantidad == 0) {
+    if (cantidad == 0)
+    {
         cout << "No hay médicos cargados." << endl;
         return;
     }
@@ -178,8 +214,10 @@ void ManagerMedico::listarMedicos() {
     Medico* lista = new Medico[cantidad];
     archivo.Leer(cantidad, lista);
 
-    for (int i = 0; i < cantidad; i++) {
-        if (lista[i].get_enabled()) {  // Mostrar solo los activos
+    for (int i = 0; i < cantidad; i++)
+    {
+        if (lista[i].get_enabled())    // Mostrar solo los activos
+        {
             cout << lista[i].toCSV() << endl;
         }
     }

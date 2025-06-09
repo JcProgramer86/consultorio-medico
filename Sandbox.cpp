@@ -24,7 +24,8 @@ void ejecutarSandboxMedico() {
     fechaNac,
     3,
     fechaIni,
-    "MAT12345"    // <-- Aquí va la matrícula, por ejemplo
+    "MAT12345",    // <-- Aquí va la matrícula, por ejemplo
+    true
 );
 
     ArchivoMedico archivo("medicos.dat");

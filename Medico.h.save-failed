@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Persona.h"
 #include "Fecha.h"
 
@@ -10,21 +11,26 @@ private:
     bool _enabled;
 
 public:
+    // Constructor por defecto
     Medico();
+
+    // Constructor con parámetros
     Medico(int id, std::string dni, std::string nombre, std::string apellido,
            std::string telefono, std::string email, Fecha fechaNacimiento,
            int idEspecialidad, Fecha fechaInicioActividad, std::string matricula, bool enabled);
 
+    // Getters
     int get_idEspecialidad();
     Fecha get_fechaInicioActividad();
     std::string get_matricula();
     bool get_enabled();
 
+    // Setters
     void set_idEspecialidad(int idEspecialidad);
     void set_fechaInicioActividad(Fecha fecha);
     void set_matricula(std::string matricula);
     void set_enabled(bool val);
 
+    // Para exportar como texto (por ejemplo para debug o archivo)
     std::string toCSV();
 };
-
