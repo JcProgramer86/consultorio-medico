@@ -11,14 +11,17 @@ private:
     char _telefono[20];
     char _email[40];
     Fecha _fechaNacimiento;
-
+protected:
+    bool _enabled;  // nuevo atributo para indicar si está activo o no
 
 public:
-
+    // Constructores
     Persona();
+    Persona(int id, std::string dni, std::string nombre, std::string apellido,
+            std::string telefono, std::string email,
+            Fecha fechaNacimiento, bool enabled = true);
 
-    Persona(int id, std::string dni, std::string nombre, std::string apellido, std::string telefono, std::string email,Fecha fechaNacimiento);
-
+    // Setters
     void set_id(int id);
     void set_dni(std::string dni);
     void set_nombre(std::string nombre);
@@ -26,21 +29,20 @@ public:
     void set_telefono(std::string telefono);
     void set_email(std::string email);
     void set_fechaNacimiento(Fecha fechaNacimiento);
+    void set_enabled(bool enabled);  // nuevo setter
 
-    int get_id();
-    std::string get_dni();
-    std::string get_nombre();
-    std::string get_apellido();
-    std::string get_telefono();
-    std::string get_email();
-    Fecha get_fechaNacimiento();
+    // Getters
+    int get_id() const;
+    std::string get_dni() const;
+    std::string get_nombre() const;
+    std::string get_apellido() const;
+    std::string get_telefono() const;
+    std::string get_email() const;
+    Fecha get_fechaNacimiento() const;  // corregido aquí
+    bool get_enabled() const;           // nuevo getter
 
-
-
-
-
+    // Validaciones
     bool validarDNI(std::string dni);
     static bool validarTelefono(std::string telefono);
     static bool validarEmail(std::string email);
 };
-
