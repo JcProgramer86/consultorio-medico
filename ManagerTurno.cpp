@@ -74,6 +74,7 @@ void ManagerTurno::sacarTurno() {
             cout << "---------------------------" << endl;
 
             hayMedicos = true;
+
         }
     }
 
