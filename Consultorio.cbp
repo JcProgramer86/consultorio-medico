@@ -53,8 +53,6 @@
 		<Unit filename="Fecha.h" />
 		<Unit filename="Hora.cpp" />
 		<Unit filename="Hora.h" />
-		<Unit filename="ManagerEspecialidad.cpp" />
-		<Unit filename="ManagerEspecialidad.h" />
 		<Unit filename="ManagerMedico.cpp" />
 		<Unit filename="ManagerMedico.h" />
 		<Unit filename="ManagerPaciente.cpp" />

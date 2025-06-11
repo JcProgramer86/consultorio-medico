@@ -24,7 +24,7 @@ void ManagerTurno::sacarTurno() {
 
     ArchivoPaciente archivoPaciente("paciente.dat");
     ArchivoTurno archivoTurno("turnos.dat");
-    ArchivoMedico archivoMedico("medico.dat");
+    ArchivoMedico archivoMedico("medicos.dat");
     ArchivoMedicoEspecialidad archivoMedEsp("medico_especialidad.dat");
     ArchivoEspecialidad archivoEspecialidad("especialidad.dat");
 
