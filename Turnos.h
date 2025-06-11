@@ -1,57 +1,49 @@
+#ifndef TURNOS_H
+#define TURNOS_H
 
-#pragma once
-#include <string>
 #include "Fecha.h"
 #include "Hora.h"
+#include <string>
+#include <cstring>
 
-class Turno
-{
+class Turno {
 private:
-    int _idTurno;
-    int _idPaciente[10];
-    int _idMedico[10];
-    Fecha _fechaTurno;
-    Hora _horaTurno;
+    int _id;
+    int _idPaciente;
+    int _idMedicoEspecialidad;
+    Fecha _fechaAtencion;
+    Hora _horaAtencion;
     float _importeConsulta;
     bool _cancelado;
     bool _sobreturno;
     Hora _duracionTurno;
     char _observaciones[100];
 
-
 public:
-
     Turno();
+    Turno(int, int, int, Fecha, Hora, float, bool, bool, Hora, const std::string&);
 
-    Turno(int idTurno, int idPaciente[], int idMedico[], Fecha fechaTurno, Hora horaTurno, float importeConsulta,
-      bool cancelado, bool sobreturno, Hora duracionTurno, const std::string& observaciones);
-
-
-    // Getters
-    int getIdTurno() const;
-    const int* getIdPaciente() const;
-    const int* getIdMedico() const;
-    Fecha getFechaTurno() const;
-    Hora getHoraTurno() const;
+    int getId() const;
+    int getIdPaciente() const;
+    int getIdMedicoEspecialidad() const;
+    Fecha getFechaAtencion() const;
+    Hora getHoraAtencion() const;
     float getImporteConsulta() const;
-     bool getCancelado() const;
+    bool getCancelado() const;
     bool getSobreturno() const;
     Hora getDuracionTurno() const;
     const char* getObservaciones() const;
 
-    // Setters
-    void setIdTurno(int idTurno);
-    void setIdPaciente(const int idPaciente[]);
-    void setIdMedico(const int idMedico[]);
-    void setFechaTurno(Fecha fechaTurno);
-    void setHoraTurno(Hora horaTurno);
-    void setImporteConsulta(float importeConsulta);
-    void setCancelado(bool cancelado);
-    void setSobreturno(bool sobreturno);
-    void setDuracionTurno(Hora duracion);
-    void setObservaciones(const char* observaciones);
-
-
-    // Método
-    bool validarTurno();
+    void setId(int);
+    void setIdPaciente(int);
+    void setIdMedicoEspecialidad(int);
+    void setFechaAtencion(Fecha);
+    void setHoraAtencion(Hora);
+    void setImporteConsulta(float);
+    void setCancelado(bool);
+    void setSobreturno(bool);
+    void setDuracionTurno(Hora);
+    void setObservaciones(const std::string&);
 };
+
+#endif // TURNOS_H

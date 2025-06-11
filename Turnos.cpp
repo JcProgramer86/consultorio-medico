@@ -1,33 +1,27 @@
 #include "Turnos.h"
-#include <cstring>  // Para memcpy si hiciera falta
-#include <string>    // Para std::string
+#include <cstring>
+#include <string>
 
-
-Turno::Turno()
-{
-    _idTurno = 0;
-    for (int i = 0; i < 10; i++)
-    {
-        _idPaciente[i] = 0;
-        _idMedico[i] = 0;
-    }
-    // Si Fecha y Hora tienen constructores por defecto, se inicializan solos
+Turno::Turno() {
+    _id = 0;
+    _idPaciente = 0;
+    _idMedicoEspecialidad = 0;
     _importeConsulta = 0.0f;
     _cancelado = false;
     _sobreturno = false;
-    _duracionTurno = Hora();  // Asume constructor por defecto en Hora
-    _observaciones[0] = '\0'; // String vacío
+    _fechaAtencion = Fecha();
+    _horaAtencion = Hora();
+    _duracionTurno = Hora();
+    _observaciones[0] = '\0';
 }
 
-// Constructor parametrizado utilizando setters
-Turno::Turno(int idTurno, int idPaciente[], int idMedico[], Fecha fechaTurno, Hora horaTurno, float importeConsulta,
-      bool cancelado, bool sobreturno, Hora duracionTurno, const std::string& observaciones)
-{
-    setIdTurno(idTurno);
+Turno::Turno(int id, int idPaciente, int idMedicoEspecialidad, Fecha fechaAtencion, Hora horaAtencion, float importeConsulta,
+             bool cancelado, bool sobreturno, Hora duracionTurno, const std::string& observaciones) {
+    setId(id);
     setIdPaciente(idPaciente);
-    setIdMedico(idMedico);
-    setFechaTurno(fechaTurno);
-    setHoraTurno(horaTurno);
+    setIdMedicoEspecialidad(idMedicoEspecialidad);
+    setFechaAtencion(fechaAtencion);
+    setHoraAtencion(horaAtencion);
     setImporteConsulta(importeConsulta);
     setCancelado(cancelado);
     setSobreturno(sobreturno);
@@ -36,112 +30,30 @@ Turno::Turno(int idTurno, int idPaciente[], int idMedico[], Fecha fechaTurno, Ho
 }
 
 // Getters
-int Turno::getIdTurno() const
-{
-    return _idTurno;
-}
-
-const int* Turno::getIdPaciente() const
-{
-    return _idPaciente;
-}
-
-const int* Turno::getIdMedico() const
-{
-    return _idMedico;
-}
-
-Fecha Turno::getFechaTurno() const
-{
-    return _fechaTurno;
-}
-
-Hora Turno::getHoraTurno() const
-{
-    return _horaTurno;
-}
-
-float Turno::getImporteConsulta() const
-{
-    return _importeConsulta;
-}
-bool Turno::getCancelado() const
-{
-    return _cancelado;
-}
-
-bool Turno::getSobreturno() const
-{
-    return _sobreturno
-           ;
-}
-
-Hora Turno::getDuracionTurno() const
-{
-    return _duracionTurno;
-}
-
-const char* Turno::getObservaciones() const
-{
-    return _observaciones;
-}
+int Turno::getId() const { return _id; }
+int Turno::getIdPaciente() const { return _idPaciente; }
+int Turno::getIdMedicoEspecialidad() const { return _idMedicoEspecialidad; }
+Fecha Turno::getFechaAtencion() const { return _fechaAtencion; }
+Hora Turno::getHoraAtencion() const { return _horaAtencion; }
+float Turno::getImporteConsulta() const { return _importeConsulta; }
+bool Turno::getCancelado() const { return _cancelado; }
+bool Turno::getSobreturno() const { return _sobreturno; }
+Hora Turno::getDuracionTurno() const { return _duracionTurno; }
+const char* Turno::getObservaciones() const { return _observaciones; }
 
 // Setters
-void Turno::setIdTurno(int idTurno)
-{
-    _idTurno = idTurno;
+void Turno::setId(int id) { _id = id; }
+void Turno::setIdPaciente(int idPaciente) { _idPaciente = idPaciente; }
+void Turno::setIdMedicoEspecialidad(int idMedico) { _idMedicoEspecialidad = idMedico; }
+void Turno::setFechaAtencion(Fecha fecha) { _fechaAtencion = fecha; }
+void Turno::setHoraAtencion(Hora hora) { _horaAtencion = hora; }
+void Turno::setImporteConsulta(float importe) { _importeConsulta = importe; }
+void Turno::setCancelado(bool cancelado) { _cancelado = cancelado; }
+void Turno::setSobreturno(bool sobreturno) { _sobreturno = sobreturno; }
+void Turno::setDuracionTurno(Hora duracion) { _duracionTurno = duracion; }
+void Turno::setObservaciones(const std::string& obs) {
+    strncpy(_observaciones, obs.c_str(), sizeof(_observaciones) - 1);
+    _observaciones[sizeof(_observaciones) - 1] = '\0'; // Siempre terminada
 }
 
-void Turno::setIdPaciente(const int idPaciente[])
-{
-    for (int i = 0; i < 10; i++)
-    {
-        _idPaciente[i] = idPaciente[i];
-    }
-}
 
-void Turno::setIdMedico(const int idMedico[])
-{
-    for (int i = 0; i < 10; i++)
-    {
-        _idMedico[i] = idMedico[i];
-    }
-}
-
-void Turno::setFechaTurno(Fecha fechaTurno)
-{
-    _fechaTurno = fechaTurno;
-}
-
-void Turno::setHoraTurno(Hora horaTurno)
-{
-    _horaTurno = horaTurno;
-}
-
-void Turno::setImporteConsulta(float importeConsulta)
-{
-    _importeConsulta = importeConsulta;
-}
-void Turno::setCancelado(bool cancelado) {
-    _cancelado = cancelado;
-     }
-
-void Turno::setSobreturno(bool sobreturno) {
-     _sobreturno = sobreturno;
-      }
-
-void Turno::setDuracionTurno(Hora duracion) {
-     _duracionTurno = duracion;
-     }
-
-void Turno::setObservaciones(const char* observaciones) {
-    strncpy(_observaciones, observaciones, sizeof(_observaciones));
-    _observaciones[sizeof(_observaciones) - 1] = '\0'; // Seguridad
-}
-
-// Método de ejemplo: validación de turno (modificá según tu lógica real)
-bool Turno::validarTurno()
-{
-    // Por ahora devolvemos true, luego podés implementar reglas reales
-    return true;
-}
