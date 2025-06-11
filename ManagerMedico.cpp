@@ -11,7 +11,7 @@ void ManagerMedico::registrarNuevoMedico()
 {
 
     Medico medico;
-    ArchivoMedico aMedico("medico.dat");
+    ArchivoMedico aMedico("medicos.dat");
 
     int id, idEspecialidad=0, dia, mes, anio;
     string dni, nombre,  apellido, telefono,  email, matricula;
@@ -83,7 +83,7 @@ void ManagerMedico::registrarNuevoMedico()
 // ← Método que devuelve un objeto Medico
 Medico ManagerMedico::buscarMedicoPorDni(const std::string& dni)
 {
-    ArchivoMedico aMedico("medico.dat");//aca lo tengo que buscar
+    ArchivoMedico aMedico("medicos.dat");//aca lo tengo que buscar
     int posicion=aMedico.BuscarPorDni(dni);//posicion en la que esta este medico en el archivo dat
 
     if (posicion==   -1)
@@ -122,7 +122,7 @@ bool ManagerMedico::modificarMedicoPorDni()
     cin >> dni;
     cin.ignore();
 
-    ArchivoMedico aMedico("medico.dat");
+    ArchivoMedico aMedico("medicos.dat");
     int posicion = aMedico.BuscarPorDni(dni);
 
     if (posicion == -1)
@@ -203,7 +203,7 @@ bool ManagerMedico::modificarMedicoPorDni()
 
 void ManagerMedico::listarMedicos()
 {
-    ArchivoMedico archivo("medico.dat");
+    ArchivoMedico archivo("medicos.dat");
     int cantidad = archivo.CantidadRegistros();
     if (cantidad == 0)
     {

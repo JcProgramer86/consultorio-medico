@@ -178,24 +178,25 @@ void ejecutarSandboxTurno() {
     Fecha fechaTurno(25, 5, 2025);
     Hora horaTurno(10, 30);
 
-    int pacientes[10];
-    int medicos[10];
-    for (int i = 0; i < 10; i++) {
-        pacientes[i] = i + 1;
-        medicos[i] = 100 + i;
-    }
+    // Carga simple de datos demo
+    int idPaciente = 1;
+    int idMedicoEspecialidad = 100;
 
     Turno turnoTest;
-    turnoTest.setIdTurno(1001);
-    turnoTest.setIdPaciente(pacientes);
-    turnoTest.setIdMedico(medicos);
-    turnoTest.setFechaTurno(fechaTurno);
-    turnoTest.setHoraTurno(horaTurno);
+    turnoTest.setId(1001);
+    turnoTest.setIdPaciente(idPaciente);
+    turnoTest.setIdMedicoEspecialidad(idMedicoEspecialidad);
+    turnoTest.setFechaAtencion(fechaTurno);
+    turnoTest.setHoraAtencion(horaTurno);
     turnoTest.setImporteConsulta(7500.0f);
+    turnoTest.setCancelado(false);
+    turnoTest.setSobreturno(false);
+    turnoTest.setDuracionTurno(Hora(0, 20));
+    turnoTest.setObservaciones("Prueba sandbox");
 
     ArchivoTurno archivo("turnos.dat");
 
-    if (archivo.GuardarTurno(turnoTest)) {
+    if (archivo.Guardar(turnoTest)) {
         std::cout << "Turno guardado correctamente." << std::endl;
     } else {
         std::cout << "Error al guardar el turno." << std::endl;
@@ -205,9 +206,26 @@ void ejecutarSandboxTurno() {
     archivo.ListarTurnos();
 }
 
+
+void imprimirTurno(const Turno& t) {
+    std::cout << "ID Turno: " << t.getId() << std::endl;
+    std::cout << "ID Paciente: " << t.getIdPaciente() << std::endl;
+    std::cout << "ID MedicoEspecialidad: " << t.getIdMedicoEspecialidad() << std::endl;
+
+    Fecha fecha = t.getFechaAtencion();
+    std::cout << "Fecha del turno: " << fecha.getDia() << "/" << fecha.getMes() << "/" << fecha.getAnio() << std::endl;
+
+    Hora hora = t.getHoraAtencion();
+    std::cout << "Hora del turno: " << hora.getHora() << ":" << hora.getMinuto() << std::endl;
+
+    std::cout << "Importe consulta: $" << t.getImporteConsulta() << std::endl;
+    std::cout << "Observaciones: " << t.getObservaciones() << std::endl;
+}
+
+
 void ejecutarBuscarTurnoPorId(int idBuscado) {
     ArchivoTurno archivo("turnos.dat");
-    int posicion = archivo.BuscarTurnoPorId(idBuscado);
+    int posicion = archivo.Buscar(idBuscado);
 
     if (posicion == -1) {
         std::cout << "Turno con ID " << idBuscado << " no encontrado." << std::endl;
@@ -215,32 +233,13 @@ void ejecutarBuscarTurnoPorId(int idBuscado) {
     }
 
     Turno turnoEncontrado;
-    if (archivo.LeerTurno(turnoEncontrado, posicion)) {
-        std::cout << "Turno encontrado:" << std::endl;
-        std::cout << "ID Turno: " << turnoEncontrado.getIdTurno() << std::endl;
 
-        std::cout << "Pacientes IDs: ";
-        const int* pacientes = turnoEncontrado.getIdPaciente();
-        for (int i = 0; i < 10; ++i) {
-            std::cout << pacientes[i] << " ";
-        }
-        std::cout << std::endl;
-
-        std::cout << "Médicos IDs: ";
-        const int* medicos = turnoEncontrado.getIdMedico();
-        for (int i = 0; i < 10; ++i) {
-            std::cout << medicos[i] << " ";
-        }
-        std::cout << std::endl;
-
-        Fecha fecha = turnoEncontrado.getFechaTurno();
-        std::cout << "Fecha del turno: " << fecha.getDia() << "/" << fecha.getMes() << "/" << fecha.getAnio() << std::endl;
-
-        Hora hora = turnoEncontrado.getHoraTurno();
-        std::cout << "Hora del turno: " << hora.getHora() << ":" << hora.getMinuto()  << std::endl;
-
-        std::cout << "Importe consulta: $" << turnoEncontrado.getImporteConsulta() << std::endl;
+    if (turnoEncontrado.getId() != -1) { // Suponiendo que si no existe devuelve Turno con id=0
+        imprimirTurno(turnoEncontrado);
     } else {
         std::cout << "Error al leer el turno desde el archivo." << std::endl;
     }
 }
+
+
+

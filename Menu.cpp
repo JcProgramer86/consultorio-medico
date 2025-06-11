@@ -2,6 +2,8 @@
 #include "ManagerPaciente.h"
 #include <iostream>
 #include "ManagerMedico.h"
+#include "ManagerTurno.h"
+
 using namespace std;
 
 // Constructor vacío
@@ -44,6 +46,7 @@ void Menu::menuPrincipal()
 void Menu::menuPaciente()
 {
     ManagerPaciente managerPaciente;
+    ManagerTurno managerTurno;
     int opcion;
     do
     {
@@ -72,43 +75,16 @@ void Menu::menuPaciente()
                 break;
 
             case 5:
-                cout << "Sacar turno (opción aún no implementada)." << endl;
+                  managerTurno.sacarTurno();
                 break;
             case 6:
-                cout << "Ver turnos (opción aún no implementada)." << endl;
+                 managerTurno.mostrarAgendaSemanal();
                 break;
             case 0:
                 cout << "Volviendo al menú principal..." << endl;
                 break;
             default:
                 cout << "Opción no válida. Intente de nuevo." << endl;
-
-        switch (opcion)
-        {
-        case 1:
-            managerPaciente.crearNuevoPaciente();
-
-            break;
-        case 2:
-            cout << "Listar pacientes (opción aún no implementada)." << endl;
-            break;
-        case 3:
-            cout << "Modificar paciente (opción aún no implementada)." << endl;
-            break;
-        case 4:
-            cout << "Buscar paciente por ID (opción aún no implementada)." << endl;
-            break;
-        case 5:
-            cout << "Sacar turno (opción aún no implementada)." << endl;
-            break;
-        case 6:
-            cout << "Ver turnos (opción aún no implementada)." << endl;
-            break;
-        case 0:
-            cout << "Volviendo al menú principal..." << endl;
-            break;
-        default:
-            cout << "Opción no válida. Intente de nuevo." << endl;
 
         }
 

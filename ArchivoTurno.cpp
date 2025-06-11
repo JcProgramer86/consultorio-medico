@@ -1,99 +1,115 @@
-#include <cstdio>        // fopen, fread, fwrite, fclose, fseek
-#include <iostream>      // cout, endl
-#include <cstring>       // strcpy
 #include "ArchivoTurno.h"
+#include <cstdio>
+#include <iostream>
 
-using namespace std;
-
-// Constructor: guarda el nombre del archivo en el atributo privado
-ArchivoTurno::ArchivoTurno(const char* nombreArchivoTurno) {
-    strcpy(_nombreArchivoTurno, nombreArchivoTurno);  // Copia segura de cadena de C
+// Constructor
+ArchivoTurno::ArchivoTurno(std::string nombreArchivoTurno) {
+    _nombreArchivoTurno = nombreArchivoTurno;
 }
 
-// Guarda un turno al final del archivo (modo "append binary")
-bool ArchivoTurno::GuardarTurno(Turno turno) {
-    FILE* pArchivo = fopen(_nombreArchivoTurno, "ab");  // Abrir archivo en modo "agregar binario"
-    if (pArchivo == nullptr) return false;              // Si no se pudo abrir, error
-
-    bool ok = fwrite(&turno, sizeof(turno), 1, pArchivo) == 1;  // Escribir el turno
-    fclose(pArchivo);                                     // Cerrar archivo
-    return ok;                                            // Retornar si se escribió bien
+// Guardar al final
+bool ArchivoTurno::Guardar(Turno turno) {
+    FILE* pArchivo = fopen(_nombreArchivoTurno.c_str(), "ab");
+    if (pArchivo == NULL) return false;
+    bool ok = fwrite(&turno, sizeof(Turno), 1, pArchivo);
+    fclose(pArchivo);
+    return ok;
 }
 
-// Modifica un turno existente en una posición específica
-bool ArchivoTurno::ModificarTurno(Turno turno, int posicion) {
-    FILE* pArchivo = fopen(_nombreArchivoTurno, "rb+");  // Abrir en modo lectura/escritura binaria
-    if (pArchivo == nullptr) return false;               // Error si no se abre
-
-    fseek(pArchivo, sizeof(turno) * posicion, SEEK_SET); // Mover el puntero al turno deseado
-    bool ok = fwrite(&turno, sizeof(turno), 1, pArchivo) == 1; // Sobrescribir los datos
-    fclose(pArchivo);                                     // Cerrar archivo
-    return ok;                                            // Retornar si fue correcto
-}
-
-// Lee un turno desde el archivo en una posición dada
-bool ArchivoTurno::LeerTurno(Turno& turno, int posicion) {
-    FILE* pArchivo = fopen(_nombreArchivoTurno, "rb");
-    if (pArchivo == nullptr) return false;
-
+// Guardar en posición específica
+bool ArchivoTurno::Guardar(Turno turno, int posicion) {
+    FILE* pArchivo = fopen(_nombreArchivoTurno.c_str(), "rb+");
+    if (pArchivo == NULL) return false;
     fseek(pArchivo, sizeof(Turno) * posicion, SEEK_SET);
-    bool leyo = fread(&turno, sizeof(Turno), 1, pArchivo) == 1;
+    bool ok = fwrite(&turno, sizeof(Turno), 1, pArchivo);
     fclose(pArchivo);
-    return leyo;
+    return ok;
 }
 
-// Lista todos los turnos en el archivo imprimiendo sus datos
-void ArchivoTurno::ListarTurnos() {
-    FILE* pArchivo = fopen(_nombreArchivoTurno, "rb");
-    if (pArchivo == nullptr) {
-        cout << "No se pudo abrir el archivo de turnos." << endl;
-        return;
-    }
-
+// Buscar por ID
+int ArchivoTurno::Buscar(int IDTurno) {
+    FILE* pArchivo = fopen(_nombreArchivoTurno.c_str(), "rb");
+    if (pArchivo == NULL) return -1;
     Turno turno;
-    int contador = 0;
-    while (fread(&turno, sizeof(Turno), 1, pArchivo) == 1) {
-        cout << "Turno #" << contador << ":" << endl;
-        cout << "  ID Turno: " << turno.getIdTurno() << endl;
-
-        cout << "  IDs Pacientes: ";
-        const int* pacientes = turno.getIdPaciente();
-        for (int i = 0; i < 10; i++) cout << pacientes[i] << " ";
-        cout << endl;
-
-        cout << "  IDs Médicos: ";
-        const int* medicos = turno.getIdMedico();
-        for (int i = 0; i < 10; i++) cout << medicos[i] << " ";
-        cout << endl;
-
-        Fecha fecha = turno.getFechaTurno();
-        cout << "  Fecha: " << fecha.getDia() << "/" << fecha.getMes() << "/" << fecha.getAnio() << endl;
-
-        Hora hora = turno.getHoraTurno();
-        cout << "  Hora: " << hora.getHora() << ":" << hora.getMinuto() << endl;
-
-        cout << "  Importe Consulta: $" << turno.getImporteConsulta() << endl;
-        cout << "-----------------------" << endl;
-        contador++;
-    }
-
-    fclose(pArchivo);
-}
-
-// Busca la posición de un turno por su ID, devuelve -1 si no encuentra
-int ArchivoTurno::BuscarTurnoPorId(int idTurnoBuscado) {
-    FILE* pArchivo = fopen(_nombreArchivoTurno, "rb");
-    if (pArchivo == nullptr) return -1;
-
-    Turno turno;
-    int posicion = 0;
-    while (fread(&turno, sizeof(Turno), 1, pArchivo) == 1) {
-        if (turno.getIdTurno() == idTurnoBuscado) {
+    int i = 0;
+    while (fread(&turno, sizeof(Turno), 1, pArchivo)) {
+        if (turno.getId() == IDTurno) {
             fclose(pArchivo);
-            return posicion;
+            return i;
         }
-        posicion++;
+        i++;
     }
     fclose(pArchivo);
     return -1;
+}
+
+// Leer turno por posición
+Turno ArchivoTurno::Leer(int posicion) {
+    FILE* pArchivo = fopen(_nombreArchivoTurno.c_str(), "rb");
+    if (pArchivo == NULL) return Turno();
+    Turno turno;
+    fseek(pArchivo, sizeof(Turno) * posicion, SEEK_SET);
+    fread(&turno, sizeof(Turno), 1, pArchivo);
+    fclose(pArchivo);
+    return turno;
+}
+
+// Contar cantidad de registros
+int ArchivoTurno::CantidadRegistros() {
+    FILE* pArchivo = fopen(_nombreArchivoTurno.c_str(), "rb");
+    if (pArchivo == NULL) return 0;
+    fseek(pArchivo, 0, SEEK_END);
+    int cantidadRegistros = ftell(pArchivo) / sizeof(Turno);
+    fclose(pArchivo);
+    return cantidadRegistros;
+}
+
+// Generar nuevo ID (auto-incremental)
+int ArchivoTurno::generarNuevoId() {
+    int cantidad = CantidadRegistros();
+    if (cantidad == 0) return 1;
+    Turno ultimo = Leer(cantidad - 1);
+    return ultimo.getId() + 1;
+}
+
+// Leer un vector de turnos
+void ArchivoTurno::Leer(int cantidadRegistros, Turno* vector) {
+    FILE* pArchivo = fopen(_nombreArchivoTurno.c_str(), "rb");
+    if (pArchivo == NULL) return;
+    for (int i = 0; i < cantidadRegistros; i++) {
+        fread(&vector[i], sizeof(Turno), 1, pArchivo);
+    }
+    fclose(pArchivo);
+}
+
+void ArchivoTurno::ListarTurnos() {
+    int cantidad = CantidadRegistros();
+    if (cantidad == 0) {
+        std::cout << "No hay turnos registrados." << std::endl;
+        return;
+    }
+
+    for (int i = 0; i < cantidad; ++i) {
+        Turno t = Leer(i);
+
+        std::cout << "----------------------" << std::endl;
+        std::cout << "ID: " << t.getId() << std::endl;
+        std::cout << "ID Paciente: " << t.getIdPaciente() << std::endl;
+        std::cout << "ID MedicoEspecialidad: " << t.getIdMedicoEspecialidad() << std::endl;
+        std::cout << "Fecha: "
+                  << t.getFechaAtencion().getDia() << "/"
+                  << t.getFechaAtencion().getMes() << "/"
+                  << t.getFechaAtencion().getAnio() << std::endl;
+        std::cout << "Hora: "
+                  << t.getHoraAtencion().getHora() << ":"
+                  << (t.getHoraAtencion().getMinuto() < 10 ? "0" : "")
+                  << t.getHoraAtencion().getMinuto() << std::endl;
+        std::cout << "Importe: $" << t.getImporteConsulta() << std::endl;
+        std::cout << "Cancelado: " << (t.getCancelado() ? "Si" : "No") << std::endl;
+        std::cout << "Sobreturno: " << (t.getSobreturno() ? "Si" : "No") << std::endl;
+        std::cout << "Duración: "
+                  << t.getDuracionTurno().getHora() << "h "
+                  << t.getDuracionTurno().getMinuto() << "min" << std::endl;
+        std::cout << "Observaciones: " << t.getObservaciones() << std::endl;
+    }
 }
