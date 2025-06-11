@@ -2,10 +2,8 @@
 #include "ManagerPaciente.h"
 #include <iostream>
 #include "ManagerMedico.h"
-<<<<<<< HEAD
 #include "ManagerTurno.h"
-=======
->>>>>>> e724606 (Guarda cambios pendientes antes de hacer pull --rebase)
+
 
 using namespace std;
 
