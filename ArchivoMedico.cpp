@@ -109,9 +109,6 @@ void ArchivoMedico::Leer(int cantidadRegistros, Medico *vector){
 }
 bool ArchivoMedico::checkDni(std::string& dni){
     int pos = BuscarPorDni(dni);
-    if (pos != -1) {
-        cout << "El DNI ya está registrado para otro medico." << std::endl;
-        return false;
-    }
-    return true;
+    return (pos == -1);
 }
+

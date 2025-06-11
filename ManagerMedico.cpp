@@ -10,77 +10,80 @@ using namespace std;
 
 void ManagerMedico::registrarNuevoMedico()
 {
-
     Medico medico;
     ArchivoMedico aMedico("medicos.dat");
 
-    int id, idEspecialidad=0, dia, mes, anio;
-    string dni, nombre,  apellido, telefono,  email, matricula;
-    bool bandera = false;
+    int id, idEspecialidad = 0, dia, mes, anio;
+    string dni, nombre, apellido, telefono, email, matricula;
 
-    while(bandera == false)
-    {
-        bandera = true;
-        cout<<"Ingrese el numero de DNI: "<<endl;
-        cin>>dni;
-        if(!aMedico.checkDni(dni))
-        {
-            bandera = false;
-        }
-    }
+    cout << "Ingrese el numero de DNI (0 para cancelar): " << endl;
+    cin >> dni;
 
+  while (dni != "0" && !aMedico.checkDni(dni))
+{
+    cout << "El DNI ya está registrado para otro médico." << endl;
+    cout << "Ingrese el numero de DNI (0 para cancelar): " << endl;
+    cin >> dni;
+}
 
-    cout<<"Ingrese el Nombre del medico: "<<endl;
+if (dni == "0")
+{
+    cout << "Registro cancelado." << endl;
+    return;  // Salís del método sin seguir pidiendo datos
+}
+
+    cout << "Ingrese el Nombre del medico: " << endl;
     cin.ignore();
-    getline(cin,nombre);
+    getline(cin, nombre);
 
-    cout<<"Ingrese el Apellido del medico: "<<endl;
-    getline(cin,apellido);
+    cout << "Ingrese el Apellido del medico: " << endl;
+    getline(cin, apellido);
 
-    cout<<"Ingrese el numero de telefono: "<<endl;
-    getline(cin,telefono);
+    cout << "Ingrese el numero de telefono: " << endl;
+    getline(cin, telefono);
 
-    cout<<"Ingrese el email: "<<endl;
-    getline(cin,email);
+    cout << "Ingrese el email: " << endl;
+    getline(cin, email);
 
     cout << "Ingrese la matrícula del médico: " << endl;
     getline(cin, matricula);
 
-    cout<<"Ingrese dia del mes en que nacio: "<<endl;
-    cin>>dia;
+    cout << "Ingrese dia del mes en que nacio: " << endl;
+    cin >> dia;
 
-    cout<<"Ingrese mes en el que nacio: "<<endl;
-    cin>>mes;
+    cout << "Ingrese mes en el que nacio: " << endl;
+    cin >> mes;
 
-    cout<<"Ingrese año en el que nacio: "<<endl;
-    cin>>anio;
-    Fecha fechaNacimiento(dia,mes,anio);
-    cout<<"ingrese dia del mes en que inicio actividad: "<<endl;
-    cin>>dia;
+    cout << "Ingrese año en el que nacio: " << endl;
+    cin >> anio;
+    Fecha fechaNacimiento(dia, mes, anio);
 
-    cout<<"Ingrese mes en el que inicio actividad: "<<endl;
-    cin>>mes;
+    cout << "Ingrese dia del mes en que inicio actividad: " << endl;
+    cin >> dia;
 
-    cout<<"Ingrese año en el que inicio actividad: "<<endl;
-    cin>>anio;
-    Fecha fechaInicioActividad(dia, mes,anio);
+    cout << "Ingrese mes en el que inicio actividad: " << endl;
+    cin >> mes;
+
+    cout << "Ingrese año en el que inicio actividad: " << endl;
+    cin >> anio;
+    Fecha fechaInicioActividad(dia, mes, anio);
 
     bool enabled = true;
-
     id = aMedico.generarNuevoId();
 
-    medico= Medico( id, dni,  nombre,  apellido, telefono, email,  fechaNacimiento, idEspecialidad, fechaInicioActividad,  matricula,  enabled);
+    medico = Medico(id, dni, nombre, apellido, telefono, email, fechaNacimiento, idEspecialidad, fechaInicioActividad, matricula, enabled);
 
-    if(aMedico.Guardar(medico))
+    if (aMedico.Guardar(medico))
     {
-        cout << "Se guardo correctamente!" << endl;
+        cout << "Se guardó correctamente!" << endl;
     }
     else
     {
         cout << "Hubo un error inesperado, llame al de sistemas..." << endl;
     }
-
 }
+
+
 // ← Método que devuelve un objeto Medico
 Medico ManagerMedico::buscarMedicoPorDni(const std::string& dni)
 {
