@@ -4,12 +4,13 @@
 #include "ManagerMedico.h"
 #include "ManagerTurno.h"
 
+
 using namespace std;
 
-// Constructor vacío
+// Constructor vacÃ­o
 Menu::Menu() {}
 
-// Menú principal del sistema
+// MenÃº principal del sistema
 void Menu::menuPrincipal()
 {
     int opcion;
@@ -34,7 +35,7 @@ void Menu::menuPrincipal()
             cout << "Saliendo del sistema..." << endl;
             break;
         default:
-            cout << "Opción no válida. Intente de nuevo." << endl;
+            cout << "OpciÃ³n no vÃ¡lida. Intente de nuevo." << endl;
         }
 
         cout << endl;
@@ -42,7 +43,7 @@ void Menu::menuPrincipal()
     while (opcion != 0);
 }
 
-// Menú de opciones para pacientes
+// MenÃº de opciones para pacientes
 void Menu::menuPaciente()
 {
     ManagerPaciente managerPaciente;
@@ -81,19 +82,18 @@ void Menu::menuPaciente()
                  managerTurno.mostrarAgendaSemanal();
                 break;
             case 0:
-                cout << "Volviendo al menú principal..." << endl;
+                cout << "Volviendo al menÃº principal..." << endl;
                 break;
             default:
-                cout << "Opción no válida. Intente de nuevo." << endl;
+                cout << "OpciÃ³n no vÃ¡lida. Intente de nuevo." << endl;
 
         }
-
         cout << endl;
     }
     while (opcion != 0);
 }
 
-// Menú de opciones para médicos
+// MenÃº de opciones para mÃ©dicos
 void Menu::menuMedico()
 {
     ManagerMedico manager;  //objeto pra llamar al metodo
@@ -127,10 +127,10 @@ void Menu::menuMedico()
             break;
 
         case 0:
-            cout << "Volviendo al menú principal..." << endl;
+            cout << "Volviendo al menÃº principal..." << endl;
             break;
         default:
-            cout << "Opción no válida. Intente de nuevo." << endl;
+            cout << "OpciÃ³n no vÃ¡lida. Intente de nuevo." << endl;
         }
 
         cout << endl;
