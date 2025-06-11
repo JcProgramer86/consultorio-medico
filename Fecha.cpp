@@ -1,6 +1,8 @@
 #include "Fecha.h"
-#include <cstring>
 #include <iostream>
+#include <string>
+#include <vector>
+#include <ctime>
 
 Fecha::Fecha() {
     _dia = 1;
@@ -47,6 +49,25 @@ bool Fecha::esValida(int dia, int mes, int anio) {
     if (bisiesto && mes == 2) return dia <= 29;
 
     return dia <= diasEnMes[mes - 1];
+}
+
+void Fecha::sumarDias(int dias) {
+    std::tm tiempo = {};
+    tiempo.tm_mday = _dia;
+    tiempo.tm_mon = _mes - 1; // tm_mon va de 0 a 11
+    tiempo.tm_year = _anio - 1900; // tm_year = año desde 1900
+
+    std::time_t tiempo_epoch = std::mktime(&tiempo);
+    tiempo_epoch += dias * 86400; // 86400 segundos por día
+
+    std::tm* nuevaFecha = std::localtime(&tiempo_epoch);
+    _dia = nuevaFecha->tm_mday;
+    _mes = nuevaFecha->tm_mon + 1;
+    _anio = nuevaFecha->tm_year + 1900;
+}
+
+bool Fecha::operator==(const Fecha& otra) const {
+    return _dia == otra._dia && _mes == otra._mes && _anio == otra._anio;
 }
 
 std::string Fecha::toString() const {

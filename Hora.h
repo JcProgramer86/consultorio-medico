@@ -1,4 +1,5 @@
 #pragma once
+#include <sstream>
 
 class Hora {
 private:
@@ -17,4 +18,8 @@ public:
     // Getters
     int getHora() const;
     int getMinuto() const;
+
+    bool operator==(const Hora& other) const;
+    std::string toString() const;
+
 };

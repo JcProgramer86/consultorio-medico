@@ -1,18 +1,20 @@
 #pragma once
-
+#include <string>
 #include "Turnos.h"
 
 class ArchivoTurno {
 private:
-    char _nombreArchivoTurno[50];  // Nombre del archivo para almacenar los turnos
+    std::string _nombreArchivoTurno;
 
 public:
-    ArchivoTurno(const char* nombreArchivoTurno);
+    ArchivoTurno(std::string nombreArchivoTurno);
 
-    bool GuardarTurno(Turno turno);                   // Guarda un turno al final del archivo
-    bool ModificarTurno(Turno turno, int posicion);  // Modifica un turno en la posición indicada
-    int BuscarTurnoPorId(int idTurno);                // Busca turno por id, devuelve posición o -1 si no existe
-    void ListarTurnos();                              // Lista todos los turnos (podría imprimirlos o devolverlos)
-    bool LeerTurno(Turno& turno, int posicion);
-
+    bool Guardar(Turno turno);
+    bool Guardar(Turno turno, int posicion);
+    int Buscar(int IDTurno);
+    Turno Leer(int posicion);
+    int CantidadRegistros();
+    int generarNuevoId();
+    void Leer(int cantidadRegistros, Turno* vector);
+    void ListarTurnos();
 };

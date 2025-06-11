@@ -25,7 +25,10 @@ public:
 
 
     static bool esValida(int dia, int mes, int anio);
+    void sumarDias(int dias);
+    bool operator==(const Fecha& otra) const;
     std::string toString() const;
+
 };
 
 

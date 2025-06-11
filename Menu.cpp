@@ -2,13 +2,14 @@
 #include "ManagerPaciente.h"
 #include <iostream>
 #include "ManagerMedico.h"
-#include <windows.h>
+#include "ManagerTurno.h"
+
 using namespace std;
 
-// Constructor vacío
+// Constructor vacÃ­o
 Menu::Menu() {}
 
-// Menú principal del sistema
+// MenÃº principal del sistema
 void Menu::menuPrincipal()
 {
     int opcion;
@@ -33,7 +34,7 @@ void Menu::menuPrincipal()
             cout << "Saliendo del sistema..." << endl;
             break;
         default:
-            cout << "Opción no válida. Intente de nuevo." << endl;
+            cout << "OpciÃ³n no vÃ¡lida. Intente de nuevo." << endl;
         }
 
         cout << endl;
@@ -41,10 +42,11 @@ void Menu::menuPrincipal()
     while (opcion != 0);
 }
 
-// Menú de opciones para pacientes
+// MenÃº de opciones para pacientes
 void Menu::menuPaciente()
 {
     ManagerPaciente managerPaciente;
+    ManagerTurno managerTurno;
     int opcion;
     do
     {
@@ -73,23 +75,24 @@ void Menu::menuPaciente()
                 break;
 
             case 5:
-                cout << "Sacar turno (opción aún no implementada)." << endl;
+                  managerTurno.sacarTurno();
                 break;
             case 6:
-                cout << "Ver turnos (opción aún no implementada)." << endl;
+                 managerTurno.mostrarAgendaSemanal();
                 break;
             case 0:
-                cout << "Volviendo al menú principal..." << endl;
+                cout << "Volviendo al menÃº principal..." << endl;
                 break;
             default:
-                cout << "Opción no válida. Intente de nuevo." << endl;
+                cout << "OpciÃ³n no vÃ¡lida. Intente de nuevo." << endl;
+
         }
         cout << endl;
     }
     while (opcion != 0);
 }
 
-// Menú de opciones para médicos
+// MenÃº de opciones para mÃ©dicos
 void Menu::menuMedico()
 {
     ManagerMedico manager;  //objeto pra llamar al metodo
@@ -123,10 +126,10 @@ void Menu::menuMedico()
             break;
 
         case 0:
-            cout << "Volviendo al menú principal..." << endl;
+            cout << "Volviendo al menÃº principal..." << endl;
             break;
         default:
-            cout << "Opción no válida. Intente de nuevo." << endl;
+            cout << "OpciÃ³n no vÃ¡lida. Intente de nuevo." << endl;
         }
 
         cout << endl;

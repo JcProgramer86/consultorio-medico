@@ -123,7 +123,7 @@ bool ManagerMedico::modificarMedicoPorDni()
     cin >> dni;
     cin.ignore();
 
-    ArchivoMedico aMedico("medico.dat");
+    ArchivoMedico aMedico("medicos.dat");
     int posicion = aMedico.BuscarPorDni(dni);
 
     if (posicion == -1)

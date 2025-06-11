@@ -1,10 +1,12 @@
 #include "Hora.h"
-
+#include <sstream>
 
 Hora::Hora() {
     _hora = 0;
     _minuto = 0;
 }
+
+
 Hora::Hora(int hora, int minuto) {
     setHora(hora);
     setMinuto(minuto);
@@ -35,3 +37,18 @@ int Hora::getHora() const {
 int Hora::getMinuto() const {
     return _minuto;
 }
+
+bool Hora::operator==(const Hora& other) const {
+    return _hora == other._hora && _minuto == other._minuto;
+}
+
+
+std::string Hora::toString() const {
+    std::ostringstream oss;
+    if (_hora < 10) oss << "0";
+    oss << _hora << ":";
+    if (_minuto < 10) oss << "0";
+    oss << _minuto;
+    return oss.str();
+}
+
