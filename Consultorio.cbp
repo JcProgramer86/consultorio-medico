@@ -34,6 +34,8 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="ArchivoEspecialidad.cpp" />
+		<Unit filename="ArchivoEspecialidad.h" />
 		<Unit filename="ArchivoMedico.cpp" />
 		<Unit filename="ArchivoMedico.h" />
 		<Unit filename="ArchivoMedicoEspecialidad.cpp" />
@@ -53,8 +55,6 @@
 		<Unit filename="Fecha.h" />
 		<Unit filename="Hora.cpp" />
 		<Unit filename="Hora.h" />
-		<Unit filename="ManagerEspecialidad.cpp" />
-		<Unit filename="ManagerEspecialidad.h" />
 		<Unit filename="ManagerMedico.cpp" />
 		<Unit filename="ManagerMedico.h" />
 		<Unit filename="ManagerPaciente.cpp" />
@@ -78,6 +78,7 @@
 		<Unit filename="Turnos.cpp" />
 		<Unit filename="Turnos.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="medicos.dat" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
