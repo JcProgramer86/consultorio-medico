@@ -2,6 +2,8 @@
 #include "ArchivoPaciente.h"
 #include <iostream>
 
+using namespace std;
+
 ArchivoPaciente::ArchivoPaciente(std::string nombreArchivo){
     _nombreArchivo = nombreArchivo;
 }
@@ -99,7 +101,7 @@ int ArchivoPaciente::BuscarPorDni(std::string& dniPaciente) {
 bool ArchivoPaciente::checkDni(std::string& dni){
     int pos = BuscarPorDni(dni);
     if (pos != -1) {
-        std::cout << "El DNI ya está registrado para otro paciente." << std::endl;
+        cout << "[!] Documento ya registrado. Intente nuevamente." << endl;
         return false;
     }
     return true;

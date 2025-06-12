@@ -2,120 +2,182 @@
 #include "Paciente.h"
 #include "ArchivoPaciente.h"
 #include "Fecha.h"
+#include "Utils.h"
 #include <iostream>
+#include "Menu.h"
 
 using namespace std;
 
 void ManagerPaciente::crearNuevoPaciente() {
     Paciente paciente;
     ArchivoPaciente aPaciente("paciente.dat") ;
-
+    Menu menu;
     string nombre,apellido,dni,telefono,email;
     int idPrestador,id,dia,mes,anio;
     bool bandera = false;
+    system("cls");
+    menu.menuHeader();
+
+    cout << "\n========================================" << endl;
+    cout << "          ALTA DE NUEVO PACIENTE          " << endl;
+    cout << "========================================" << endl;
 
     while(bandera == false){
-            bandera = true;
-            cout<<"Ingrese el numero de dni: "<<endl;
-            cin>>dni;
-            if(!aPaciente.checkDni(dni)){
-                bandera = false;
-            }
+
+        bandera = true;
+
+        cout << "\nIngrese el numero de documento: ";
+        cin >> dni;
+        if(!aPaciente.checkDni(dni)){
+            bandera = false;
+        }
     }
 
-
-    cout<<"Ingrese el nombre del paciente: "<<endl;
+    cout << "Ingrese el nombre del paciente: ";
     cin.ignore();
     getline(cin,nombre);
 
-    cout<<"Ingrese el apellido del paciente: "<<endl;
+    cout << "Ingrese el apellido del paciente: ";
     getline(cin,apellido);
 
-    cout<<"Ingrese el nuemero de telefono: "<<endl;
+    cout << "Ingrese el numero de telefono: ";
     getline(cin,telefono);
 
-    cout<<"Ingrese el email: "<<endl;
+    cout << "Ingrese el email: ";
     getline(cin,email);
 
-    cout<<"ingrese dia del mes en que nacio: "<<endl;
-    cin>>dia;
+    cout << "Ingrese el dia de nacimiento: ";
+    cin >> dia;
 
-    cout<<"Ingrese mes en el que nacio: "<<endl;
-    cin>>mes;
+    cout << "Ingrese el mes de nacimiento: ";
+    cin >> mes;
 
-    cout<<"Ingrese año en el que nacio: "<<endl;
-    cin>>anio;
+    cout << "Ingrese el anio de nacimiento: ";
+    cin >> anio;
 
-    cout<<"Ingrese el prestador: "<<endl;
-    cin>>idPrestador;
+    cout << "Ingrese el ID del prestador: ";
+    cin >> idPrestador;
 
     Fecha fechaNacimiento(dia,mes,anio);
-
 
     id = aPaciente.generarNuevoId();
 
     paciente = Paciente(id,dni,nombre,apellido,telefono,email,idPrestador,fechaNacimiento);
 
+    cout << "\n--------------------------------------" << endl;
     if(aPaciente.Guardar(paciente)){
-        cout << "Se guardo correctamente!" << endl;
-      }else{
-        cout << "Hubo un error inesperado, llame al de sistemas..." << endl;
-      }
-
-
+        cout << "[OK] Paciente guardado correctamente." << endl;
+        esperarEnter();
+    } else {
+        cout << "[ERROR] Ocurrio un problema inesperado. Contacte a sistemas." << endl;
+    }
+    cout << "--------------------------------------\n" << endl;
 }
+
 
 void ManagerPaciente::ListarTodos(){
     Paciente paciente;
-
     ArchivoPaciente aPaciente("paciente.dat");
     int cant = aPaciente.CantidadRegistros();
 
-    for(int x = 0;x < cant;x++){
-        paciente = aPaciente.Leer(x);
-        cout<<paciente.toCSV()<<endl;
-        cout<<endl;
-        cout<<"--------"<<endl;
+    cout << "\n==============================================================" << endl;
+    cout << "                  LISTADO DE PACIENTES ACTIVOS                " << endl;
+    cout << "==============================================================" << endl;
+
+    if (cant == 0) {
+        cout << "\nNo hay pacientes registrados." << endl;
+        return;
     }
 
+    // Encabezado de columnas (sin la columna Activo)
+    cout << left
+         << setw(4)  << "ID"
+         << setw(12) << "Documento"
+         << setw(15) << "Nombre"
+         << setw(15) << "Apellido"
+         << setw(15) << "Telefono"
+         << setw(25) << "Email"
+         << setw(12) << "F.Nac."
+         << setw(10) << "Prestador"
+         << endl;
+
+    cout << string(108, '-') << endl;
+
+    // Filtrar e imprimir solo los activos
+    int encontrados = 0;
+    for(int x = 0; x < cant; x++){
+        paciente = aPaciente.Leer(x);
+
+        if (!paciente.get_enabled()) {
+            continue; // Salta los inactivos
+        }
+        encontrados++;
+
+        cout << left
+             << setw(4)  << paciente.get_id()
+             << setw(12) << paciente.get_dni()
+             << setw(15) << paciente.get_nombre()
+             << setw(15) << paciente.get_apellido()
+             << setw(15) << paciente.get_telefono()
+             << setw(25) << paciente.get_email()
+             << setw(12) << paciente.get_fechaNacimiento().toString()
+             << setw(10) << paciente.get_idPrestador()
+             << endl;
+    }
+
+    cout << string(108, '=') << endl << endl;
+    if (encontrados == 0) {
+        cout << "No hay pacientes activos para mostrar." << endl << endl;
+    }
 }
 
-void ManagerPaciente::MostrarPorDni(){
 
+void ManagerPaciente::MostrarPorDni(){
     Paciente paciente;
     ArchivoPaciente aPaciente("paciente.dat");
     string dni;
 
-    cout<<"Ingrese numero del paciente que desea buscar"<<endl;
-    cin>>dni;
+    cout << "\n======================================" << endl;
+    cout << "       BUSQUEDA DE PACIENTE POR DNI    " << endl;
+    cout << "======================================" << endl;
+    cout << "Ingrese el documento del paciente a buscar: ";
+    cin >> dni;
 
     int idPaciente = aPaciente.BuscarPorDni(dni);
+
+    if (idPaciente == -1) {
+        cout << "\n[!] Paciente no encontrado." << endl;
+        return;
+    }
+
     paciente = aPaciente.Leer(idPaciente-1);
 
-    cout<<"Datos del paciente: "<<endl;
-    cout<<endl;
+    cout << "\n------------- DATOS DEL PACIENTE -------------" << endl<<endl;
     cout << "ID: " << paciente.get_id() << endl;
-    cout << "DNI: " << paciente.get_dni() << endl;
+    cout << "Documento: " << paciente.get_dni() << endl;
     cout << "Nombre: " << paciente.get_nombre() << endl;
     cout << "Apellido: " << paciente.get_apellido() << endl;
-    cout << "Teléfono: " << paciente.get_telefono() << endl;
+    cout << "Telefono: " << paciente.get_telefono() << endl;
     cout << "Email: " << paciente.get_email() << endl;
     cout << "Fecha de nacimiento: " << paciente.get_fechaNacimiento().toString() << endl;
-    cout << "ID Prestador: " << paciente.get_idPrestador() << endl;
-
-
+    cout << "ID del prestador: " << paciente.get_idPrestador() << endl;
+    cout << "Habilitado" << paciente.get_enabled() << endl;
+    cout << "----------------------------------------------\n" << endl;
 }
 
 void ManagerPaciente::EditarPaciente() {
     ArchivoPaciente aPaciente("paciente.dat");
     string dni;
 
-    cout << "Ingrese el DNI del paciente que quiere editar: ";
+    cout << "\n======================================" << endl;
+    cout << "         EDICION DE PACIENTE          " << endl;
+    cout << "======================================" << endl;
+    cout << "Ingrese el documento del paciente a editar: ";
     cin >> dni;
 
     int pos = aPaciente.BuscarPorDni(dni);
     if (pos == -1) {
-        cout << "Paciente no encontrado." << endl;
+        cout << "\n[!] Paciente no encontrado." << endl;
         return;
     }
 
@@ -123,16 +185,17 @@ void ManagerPaciente::EditarPaciente() {
     int opcion = 0;
 
     do {
-        cout << "\n--- Editar Paciente ID: " << paciente.get_id() << " ---" << endl;
-        cout << "1. Editar Nombre (actual: " << paciente.get_nombre() << ")" << endl;
-        cout << "2. Editar Apellido (actual: " << paciente.get_apellido() << ")" << endl;
-        cout << "3. Editar Teléfono (actual: " << paciente.get_telefono() << ")" << endl;
-        cout << "4. Editar Email (actual: " << paciente.get_email() << ")" << endl;
-        cout << "5. Editar Fecha de Nacimiento (actual: " << paciente.get_fechaNacimiento().toString() << ")" << endl;
-        cout << "6. Editar ID Prestador (actual: " << paciente.get_idPrestador() << ")" << endl;
+        cout << "\n--- EDICION PACIENTE ID: " << paciente.get_id() << " ---" << endl;
+        cout << "1. Editar nombre       (actual: " << paciente.get_nombre() << ")" << endl;
+        cout << "2. Editar apellido     (actual: " << paciente.get_apellido() << ")" << endl;
+        cout << "3. Editar telefono     (actual: " << paciente.get_telefono() << ")" << endl;
+        cout << "4. Editar email        (actual: " << paciente.get_email() << ")" << endl;
+        cout << "5. Editar fecha nac.   (actual: " << paciente.get_fechaNacimiento().toString() << ")" << endl;
+        cout << "6. Editar ID prestador (actual: " << paciente.get_idPrestador() << ")" << endl;
         cout << "7. Guardar y salir" << endl;
         cout << "0. Cancelar sin guardar" << endl;
-        cout << "Seleccione una opción: ";
+        cout << "--------------------------------------" << endl;
+        cout << "Seleccione una opcion: ";
         cin >> opcion;
         cin.ignore();
 
@@ -153,7 +216,7 @@ void ManagerPaciente::EditarPaciente() {
             }
             case 3: {
                 string telefono;
-                cout << "Ingrese nuevo teléfono: ";
+                cout << "Ingrese nuevo telefono: ";
                 getline(cin, telefono);
                 paciente.set_telefono(telefono);
                 break;
@@ -167,11 +230,11 @@ void ManagerPaciente::EditarPaciente() {
             }
             case 5: {
                 int dia, mes, anio;
-                cout << "Ingrese nuevo día de nacimiento: ";
+                cout << "Ingrese nuevo dia de nacimiento: ";
                 cin >> dia;
                 cout << "Ingrese nuevo mes: ";
                 cin >> mes;
-                cout << "Ingrese nuevo año: ";
+                cout << "Ingrese nuevo anio: ";
                 cin >> anio;
                 paciente.set_fechaNacimiento(Fecha(dia, mes, anio));
                 break;
@@ -184,19 +247,19 @@ void ManagerPaciente::EditarPaciente() {
                 break;
             }
             case 7:
+                cout << "\n--------------------------------------" << endl;
                 if (aPaciente.Guardar(paciente, pos)) {
-                    cout << "Paciente actualizado correctamente." << endl;
+                    cout << "[OK] Paciente actualizado correctamente." << endl;
                 } else {
-                    cout << "Error al guardar el paciente." << endl;
+                    cout << "[ERROR] No se pudo guardar el paciente." << endl;
                 }
+                cout << "--------------------------------------\n" << endl;
                 return;
             case 0:
-                cout << "Operación cancelada. No se realizaron cambios." << endl;
+                cout << "\nOperacion cancelada. No se realizaron cambios." << endl;
                 return;
             default:
-                cout << "Opción inválida. Intente nuevamente." << endl;
+                cout << "\nOpcion invalida. Intente nuevamente." << endl;
         }
     } while (true);
 }
-
-

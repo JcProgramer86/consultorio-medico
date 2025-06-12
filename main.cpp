@@ -8,7 +8,7 @@ using namespace std;
 
 int main() {
 
-setlocale(LC_ALL, "Spanish");
+    setlocale(LC_ALL, "Spanish");
     //ejecutarSandboxMedico();
     //ejecutarSandboxPaciente();
 
