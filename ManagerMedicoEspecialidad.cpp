@@ -69,7 +69,7 @@ void ManagerMedicoEspecialidad::eliminarMedicoEspecialidad() {
 }
 
 void ManagerMedicoEspecialidad::listarMedicoEspecialidad() {
-    ArchivoMedicoEspecialidad archivo("medico_especialidad.dat");
+    ArchivoMedicoEspecialidad archivo("medicoespecialidades.dat");
     int cantidad = archivo.CantidadRegistros();
     if (cantidad == 0) {
         std::cout << "No hay relaciones medico-especialidad.\n";
