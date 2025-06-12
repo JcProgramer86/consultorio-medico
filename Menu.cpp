@@ -219,7 +219,7 @@ void Menu::menuTurnos() {
                 cin >> id;
                 break;
             }
-            case 4:
+            case 4: manager.listarTurnos() ;
                 break;
             case 0:
                 cout << "Volviendo al menu principal..." << endl;

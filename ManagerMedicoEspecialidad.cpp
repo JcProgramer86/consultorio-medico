@@ -5,8 +5,8 @@
 #include <iostream>
 
 void ManagerMedicoEspecialidad::cargarMedicoEspecialidad() {
-    ArchivoMedicoEspecialidad archivo("medico_especialidad.dat");
-    ArchivoMedico archivoMedico("medico.dat");
+    ArchivoMedicoEspecialidad archivo("medicoespecialidades.dat");
+    ArchivoMedico archivoMedico("medicos.dat");
     ArchivoEspecialidad archivoEspecialidad("especialidad.dat");
 
     int nuevoId = archivo.CantidadRegistros() > 0 ?
