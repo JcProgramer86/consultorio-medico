@@ -176,7 +176,7 @@ cout << "=======================================================================
     }
 
     // Selección de hora válida
-   string inputHora;
+   string inputHor
     int horaSel, minSel;
     Hora horaTurno;
     bool esValida = false;
