@@ -1,21 +1,16 @@
 #pragma once
-#include <string>
-#include "Especialidad.h"
+#include "ArchivoEspecialidad.h"
+#include "ArchivoMedicoEspecialidad.h"
 
-class ArchivoEspecialidad {
-private:
-    std::string _nombreArchivo;
 
+class ManagerEspecialidad {
 public:
-    // Constructor
-    ArchivoEspecialidad(const std::string& nombreArchivo);
 
-    // Métodos
-    bool Guardar(const Especialidad& especialidad);
-    bool Guardar(const Especialidad& especialidad, int posicion);
-    Especialidad Leer(int posicion);
-    int Buscar(int idEspecialidad);
-    int CantidadRegistros();
-    void Leer(int cantidadRegistros, Especialidad* vector);
-    int generarNuevoId();
+    void cargarEspecialidad();
+
+    void editarEspecialidad();
+
+    void eliminarEspecialidad();
+
+    void listarEspecialidades();
 };

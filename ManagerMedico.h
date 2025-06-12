@@ -7,7 +7,7 @@ public:
 
    void registrarNuevoMedico();
     void listarMedicos();
-    bool modificarMedicoPorDni();
+    void modificarMedicoPorDni();
     Medico buscarMedicoPorDni(const std::string& dni);  // ya lo tenías
     void buscarYMostrarMedicoPorDni();
 };
