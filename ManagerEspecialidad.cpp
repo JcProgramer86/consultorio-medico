@@ -4,12 +4,12 @@
 #include <iomanip>
 #include <string>
 
+using namespace std;
 
 void ManagerEspecialidad::cargarEspecialidad() {
     ArchivoEspecialidad archivo("especialidad.dat");
     Especialidad especialidad;
 
-    // Generar nuevo ID incremental
     int nuevoId = archivo.cantidadRegistros() > 0
                   ? archivo.leer(archivo.cantidadRegistros() - 1).get_id() + 1
                   : 1;
@@ -18,19 +18,19 @@ void ManagerEspecialidad::cargarEspecialidad() {
     char codigo[10];
     char nombre[100];
 
-    std::cout << "Ingrese código de especialidad: ";
-    std::cin.ignore();
-    std::cin.getline(codigo, 10);
+    cout << "Ingrese codigo de especialidad: ";
+    cin.ignore();
+    cin.getline(codigo, 10);
     especialidad.set_codEspecialidad(codigo);
 
-    std::cout << "Ingrese nombre de especialidad: ";
-    std::cin.getline(nombre, 100);
+    cout << "Ingrese nombre de especialidad: ";
+    cin.getline(nombre, 100);
     especialidad.set_nombreEspecialidad(nombre);
 
     if (archivo.guardar(especialidad)) {
-        std::cout << "Especialidad cargada correctamente.\n";
+        cout << "Especialidad cargada correctamente." << endl;
     } else {
-        std::cout << "Error al guardar la especialidad.\n";
+        cout << "Error al guardar la especialidad." << endl;
     }
 }
 
@@ -39,16 +39,15 @@ void ManagerEspecialidad::editarEspecialidad() {
     ArchivoMedicoEspecialidad archivoMedEsp("medico_especialidad.dat");
 
     int id;
-    std::cout << "Ingrese el ID de la especialidad a editar: ";
-    std::cin >> id;
+    cout << "Ingrese el ID de la especialidad a editar: ";
+    cin >> id;
 
     int pos = archivo.buscarPorId(id);
     if (pos == -1) {
-        std::cout << "Especialidad no encontrada.\n";
+        cout << "Especialidad no encontrada." << endl;
         return;
     }
 
-    // ¿Tiene médicos asociados? (solo advertencia)
     int totalMedEsp = archivoMedEsp.CantidadRegistros();
     bool asociada = false;
     for (int i = 0; i < totalMedEsp; ++i) {
@@ -59,25 +58,25 @@ void ManagerEspecialidad::editarEspecialidad() {
         }
     }
     if (asociada) {
-        std::cout << "⚠️ Advertencia: hay médicos asociados a esta especialidad.\n";
+        cout << "Atencion: hay medicos asociados a esta especialidad." << endl;
     }
 
     Especialidad esp = archivo.leer(pos);
 
     char cod[10], nombre[100];
-    std::cout << "Código actual: " << esp.get_codEspecialidad() << ". Nuevo (dejar vacío para no cambiar): ";
-    std::cin.ignore();
-    std::cin.getline(cod, 10);
+    cout << "Codigo actual: " << esp.get_codEspecialidad() << ". Nuevo (dejar vacio para no cambiar): ";
+    cin.ignore();
+    cin.getline(cod, 10);
     if (strlen(cod) > 0) esp.set_codEspecialidad(cod);
 
-    std::cout << "Nombre actual: " << esp.get_nombreEspecialidad() << ". Nuevo (dejar vacío para no cambiar): ";
-    std::cin.getline(nombre, 100);
+    cout << "Nombre actual: " << esp.get_nombreEspecialidad() << ". Nuevo (dejar vacio para no cambiar): ";
+    cin.getline(nombre, 100);
     if (strlen(nombre) > 0) esp.set_nombreEspecialidad(nombre);
 
     if (archivo.guardar(esp, pos)) {
-        std::cout << "Especialidad actualizada correctamente.\n";
+        cout << "Especialidad actualizada correctamente." << endl;
     } else {
-        std::cout << "Error al actualizar la especialidad.\n";
+        cout << "Error al actualizar la especialidad." << endl;
     }
 }
 
@@ -86,26 +85,24 @@ void ManagerEspecialidad::eliminarEspecialidad() {
     ArchivoMedicoEspecialidad archivoMedEsp("medico_especialidad.dat");
 
     int id;
-    std::cout << "Ingrese el ID de la especialidad a eliminar: ";
-    std::cin >> id;
+    cout << "Ingrese el ID de la especialidad a eliminar: ";
+    cin >> id;
 
     int pos = archivo.buscarPorId(id);
     if (pos == -1) {
-        std::cout << "Especialidad no encontrada.\n";
+        cout << "Especialidad no encontrada." << endl;
         return;
     }
 
-    // Validar que no la use ningún médico
     int totalMedEsp = archivoMedEsp.CantidadRegistros();
     for (int i = 0; i < totalMedEsp; ++i) {
         MedicoEspecialidad medEsp = archivoMedEsp.Leer(i);
         if (medEsp.getIdEspecialidad() == id) {
-            std::cout << "❌ No se puede eliminar: la especialidad está asociada a médicos.\n";
+            cout << "No se puede eliminar: la especialidad esta asociada a medicos." << endl;
             return;
         }
     }
 
-    // Borrado físico reescribiendo el archivo (sin la especialidad eliminada)
     int total = archivo.cantidadRegistros();
     Especialidad* todas = new Especialidad[total];
     archivo.leer(total, todas);
@@ -118,35 +115,33 @@ void ManagerEspecialidad::eliminarEspecialidad() {
     }
     fclose(pArchivo);
     delete[] todas;
-    std::cout << "Especialidad eliminada correctamente.\n";
+    cout << "Especialidad eliminada correctamente." << endl;
 }
-
-
 
 void ManagerEspecialidad::listarEspecialidades() {
     ArchivoEspecialidad archivo("especialidad.dat");
     int cantidad = archivo.cantidadRegistros();
 
     if (cantidad == 0) {
-        std::cout << "No hay especialidades registradas." << std::endl;
+        cout << "No hay especialidades registradas." << endl;
         return;
     }
 
-    std::cout << std::left
-              << std::setw(6)  << "ID"
-              << std::setw(12) << "Codigo"
-              << std::setw(30) << "Nombre"
-              << std::endl;
-    std::cout << std::string(48, '-') << std::endl;
+    cout << left
+         << setw(6)  << "ID"
+         << setw(12) << "Codigo"
+         << setw(30) << "Nombre"
+         << endl;
+    cout << string(48, '-') << endl;
 
     for (int i = 0; i < cantidad; i++) {
         Especialidad esp = archivo.leer(i);
-        std::cout << std::left
-                  << std::setw(6)  << esp.get_id()
-                  << std::setw(12) << esp.get_codEspecialidad()
-                  << std::setw(30) << esp.get_nombreEspecialidad()
-                  << std::endl;
+        cout << left
+             << setw(6)  << esp.get_id()
+             << setw(12) << esp.get_codEspecialidad()
+             << setw(30) << esp.get_nombreEspecialidad()
+             << endl;
     }
-    std::cout << std::string(48, '-') << std::endl;
-}
 
+    cout << string(48, '-') << endl;
+}

@@ -96,7 +96,7 @@ void ManagerPaciente::ListarTodos(){
          << setw(15) << "Nombre"
          << setw(15) << "Apellido"
          << setw(15) << "Telefono"
-         << setw(25) << "Email"
+         << setw(40) << "Email"
          << setw(12) << "F.Nac."
          << setw(10) << "Prestador"
          << endl;
@@ -119,7 +119,7 @@ void ManagerPaciente::ListarTodos(){
              << setw(15) << paciente.get_nombre()
              << setw(15) << paciente.get_apellido()
              << setw(15) << paciente.get_telefono()
-             << setw(25) << paciente.get_email()
+             << setw(40) << paciente.get_email()
              << setw(12) << paciente.get_fechaNacimiento().toString()
              << setw(10) << paciente.get_idPrestador()
              << endl;

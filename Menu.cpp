@@ -129,8 +129,6 @@ void Menu::menuMedico()
         cout << "  9) Asignar especialidad a medico\n";
         cout << " 10) Quitar especialidad a medico\n";
         cout << " 11) Ver relaciones medico-especialidad\n";
-        cout << " 12) Buscar relaciones por ID de medico\n";
-        cout << " 13) Buscar relaciones por ID de especialidad\n";
         cout << "----------------------------------------\n";
         cout << "  0) Volver al menu principal\n";
         cout << "----------------------------------------\n";
@@ -172,12 +170,6 @@ void Menu::menuMedico()
             break;
         case 11:
             managerMedEsp.listarMedicoEspecialidad();
-            break;
-        case 12:
-            managerMedEsp.buscarPorIdMedico();
-            break;
-        case 13:
-            managerMedEsp.buscarPorIdEspecialidad();
             break;
         case 0:
             cout << "Volviendo al menu principal..." << endl;
