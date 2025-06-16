@@ -56,6 +56,8 @@ void Medico::set_enabled(bool val) {
     _enabled = val;
 }
 
+
+
 // Exportar como CSV
 std::string Medico::toCSV() {
     return std::to_string(get_id()) + "," +
