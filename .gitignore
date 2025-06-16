@@ -1,127 +1,29 @@
-
-
-
-# Archivos y carpetas generadas por Code::Blocks
+# Ignorar archivos y carpetas generadas por Code::Blocks
 *.depend
 *.layout
 *.depend.*
 *.layout.*
+Consultorio.layout
+Consultorio.depend
 
-# Archivos binarios generados por el compilador
+# Ignorar archivos binarios generados por el compilador
 *.exe
 *.o
 
-# Directorios de salida de compilación
+# Ignorar directorios de salida de compilación
 bin/
 obj/
 
-# Archivos temporales de sistema
+# Ignorar archivos de datos binarios del proyecto
+*.dat
+
+# Ignorar archivos temporales
 *.log
 *.tmp
 *.bak
 *~
 
-# Archivos de sistema (Windows/macOS)
+# Ignorar archivos de sistema (Windows/macOS)
 .DS_Store
 Thumbs.db
 desktop.ini
-Consultorio.layout
-Consultorio.depend
-
-
-
-
-
-# Archivos y carpetas generadas por Code::Blocks
-*.depend
-*.layout
-*.depend.*
-*.layout.*
-
-# Archivos binarios generados por el compilador
-*.exe
-*.o
-
-# Directorios de salida de compilación
-bin/
-obj/
-
-# Archivos temporales de sistema
-*.log
-*.tmp
-*.bak
-*~
-
-# Archivos de sistema (Windows/macOS)
-.DS_Store
-Thumbs.db
-desktop.ini
-Consultorio.layout
-Consultorio.depend
-
-
-
-
-
-# Archivos y carpetas generadas por Code::Blocks
-*.depend
-*.layout
-*.depend.*
-*.layout.*
-
-# Archivos binarios generados por el compilador
-*.exe
-*.o
-
-# Directorios de salida de compilación
-bin/
-obj/
-
-# Archivos temporales de sistema
-*.log
-*.tmp
-*.bak
-*~
-
-# Archivos de sistema (Windows/macOS)
-.DS_Store
-Thumbs.db
-
-
-
-desktop.ini
-Consultorio.layout
-Consultorio.depend
-
-
-
-
-
-# Archivos y carpetas generadas por Code::Blocks
-*.depend
-*.layout
-*.depend.*
-*.layout.*
-
-# Archivos binarios generados por el compilador
-*.exe
-*.o
-
-# Directorios de salida de compilación
-bin/
-obj/
-
-# Archivos temporales de sistema
-*.log
-*.tmp
-*.bak
-*~
-
-# Archivos de sistema (Windows/macOS)
-.DS_Store
-Thumbs.db
-desktop.ini
-Consultorio.layout
-Consultorio.depend
-
-

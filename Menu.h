@@ -4,13 +4,16 @@
 
 class Menu {
 public:
-    // Constructor
-    Menu();
 
     void menuPrincipal();
 
     void menuPaciente();
 
     void menuMedico();
+
+    void menuTurnos();
+
+    void menuHeader();
+
 };
 

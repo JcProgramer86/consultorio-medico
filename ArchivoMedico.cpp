@@ -1,5 +1,8 @@
 #include "Fecha.h"
 #include "ArchivoMedico.h"
+#include <iostream>
+using namespace std;
+
 
 ArchivoMedico::ArchivoMedico(std::string nombreArchivoMedico){
     _nombreArchivoMedico = nombreArchivoMedico;
@@ -43,6 +46,26 @@ int ArchivoMedico::Buscar(int IDmedico){
     fclose(pArchivoMedico);
     return -1;
 }
+int ArchivoMedico::BuscarPorDni(const std::string& dniMedico) {
+    FILE* pArchivo = fopen(_nombreArchivoMedico.c_str(), "rb");
+    if (pArchivo == NULL) {
+        return -1;
+    }
+    Medico medico;
+    int i = 0;
+
+    while (fread(&medico, sizeof(Medico), 1, pArchivo)) {
+        if (medico.get_dni() == dniMedico) {
+            fclose(pArchivo);
+            return i;
+        }
+        i++;
+    }
+
+    fclose(pArchivo);
+    return -1;
+}
+
 
 Medico ArchivoMedico::Leer(int posicion){
     FILE *pArchivoMedico = fopen(_nombreArchivoMedico.c_str(), "rb");
@@ -66,6 +89,13 @@ int ArchivoMedico::CantidadRegistros(){
     fclose(pArchivoMedico);
     return cantidadRegistros;
 }
+int ArchivoMedico::generarNuevoId() {
+    int cantidad = CantidadRegistros();
+    if (cantidad == 0) return 1;
+
+    Medico ultimo = Leer(cantidad - 1);
+    return ultimo.get_id() + 1;
+}
 
 void ArchivoMedico::Leer(int cantidadRegistros, Medico *vector){
     FILE *pArchivoMedico = fopen(_nombreArchivoMedico.c_str(), "rb");
@@ -77,3 +107,8 @@ void ArchivoMedico::Leer(int cantidadRegistros, Medico *vector){
     }
     fclose(pArchivoMedico);
 }
+bool ArchivoMedico::checkDni(std::string& dni){
+    int pos = BuscarPorDni(dni);
+    return (pos == -1);
+}
+
