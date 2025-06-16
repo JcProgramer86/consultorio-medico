@@ -26,5 +26,8 @@ public:
     void set_enabled(bool val);
 
     std::string toCSV();
+    bool guardarEnDisco(FILE* f);
+    bool leerDeDisco(FILE* f);
+
 };
 

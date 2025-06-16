@@ -25,6 +25,6 @@ public:
     char* get_nombreEspecialidad();
 
     // Método para generar el código automáticamente
-    void generarCodigoEspecialidad(std::string nombre, int numero);
+    std::string generarCodigoEspecialidad(const std::string& nombre, int numeroSecuencia);
 
 };
