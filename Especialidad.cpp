@@ -60,28 +60,30 @@ char* Especialidad::get_nombreEspecialidad() {
 
 // MÉTODO PARA GENERAR CÓDIGO DE ESPECIALIDAD
 // Recibe el nombre y un número correlativo (por ejemplo: 1 para 001, 2 para 002, etc.)
-void Especialidad::generarCodigoEspecialidad(std::string nombre, int numeroSecuencia) {
+std::string Especialidad::generarCodigoEspecialidad(const std::string& nombre, int numeroSecuencia) {
     if (nombre.length() < 3) {
         std::cout << "El nombre de la especialidad es muy corto para generar un código." << std::endl;
-        return;
+        return "";
     }
 
-    std::string codigo = "";
-    for (int i = 0; i < 3; i++) {
-        // Convertimos a mayúscula directamente, sin static_cast
-        codigo += toupper(nombre[i]);
+    // Obtener primeros 5 caracteres del nombre en minúscula
+    std::string sufijo = nombre.substr(0, 5);
+    for (char& c : sufijo) {
+        c = tolower(c);
     }
 
-    if (numeroSecuencia < 10) {
-        codigo += "-00" + std::to_string(numeroSecuencia);
-    } else if (numeroSecuencia < 100) {
-        codigo += "-0" + std::to_string(numeroSecuencia);
-    } else {
-        codigo += "-" + std::to_string(numeroSecuencia);
-    }
+    // Generar número con 3 dígitos
+    char bufferNum[4];
+    snprintf(bufferNum, sizeof(bufferNum), "%03d", numeroSecuencia);
 
+    // Concatenar número + sufijo
+    std::string codigo = std::string(bufferNum) + sufijo;
+
+    // Guardar en el atributo (por compatibilidad si también lo usás así)
     strncpy(_codEspecialidad, codigo.c_str(), sizeof(_codEspecialidad) - 1);
     _codEspecialidad[sizeof(_codEspecialidad) - 1] = '\0';
 
-    std::cout << "Código generado: " << _codEspecialidad << std::endl;
+    return codigo;
 }
+
+

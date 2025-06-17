@@ -12,5 +12,5 @@ public:
 
     void eliminarEspecialidad();
 
-    void listarEspecialidades();
+    void listarEspecialidades(bool menu = true);
 };

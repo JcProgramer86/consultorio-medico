@@ -14,6 +14,7 @@ void Menu::menuPrincipal()
     int opcion;
     do
     {
+        system("cls");
         menuHeader();
         cout << "\n------------ Menu Principal -----------\n";
         cout << "  1) Pacientes\n";
@@ -29,18 +30,12 @@ void Menu::menuPrincipal()
         switch (opcion)
         {
         case 1:
-            system("cls");
-            menuHeader();
             menuPaciente();
             break;
         case 2:
-            system("cls");
-            menuHeader();
             menuMedico();
             break;
         case 3:
-            system("cls");
-            menuHeader();
             menuTurnos();
             break;
         case 4:
@@ -68,6 +63,8 @@ void Menu::menuPaciente()
     int opcion;
     do
     {
+        system("cls");
+        menuHeader();
         cout << "\n-------------- PACIENTES --------------\n";
         cout << "  1) Registrar nuevo paciente\n";
         cout << "  2) Listar pacientes\n";
@@ -128,6 +125,8 @@ void Menu::menuMedico()
     int opcion;
     do
     {
+        system("cls");
+        menuHeader();
         cout << "\n---------------- MEDICOS ---------------\n";
         cout << "  1) Registrar nuevo medico\n";
         cout << "  2) Listar medicos\n";
@@ -162,24 +161,38 @@ void Menu::menuMedico()
             manager.buscarYMostrarMedicoPorDni();
             break;
         case 5:
+            system("cls");
+            menuHeader();
             managerEsp.cargarEspecialidad();
             break;
         case 6:
+            system("cls");
+            menuHeader();
             managerEsp.listarEspecialidades();
             break;
         case 7:
+            system("cls");
+            menuHeader();
             managerEsp.editarEspecialidad();
             break;
         case 8:
+            system("cls");
+            menuHeader();
             managerEsp.eliminarEspecialidad();
             break;
         case 9:
+            system("cls");
+            menuHeader();
             managerMedEsp.cargarMedicoEspecialidad();
             break;
         case 10:
+            system("cls");
+            menuHeader();
             managerMedEsp.eliminarMedicoEspecialidad();
             break;
         case 11:
+            system("cls");
+            menuHeader();
             managerMedEsp.listarMedicoEspecialidad();
             break;
         case 0:
@@ -198,8 +211,11 @@ void Menu::menuTurnos()
 {
     ManagerTurno manager;
     int opcion;
-    do
-    {
+
+    do {
+        system("cls");
+        menuHeader();
+
         cout << "\n----------------- TURNOS ----------------\n";
         cout << "  1) Sacar nuevo turno\n";
         cout << "  2) Ver agenda semanal\n";

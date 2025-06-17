@@ -5,6 +5,7 @@
 #include "ManagerMedico.h"
 #include "ArchivoMedico.h"
 #include "ManagerEspecialidad.h"
+#include "ArchivoEspecialidad.h"
 
 using namespace std;
 
@@ -57,7 +58,9 @@ void ManagerMedico::registrarNuevoMedico()
     // Mostrar especialidades para elegir
     cout << "\n--------------------------------------" << endl;
     cout << "LISTADO DE ESPECIALIDADES DISPONIBLES:" << endl;
+
     managerEsp.listarEspecialidades();
+
     cout << "--------------------------------------" << endl;
     cout << "Ingrese el ID de especialidad del medico: ";
     cin >> idEspecialidad;
@@ -96,22 +99,6 @@ void ManagerMedico::registrarNuevoMedico()
 }
 
 
-Medico ManagerMedico::buscarMedicoPorDni(const std::string& dni)
-{
-    ArchivoMedico aMedico("medicos.dat");
-    int posicion = aMedico.BuscarPorDni(dni);
-
-    if (posicion == -1)
-    {
-        cout << "No se encontro un medico con ese DNI." << endl;
-        return Medico();
-    }
-    else
-    {
-        Medico medicoEncontrado = aMedico.Leer(posicion);
-        return medicoEncontrado;
-    }
-}
 
 void ManagerMedico::buscarYMostrarMedicoPorDni()
 {
@@ -119,17 +106,59 @@ void ManagerMedico::buscarYMostrarMedicoPorDni()
     cout << "Ingrese el DNI del medico a buscar: ";
     cin >> dni;
 
-    Medico medicoEncontrado = buscarMedicoPorDni(dni);
+    ArchivoMedico aMedico("medicos.dat");
+    int posicion = aMedico.BuscarPorDni(dni);
 
-    if (medicoEncontrado.get_id() != -1)
+    if (posicion != -1)
     {
-        cout << medicoEncontrado.toCSV() << endl;
+        system("cls");
+        Medico medicoEncontrado = aMedico.Leer(posicion);
+        ArchivoEspecialidad archivoEsp("especialidad.dat");
+
+        cout << "\n==============================================================" << endl;
+        cout << "                  RESULTADO DE LA BUSQUEDA                    " << endl;
+        cout << "==============================================================" << endl << endl;
+
+        // Encabezado de columnas
+        cout << left
+             << setw(4)  << "|ID"
+             << setw(12) << "|DNI"
+             << setw(15) << "|Nombre"
+             << setw(15) << "|Apellido"
+             << setw(15) << "|Telefono"
+             << setw(25) << "|Email"
+             << setw(8)  << "|Matri."
+             << setw(12) << "|F.Nac."
+             << setw(15) << "|Esp."
+             << setw(12) << "|Inicio Act."
+             << endl;
+        cout << string(135, '-') << endl;
+
+        cout << left
+             << setw(4)  << medicoEncontrado.get_id()
+             << setw(12) << medicoEncontrado.get_dni()
+             << setw(15) << medicoEncontrado.get_nombre()
+             << setw(15) << medicoEncontrado.get_apellido()
+             << setw(15) << medicoEncontrado.get_telefono()
+             << setw(25) << medicoEncontrado.get_email()
+             << setw(8)  << medicoEncontrado.get_matricula()
+             << setw(12) << medicoEncontrado.get_fechaNacimiento().toString()
+             << setw(15) << archivoEsp.leer(medicoEncontrado.get_idEspecialidad()).get_nombreEspecialidad()
+             << setw(12) << medicoEncontrado.get_fechaInicioActividad().toString()
+             << endl;
+
+        cout << string(135, '=') << endl;
     }
     else
     {
-        cout << "No se encontro un medico con ese DNI." << endl;
+        cout << "\n[!] No se encontro un medico con ese DNI." << endl;
     }
+
+    cout << "\nPresione Enter para volver al menu de Medicos...";
+    cin.ignore();
+    cin.get();
 }
+
 
 void ManagerMedico::modificarMedicoPorDni() {
     ArchivoMedico aMedico("medicos.dat");
@@ -281,8 +310,10 @@ void ManagerMedico::listarMedicos()
     cout << "\n==============================================================" << endl;
     cout << "                    LISTADO DE MEDICOS ACTIVOS                " << endl;
     cout << "==============================================================" << endl;
+    cout << endl;
 
     ArchivoMedico archivo("medicos.dat");
+    ArchivoEspecialidad Especialidad("especialidad.dat");
     int cantidad = archivo.CantidadRegistros();
 
     if (cantidad == 0)
@@ -293,16 +324,16 @@ void ManagerMedico::listarMedicos()
 
     // Encabezado de columnas
     cout << left
-         << setw(4)  << "ID"
-         << setw(12) << "DNI"
-         << setw(15) << "Nombre"
-         << setw(15) << "Apellido"
-         << setw(15) << "Telefono"
-         << setw(25) << "Email"
-         << setw(15) << "Matricula"
-         << setw(12) << "F.Nac."
-         << setw(10) << "Especial."
-         << setw(12) << "Inicio Act."
+         << setw(4)  << "|ID"
+         << setw(12) << "|DNI"
+         << setw(15) << "|Nombre"
+         << setw(15) << "|Apellido"
+         << setw(15) << "|Telefono"
+         << setw(25) << "|Email"
+         << setw(8) << "|Matri."
+         << setw(12) << "|F.Nac."
+         << setw(15) << "|Esp."
+         << setw(12) << "|Inicio Act."
          << endl;
     cout << string(135, '-') << endl;
 
@@ -321,9 +352,9 @@ void ManagerMedico::listarMedicos()
                  << setw(15) << medico.get_apellido()
                  << setw(15) << medico.get_telefono()
                  << setw(25) << medico.get_email()
-                 << setw(15) << medico.get_matricula()
+                 << setw(8) << medico.get_matricula()
                  << setw(12) << medico.get_fechaNacimiento().toString()
-                 << setw(10) << medico.get_idEspecialidad()
+                 << setw(15) << Especialidad.leer(medico.get_idEspecialidad()).get_nombreEspecialidad()
                  << setw(12) << medico.get_fechaInicioActividad().toString()
                  << endl;
         }
@@ -335,4 +366,9 @@ void ManagerMedico::listarMedicos()
     {
         cout << "No hay medicos activos para mostrar." << endl << endl;
     }
+
+    cout << "\nPresione Enter para volver al menu de Medicos...";
+    cin.ignore(); // limpia cualquier entrada anterior
+    cin.get();    // espera que el usuario presione Enter
+
 }

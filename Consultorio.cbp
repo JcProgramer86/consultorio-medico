@@ -84,6 +84,7 @@
 		<Unit filename="Turnos.cpp" />
 		<Unit filename="Turnos.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="medicos.dat" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
