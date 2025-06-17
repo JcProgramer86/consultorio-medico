@@ -1,5 +1,4 @@
-#ifndef TURNOS_H
-#define TURNOS_H
+#pragma once
 
 #include "Fecha.h"
 #include "Hora.h"
@@ -18,10 +17,11 @@ private:
     bool _sobreturno;
     Hora _duracionTurno;
     char _observaciones[100];
+    bool _asistio = false;  // Nuevo atributo, por defecto false
 
 public:
     Turno();
-    Turno(int, int, int, Fecha, Hora, float, bool, bool, Hora, const std::string&);
+    Turno(int, int, int, Fecha, Hora, float, bool, bool, Hora, const std::string&, bool);
 
     int getId() const;
     int getIdPaciente() const;
@@ -33,6 +33,7 @@ public:
     bool getSobreturno() const;
     Hora getDuracionTurno() const;
     const char* getObservaciones() const;
+    bool getAsistio() const;  // Nuevo getter
 
     void setId(int);
     void setIdPaciente(int);
@@ -44,6 +45,6 @@ public:
     void setSobreturno(bool);
     void setDuracionTurno(Hora);
     void setObservaciones(const std::string&);
+    void setAsistio(bool);   // Nuevo setter
 };
 
-#endif // TURNOS_H

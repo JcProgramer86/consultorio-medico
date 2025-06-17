@@ -8,6 +8,7 @@
 #include "ArchivoTurno.h"
 #include "ArchivoMedicoEspecialidad.h"
 #include "ArchivoPrestador.h"
+#include "ManagerAdministrativo.h"
 
 
 void ejecutarSandboxMedico() {
@@ -241,5 +242,59 @@ void ejecutarBuscarTurnoPorId(int idBuscado) {
     }
 }
 
+//facturacion mensual
 
+void ejecutarSandboxFacturacionMensual() {
+    // Generar algunos turnos de prueba
+    ArchivoTurno archivo("turnos.dat");
 
+    Turno t1;
+    t1.setId(2001);
+    t1.setIdPaciente(10);
+    t1.setIdMedicoEspecialidad(101);
+    t1.setFechaAtencion(Fecha(10, 6, 2025));  // Junio 2025
+    t1.setHoraAtencion(Hora(9, 0));
+    t1.setImporteConsulta(5000.0f);
+    t1.setCancelado(false);
+    t1.setSobreturno(false);
+    t1.setDuracionTurno(Hora(0, 15));
+    t1.setObservaciones("Consulta general");
+
+    Turno t2;
+    t2.setId(2002);
+    t2.setIdPaciente(11);
+    t2.setIdMedicoEspecialidad(102);
+    t2.setFechaAtencion(Fecha(20, 6, 2025));  // Junio 2025
+    t2.setHoraAtencion(Hora(10, 30));
+    t2.setImporteConsulta(7000.0f);
+    t2.setCancelado(false);
+    t2.setSobreturno(false);
+    t2.setDuracionTurno(Hora(0, 15));
+    t2.setObservaciones("Especialidad");
+
+    Turno t3;
+    t3.setId(2003);
+    t3.setIdPaciente(12);
+    t3.setIdMedicoEspecialidad(103);
+    t3.setFechaAtencion(Fecha(5, 7, 2025));  // Julio 2025
+    t3.setHoraAtencion(Hora(11, 0));
+    t3.setImporteConsulta(6000.0f);
+    t3.setCancelado(false);
+    t3.setSobreturno(false);
+    t3.setDuracionTurno(Hora(0, 15));
+    t3.setObservaciones("Chequeo");
+
+    archivo.Guardar(t1);
+    archivo.Guardar(t2);
+    archivo.Guardar(t3);
+
+    std::cout << "Turnos de prueba generados.\n";
+
+    // Llamar al cálculo de facturación
+    ManagerAdministrativo manager;
+    float facturacion = manager.obtenerFacturacionDelMes();
+
+    std::cout << "Facturación total de Junio 2025: $" << facturacion << std::endl;
+
+    system("pause");
+}

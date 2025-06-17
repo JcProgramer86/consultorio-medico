@@ -5,7 +5,7 @@
 #include "ManagerTurno.h"
 #include "ManagerEspecialidad.h"
 #include "ManagerMedicoEspecialidad.h"
-
+#include "ManagerAdministrativo.h"
 using namespace std;
 
 // Menu principal del sistema
@@ -20,6 +20,7 @@ void Menu::menuPrincipal()
         cout << "  1) Pacientes\n";
         cout << "  2) Medicos\n";
         cout << "  3) Turnos\n";
+        cout << "  4) Administrativo\n";
         cout << "----------------------------------------\n";
         cout << "  0) Salir\n";
         cout << "----------------------------------------\n";
@@ -36,6 +37,11 @@ void Menu::menuPrincipal()
             break;
         case 3:
             menuTurnos();
+            break;
+        case 4:
+            system("cls");
+            menuHeader();
+            menuAdministrativo();
             break;
         case 0:
             cout << "Saliendo del sistema..." << endl;
@@ -73,30 +79,35 @@ void Menu::menuPaciente()
         cout << endl;
         cin >> opcion;
 
-        switch (opcion) {
-            case 1: managerPaciente.crearNuevoPaciente();
-                break;
+        switch (opcion)
+        {
+        case 1:
+            managerPaciente.crearNuevoPaciente();
+            break;
 
-            case 2: managerPaciente.ListarTodos();
-                break;
+        case 2:
+            managerPaciente.ListarTodos();
+            break;
 
-            case 3: managerPaciente.EditarPaciente();
-                break;
+        case 3:
+            managerPaciente.EditarPaciente();
+            break;
 
-            case 4: managerPaciente.MostrarPorDni();
-                break;
+        case 4:
+            managerPaciente.MostrarPorDni();
+            break;
 
-            case 5:
-                  managerTurno.sacarTurno();
-                break;
-            case 6:
-                 managerTurno.mostrarAgendaSemanal();
-                break;
-            case 0:
-                cout << "Volviendo al menu principal..." << endl;
-                break;
-            default:
-                cout << "Opcion no valida. Intente de nuevo." << endl;
+        case 5:
+            managerTurno.sacarTurno();
+            break;
+        case 6:
+            managerTurno.mostrarAgendaSemanal();
+            break;
+        case 0:
+            cout << "Volviendo al menu principal..." << endl;
+            break;
+        default:
+            cout << "Opcion no valida. Intente de nuevo." << endl;
 
         }
         cout << endl;
@@ -196,12 +207,15 @@ void Menu::menuMedico()
     while (opcion != 0);
 }
 
-void Menu::menuTurnos() {
+void Menu::menuTurnos()
+{
     ManagerTurno manager;
     int opcion;
+
     do {
         system("cls");
         menuHeader();
+
         cout << "\n----------------- TURNOS ----------------\n";
         cout << "  1) Sacar nuevo turno\n";
         cout << "  2) Ver agenda semanal\n";
@@ -213,33 +227,86 @@ void Menu::menuTurnos() {
         cout << "Seleccione una opcion: ";
         cin >> opcion;
 
-        switch (opcion) {
-            case 1:
-                manager.sacarTurno();
-                break;
-            case 2:
-                manager.mostrarAgendaSemanal();
-                break;
-            case 3: {
-                int id;
-                cout << "Ingrese el ID del turno a buscar: ";
-                cin >> id;
-                break;
-            }
-            case 4: manager.listarTurnos() ;
-                break;
-            case 0:
-                cout << "Volviendo al menu principal..." << endl;
-                break;
-            default:
-                cout << "Opcion no valida. Intente de nuevo." << endl;
+        switch (opcion)
+        {
+        case 1:
+            manager.sacarTurno();
+            break;
+        case 2:
+            manager.mostrarAgendaSemanal();
+            break;
+        case 3:
+        {
+            int id;
+            cout << "Ingrese el ID del turno a buscar: ";
+            cin >> id;
+            break;
+        }
+        case 4:
+            manager.listarTurnos() ;
+            break;
+        case 0:
+            cout << "Volviendo al menu principal..." << endl;
+            break;
+        default:
+            cout << "Opcion no valida. Intente de nuevo." << endl;
         }
         cout << endl;
-    } while (opcion != 0);
+    }
+    while (opcion != 0);
 }
 
-void Menu::menuHeader(){
-        cout << "\n========================================\n";
-        cout << "           SISTEMA DE CONSULTORIO        \n";
-        cout << "========================================\n";
-};
+void Menu::menuHeader()
+{
+    cout << "\n========================================\n";
+    cout << "           SISTEMA DE CONSULTORIO        \n";
+    cout << "========================================\n";
+}
+
+
+
+void Menu::menuAdministrativo()
+{
+
+
+ManagerAdministrativo managerAdministrativo;  // Instancia del manager
+
+int opcion;
+do
+{
+    cout << "\n----------- MENU ADMINISTRATIVO ----------\n";
+    cout << "  1) Reporte de ocupacion medica\n";
+    cout << "  2) Reporte de rentabilidad\n";
+    cout << "  3) Listar pacientes por seguro\n";
+    cout << "  4) Facturacion mensual\n";
+    cout << "------------------------------------------\n";
+    cout << "  0) Volver al menu principal\n";
+    cout << "------------------------------------------\n";
+    cout << "Seleccione una opcion: ";
+    cin >> opcion;
+
+    switch (opcion)
+    {
+    case 1:
+        cout << ">> (Aqui se generara el reporte de ocupacion medica)" << endl;
+        break;
+    case 2:
+        cout << ">> (Aqui se generara el reporte de rentabilidad)" << endl;
+        break;
+    case 3:
+        cout << ">> (Aqui se listaran los pacientes por seguro)" << endl;
+        break;
+    case 4:
+        managerAdministrativo.obtenerFacturacionDelMes();  // El método se encarga de todo
+        break;
+    case 0:
+        cout << "Volviendo al menu principal..." << endl;
+        break;
+    default:
+        cout << "Opcion no valida. Intente de nuevo." << endl;
+    }
+
+    cout << endl;
+}
+while (opcion != 0);
+}

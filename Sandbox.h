@@ -10,3 +10,5 @@ void ejecutarSandboxPrestador();
 // Métodos para testear Turnos
 void ejecutarSandboxTurno();  // Guarda y lista turnos
 void ejecutarBuscarTurnoPorId(int idBuscado);  // Buscar turno por ID específico
+// Metodo para testear facturacion
+void ejecutarSandboxFacturacionMensual();

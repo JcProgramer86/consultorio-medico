@@ -13,6 +13,8 @@ public:
 
     void menuTurnos();
 
+     void menuAdministrativo();
+
     void menuHeader();
 
 };
