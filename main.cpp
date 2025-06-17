@@ -15,7 +15,7 @@ int main() {
     //ejecutarBuscarPacientePorNombre("luis");
     //ejecutarSandboxMedicoEspecialidad();
     //ejecutarSandboxPrestador();
-    ejecutarSandboxFacturacionMensual();
+    //ejecutarSandboxFacturacionMensual();
 
 
     Menu menu;

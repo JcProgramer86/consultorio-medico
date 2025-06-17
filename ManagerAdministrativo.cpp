@@ -6,6 +6,7 @@ using namespace std;
 ManagerAdministrativo::ManagerAdministrativo() {
     // Constructor vacío
 }
+
 float ManagerAdministrativo::obtenerFacturacionDelMes() {
     int mes, anio;
     cout << "Ingrese el mes (1-12): ";
@@ -22,12 +23,14 @@ float ManagerAdministrativo::obtenerFacturacionDelMes() {
         Turno turno = archivoTurno.Leer(i);
         Fecha fecha = turno.getFechaAtencion();
 
-        if (fecha.getMes() == mes && fecha.getAnio() == anio && !turno.getCancelado()) {
+        if (fecha.getMes() == mes && fecha.getAnio() == anio
+            && !turno.getCancelado()
+            && turno.getAsistio()) {   //  Ahora chequea que asistió
             totalFacturacion += turno.getImporteConsulta();
         }
     }
 
-    cout << "La facturacion del mes " << mes << "/" << anio << " es: $" << totalFacturacion << endl;
+    cout << "La facturación del mes " << mes << "/" << anio << " es: $" << totalFacturacion << endl;
     system("pause");
 
     return totalFacturacion;

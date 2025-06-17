@@ -13,10 +13,12 @@ Turno::Turno() {
     _horaAtencion = Hora();
     _duracionTurno = Hora();
     _observaciones[0] = '\0';
+    _asistio = false;  // Nuevo: por defecto false
 }
 
-Turno::Turno(int id, int idPaciente, int idMedicoEspecialidad, Fecha fechaAtencion, Hora horaAtencion, float importeConsulta,
-             bool cancelado, bool sobreturno, Hora duracionTurno, const std::string& observaciones) {
+Turno::Turno(int id, int idPaciente, int idMedicoEspecialidad, Fecha fechaAtencion, Hora horaAtencion,
+             float importeConsulta, bool cancelado, bool sobreturno, Hora duracionTurno,
+             const std::string& observaciones, bool asistio) {
     setId(id);
     setIdPaciente(idPaciente);
     setIdMedicoEspecialidad(idMedicoEspecialidad);
@@ -26,7 +28,8 @@ Turno::Turno(int id, int idPaciente, int idMedicoEspecialidad, Fecha fechaAtenci
     setCancelado(cancelado);
     setSobreturno(sobreturno);
     setDuracionTurno(duracionTurno);
-    setObservaciones(observaciones.c_str());
+    setObservaciones(observaciones);
+    setAsistio(asistio);  // Nuevo
 }
 
 // Getters
@@ -40,6 +43,7 @@ bool Turno::getCancelado() const { return _cancelado; }
 bool Turno::getSobreturno() const { return _sobreturno; }
 Hora Turno::getDuracionTurno() const { return _duracionTurno; }
 const char* Turno::getObservaciones() const { return _observaciones; }
+bool Turno::getAsistio() const { return _asistio; }  // Nuevo
 
 // Setters
 void Turno::setId(int id) { _id = id; }
@@ -53,7 +57,7 @@ void Turno::setSobreturno(bool sobreturno) { _sobreturno = sobreturno; }
 void Turno::setDuracionTurno(Hora duracion) { _duracionTurno = duracion; }
 void Turno::setObservaciones(const std::string& obs) {
     strncpy(_observaciones, obs.c_str(), sizeof(_observaciones) - 1);
-    _observaciones[sizeof(_observaciones) - 1] = '\0'; // Siempre terminada
+    _observaciones[sizeof(_observaciones) - 1] = '\0';
 }
-
+void Turno::setAsistio(bool asistio) { _asistio = asistio; }  // Nuevo
 
