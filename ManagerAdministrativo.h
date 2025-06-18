@@ -10,4 +10,7 @@ public:
 
     /// Método que calcula la facturación total del mes indicado (mes y año)
     float obtenerFacturacionDelMes();
+    // metodo que listas los pacientes por especialidad x mes
+    void listarPacientesAtendidosPorEspecialidadYMes();
+
 };

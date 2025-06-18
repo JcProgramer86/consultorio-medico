@@ -16,6 +16,7 @@ int main() {
     //ejecutarSandboxMedicoEspecialidad();
     //ejecutarSandboxPrestador();
     //ejecutarSandboxFacturacionMensual();
+ejecutarSandboxListarPacientesAtendidosPorEspecialidadYMes();
 
 
     Menu menu;

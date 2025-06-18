@@ -264,49 +264,34 @@ void Menu::menuHeader()
 }
 
 
+void Menu::menuAdministrativo() {
+    ManagerAdministrativo managerAdministrativo;  // Instancia local, como en los otros menús
 
-void Menu::menuAdministrativo()
-{
+    int opcion;
+    do {
+        cout << "\n----------- MENU ADMINISTRATIVO ----------\n";
+        cout << "  1) Listar pacientes por especialidad y mes\n";
+        cout << "  2) Facturacion mensual\n";
+        cout << "------------------------------------------\n";
+        cout << "  0) Volver al menu principal\n";
+        cout << "------------------------------------------\n";
+        cout << "Seleccione una opcion: ";
+        cin >> opcion;
 
+        switch (opcion) {
+        case 1:
+            managerAdministrativo.listarPacientesAtendidosPorEspecialidadYMes();
+            break;
+        case 2:
+            managerAdministrativo.obtenerFacturacionDelMes();
+            break;
+        case 0:
+            cout << "Volviendo al menu principal..." << endl;
+            break;
+        default:
+            cout << "Opcion no valida. Intente de nuevo." << endl;
+        }
 
-ManagerAdministrativo managerAdministrativo;  // Instancia del manager
-
-int opcion;
-do
-{
-    cout << "\n----------- MENU ADMINISTRATIVO ----------\n";
-    cout << "  1) Reporte de ocupacion medica\n";
-    cout << "  2) Reporte de rentabilidad\n";
-    cout << "  3) Listar pacientes por seguro\n";
-    cout << "  4) Facturacion mensual\n";
-    cout << "------------------------------------------\n";
-    cout << "  0) Volver al menu principal\n";
-    cout << "------------------------------------------\n";
-    cout << "Seleccione una opcion: ";
-    cin >> opcion;
-
-    switch (opcion)
-    {
-    case 1:
-        cout << ">> (Aqui se generara el reporte de ocupacion medica)" << endl;
-        break;
-    case 2:
-        cout << ">> (Aqui se generara el reporte de rentabilidad)" << endl;
-        break;
-    case 3:
-        cout << ">> (Aqui se listaran los pacientes por seguro)" << endl;
-        break;
-    case 4:
-        managerAdministrativo.obtenerFacturacionDelMes();  // El método se encarga de todo
-        break;
-    case 0:
-        cout << "Volviendo al menu principal..." << endl;
-        break;
-    default:
-        cout << "Opcion no valida. Intente de nuevo." << endl;
-    }
-
-    cout << endl;
-}
-while (opcion != 0);
+        cout << endl;
+    } while (opcion != 0);
 }
