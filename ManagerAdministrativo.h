@@ -4,7 +4,8 @@
 #include "ArchivoTurno.h"
 #include "Fecha.h"
 
-class ManagerAdministrativo {
+class ManagerAdministrativo
+{
 public:
     ManagerAdministrativo();
 
@@ -12,5 +13,6 @@ public:
     float obtenerFacturacionDelMes();
     // metodo que listas los pacientes por especialidad x mes
     void listarPacientesAtendidosPorEspecialidadYMes();
-
+    //Inicio submenu de ocupacion medica
+    void ocupacionPorDiaDeMedico();
 };

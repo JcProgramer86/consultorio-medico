@@ -265,16 +265,19 @@ void Menu::menuHeader()
 
 
 void Menu::menuAdministrativo() {
-    ManagerAdministrativo managerAdministrativo;  // Instancia local, como en los otros menús
+    ManagerAdministrativo managerAdministrativo;  // Instancia local del manager
 
     int opcion;
     do {
-        cout << "\n----------- MENU ADMINISTRATIVO ----------\n";
+        cout << "\n=========== MENU ADMINISTRATIVO ===========\n";
         cout << "  1) Listar pacientes por especialidad y mes\n";
         cout << "  2) Facturacion mensual\n";
-        cout << "------------------------------------------\n";
+        cout << "  3) Ocupacion medica\n";
+        cout << "  4) Turnos cancelados\n";
+        cout << "  5) Pacientes atendidos\n";
+        cout << "-------------------------------------------\n";
         cout << "  0) Volver al menu principal\n";
-        cout << "------------------------------------------\n";
+        cout << "-------------------------------------------\n";
         cout << "Seleccione una opcion: ";
         cin >> opcion;
 
@@ -284,6 +287,15 @@ void Menu::menuAdministrativo() {
             break;
         case 2:
             managerAdministrativo.obtenerFacturacionDelMes();
+            break;
+        case 3:
+            mostrarSubmenuOcupacionMedica(managerAdministrativo);//tengo que pasarlo para acceda a sus metodos
+            break;
+        case 4:
+            mostrarSubmenuTurnosCancelados();
+            break;
+        case 5:
+            mostrarSubmenuPacientesAtendidos();
             break;
         case 0:
             cout << "Volviendo al menu principal..." << endl;
@@ -295,3 +307,96 @@ void Menu::menuAdministrativo() {
         cout << endl;
     } while (opcion != 0);
 }
+///desarrollo de submenues
+
+void Menu::mostrarSubmenuOcupacionMedica(ManagerAdministrativo& managerAdministrativo) {
+    int opcion;
+    do {
+        cout << "\n---- OCUPACION MEDICA ----\n";
+        cout << "  1) Ocupación por día (de un médico)\n";
+        cout << "  2) Ocupación por mes (de un médico)\n";
+        cout << "  3) Ocupación por especialidad\n";
+        cout << "  4) Ocupación total de todos los médicos (en un mes)\n";
+        cout << "  0) Volver\n";
+        cout << "Seleccione una opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+        case 1:
+             managerAdministrativo.ocupacionPorDiaDeMedico();
+            break;
+        case 2:
+            // managerAdministrativo.ocupacionPorMesDeMedico();
+            break;
+        case 3:
+            // managerAdministrativo.ocupacionPorEspecialidad();
+            break;
+        case 4:
+            // managerAdministrativo.ocupacionTotalPorMes();
+            break;
+        case 0:
+            break;
+        default:
+            cout << "Opcion invalida.\n";
+        }
+    } while (opcion != 0);
+}
+
+void Menu::mostrarSubmenuTurnosCancelados() {
+    int opcion;
+    do {
+        cout << "\n---- TURNOS CANCELADOS ----\n";
+        cout << "  1) Cancelaciones por médico en rango de fechas\n";
+        cout << "  2) Cancelaciones por especialidad\n";
+        cout << "  3) Porcentaje cancelaciones vs. asistencias por mes\n";
+        cout << "  0) Volver\n";
+        cout << "Seleccione una opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+        case 1:
+            // managerAdministrativo.cancelacionesPorMedico();
+            break;
+        case 2:
+            // managerAdministrativo.cancelacionesPorEspecialidad();
+            break;
+        case 3:
+            // managerAdministrativo.porcentajeCancelacionesVsAsistencias();
+            break;
+        case 0:
+            break;
+        default:
+            cout << "Opcion invalida.\n";
+        }
+    } while (opcion != 0);
+}
+
+void Menu::mostrarSubmenuPacientesAtendidos() {
+    int opcion;
+    do {
+        cout << "\n---- PACIENTES ATENDIDOS ----\n";
+        cout << "  1) Por mes y especialidad\n";
+        cout << "  2) Por médico\n";
+        cout << "  3) Por obra social\n";
+        cout << "  0) Volver\n";
+        cout << "Seleccione una opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+        case 1:
+            // managerAdministrativo.atendidosPorMesYEspecialidad();
+            break;
+        case 2:
+            // managerAdministrativo.atendidosPorMedico();
+            break;
+        case 3:
+            // managerAdministrativo.atendidosPorObraSocial();
+            break;
+        case 0:
+            break;
+        default:
+            cout << "Opcion invalida.\n";
+        }
+    } while (opcion != 0);
+}
+

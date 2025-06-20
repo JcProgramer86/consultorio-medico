@@ -14,3 +14,5 @@ void ejecutarBuscarTurnoPorId(int idBuscado);  // Buscar turno por ID específico
 void ejecutarSandboxFacturacionMensual();
 // metodo para lsitr pac x espex mes
 void ejecutarSandboxListarPacientesAtendidosPorEspecialidadYMes();
+//metodos de submenues de ocupacion medica
+void ejecutarSandboxOcupacionPorDiaDeMedico();
