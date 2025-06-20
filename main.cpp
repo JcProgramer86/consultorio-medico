@@ -18,8 +18,8 @@ int main()
     //ejecutarSandboxPrestador();
     //ejecutarSandboxFacturacionMensual();
    //ejecutarSandboxListarPacientesAtendidosPorEspecialidadYMes();
-   //ejecutarSandboxOcupacionPorDiaDeMedico();
-
+  // ejecutarSandboxOcupacionPorDiaDeMedico();
+     ejecutarSandboxOcupacionPorMesDeMedico();
 
     Menu menu;
     menu.menuPrincipal();

@@ -484,4 +484,57 @@ void ejecutarSandboxOcupacionPorDiaDeMedico()
     system("pause");
 }
 
+void ejecutarSandboxOcupacionPorMesDeMedico()
+{
+    // Borro archivos para datos limpios
+    remove("medico.dat");
+    remove("turnos.dat");
+
+    // Creo un médico de prueba
+    Medico m1;
+    m1.set_id(1001);
+    m1.set_dni("20976055");  // DNI de ejemplo
+    m1.set_nombre("Valeria");
+    m1.set_apellido("Morandi");
+    m1.set_enabled(true);
+
+    ArchivoMedico archivoMedico("medico.dat");
+    archivoMedico.Guardar(m1);
+
+    // Creo turnos de prueba para ese médico
+    ArchivoTurno archivoTurno("turnos.dat");
+
+    Turno t1;
+    t1.setId(1);
+    t1.setIdMedicoEspecialidad(1001);
+    t1.setFechaAtencion(Fecha(20, 6, 2025));
+    t1.setHoraAtencion(Hora(9, 0));
+    t1.setAsistio(true);
+    t1.setCancelado(false);
+    archivoTurno.Guardar(t1);
+
+    Turno t2;
+    t2.setId(2);
+    t2.setIdMedicoEspecialidad(1001);
+    t2.setFechaAtencion(Fecha(21, 6, 2025));
+    t2.setHoraAtencion(Hora(10, 0));
+    t2.setAsistio(true);
+    t2.setCancelado(false);
+    archivoTurno.Guardar(t2);
+
+    Turno t3;
+    t3.setId(3);
+    t3.setIdMedicoEspecialidad(1001);
+    t3.setFechaAtencion(Fecha(15, 7, 2025));
+    t3.setHoraAtencion(Hora(11, 0));
+    t3.setAsistio(true);
+    t3.setCancelado(false);
+    archivoTurno.Guardar(t3);
+
+    // Creo instancia del manager y ejecuto método
+    ManagerAdministrativo manager;
+    manager.ocupacionPorMesDeMedico();
+
+    system("pause");
+}
 

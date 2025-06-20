@@ -15,4 +15,5 @@ public:
     void listarPacientesAtendidosPorEspecialidadYMes();
     //Inicio submenu de ocupacion medica
     void ocupacionPorDiaDeMedico();
+     void ocupacionPorMesDeMedico();
 };
