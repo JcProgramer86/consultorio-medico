@@ -46,6 +46,8 @@
 		<Unit filename="ArchivoPrestador.h" />
 		<Unit filename="ArchivoTurno.cpp" />
 		<Unit filename="ArchivoTurno.h" />
+		<Unit filename="CargarDatosPrueba.cpp" />
+		<Unit filename="CargarDatosPrueba.h" />
 		<Unit filename="Consultorio.cbp" />
 		<Unit filename="Consultorio.depend" />
 		<Unit filename="Consultorio.layout" />
