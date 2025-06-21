@@ -358,6 +358,8 @@ void Menu::menuAdministrativo() {
 
     int opcion;
     do {
+
+            system("cls");  // Limpia la consola antes de mostrar el menú
         cout << "\n=========== MENU ADMINISTRATIVO ===========\n";
         cout << "  1) Listar pacientes por especialidad y mes\n";
         cout << "  2) Facturacion mensual\n";
@@ -401,6 +403,8 @@ void Menu::menuAdministrativo() {
 void Menu::SubmenuOcupacionMedica(ManagerAdministrativo& managerAdministrativo) {
     int opcion;
     do {
+
+         system("cls");  // Limpia la consola antes de mostrar el menú
         cout << "\n---- OCUPACION MEDICA ----\n";
         cout << "  1) Ocupación por día (de un médico)\n";
         cout << "  2) Ocupación por mes (de un médico)\n";
@@ -433,7 +437,9 @@ void Menu::SubmenuOcupacionMedica(ManagerAdministrativo& managerAdministrativo) 
 
 void Menu::SubmenuTurnosCancelados() {
     int opcion;
+
     do {
+         system("cls");  // Limpia la consola antes de mostrar el menú
         cout << "\n---- TURNOS CANCELADOS ----\n";
         cout << "  1) Cancelaciones por médico en rango de fechas\n";
         cout << "  2) Cancelaciones por especialidad\n";
@@ -463,6 +469,7 @@ void Menu::SubmenuTurnosCancelados() {
 void Menu::SubmenuPacientesAtendidos() {
     int opcion;
     do {
+        system("cls");  // Limpia la consola antes de mostrar el menú
         cout << "\n---- PACIENTES ATENDIDOS ----\n";
         cout << "  1) Por mes y especialidad\n";
         cout << "  2) Por médico\n";

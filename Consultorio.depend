@@ -284,3 +284,12 @@
 	"Turnos.h"
 	"Fecha.h"
 
+1750524805 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\managerprestador.cpp
+	"ManagerPrestador.h"
+	"ArchivoPrestador.h"
+	"Prestador.h"
+	"Persona.h"
+	"Menu.h"
+	<iostream>
+	<iomanip>
+
