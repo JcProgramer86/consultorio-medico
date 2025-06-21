@@ -7,44 +7,54 @@
 #include "Turnos.h"
 #include "ArchivoTurno.h"
 #include "ArchivoMedicoEspecialidad.h"
+#include "ManagerAdministrativo.h"
 #include "ArchivoPrestador.h"
+#include <cstdio>
+
+using namespace std;
 
 
-void ejecutarSandboxMedico() {
+void ejecutarSandboxMedico()
+{
     Fecha fechaNac(15, 6, 1985);
     Fecha fechaIni(1, 3, 2010);
 
-   Medico medicoTest(
-    1,
-    "12345678",
-    "Juan",
-    "Perez",
-    "1123456789",
-    "juan@email.com",
-    fechaNac,
-    3,
-    fechaIni,
-    "MAT12345",    // <-- Aquí va la matrícula, por ejemplo
-    true
-);
+    Medico medicoTest(
+        1,
+        "12345678",
+        "Juan",
+        "Perez",
+        "1123456789",
+        "juan@email.com",
+        fechaNac,
+        3,
+        fechaIni,
+        "MAT12345",    // <-- Aquí va la matrícula, por ejemplo
+        true
+    );
 
     ArchivoMedico archivo("medicos.dat");
 
-    if (archivo.Guardar(medicoTest)) {
+    if (archivo.Guardar(medicoTest))
+    {
         std::cout << "Médico guardado correctamente." << std::endl;
-    } else {
+    }
+    else
+    {
         std::cout << "Error al guardar el médico." << std::endl;
     }
 
     int cant = archivo.CantidadRegistros();
 
-    for (int i = 0; i < cant; i++) {
+    for (int i = 0; i < cant; i++)
+    {
         Medico medico = archivo.Leer(i);
         std::cout << medico.toCSV() << std::endl;
     }
 }
 
-void ejecutarSandboxPrestador() {
+void ejecutarSandboxPrestador()
+{
     // 1) Crear un par de prestadores
     Prestador pr1(1, "", "Osde",true);
     pr1.generarCodigo("Osde");
@@ -56,29 +66,34 @@ void ejecutarSandboxPrestador() {
     ArchivoPrestador archivo("prestadores.dat");
 
     // 3) Guardar ambos registros
-    if (archivo.Guardar(pr1) && archivo.Guardar(pr2)) {
+    if (archivo.Guardar(pr1) && archivo.Guardar(pr2))
+    {
         std::cout << "Prestadores guardados correctamente." << std::endl;
-    } else {
+    }
+    else
+    {
         std::cout << "Error al guardar los prestadores." << std::endl;
         return;
     }
 
     // 4) Leer y mostrar todos los registros
     int cantidad = archivo.CantidadRegistros();
-    for (int i = 0; i < cantidad; ++i) {
+    for (int i = 0; i < cantidad; ++i)
+    {
         Prestador p = archivo.Leer(i);
         std::cout
-            << "Registro " << i << ": "
-            << "ID="     << p.getId()
-            << ", Código="  << p.getCodPrestador()
-            << ", Nombre="  << p.getNombrePrestador()
-            << ", Habilitado=" << (p.isEnabled() ? "sí" : "no")
-            << std::endl;
+                << "Registro " << i << ": "
+                << "ID="     << p.getId()
+                << ", Código="  << p.getCodPrestador()
+                << ", Nombre="  << p.getNombrePrestador()
+                << ", Habilitado=" << (p.isEnabled() ? "sí" : "no")
+                << std::endl;
     }
 }
 
 
-void ejecutarSandboxPaciente() {
+void ejecutarSandboxPaciente()
+{
     Fecha fechaNac1(12, 5, 1990);
     Fecha fechaNac2(8, 11, 1987);
 
@@ -106,29 +121,36 @@ void ejecutarSandboxPaciente() {
 
     ArchivoPaciente archivo("pacientes.dat");
 
-    if (archivo.Guardar(paciente1) && archivo.Guardar(paciente2)) {
+    if (archivo.Guardar(paciente1) && archivo.Guardar(paciente2))
+    {
         std::cout << "Pacientes guardados correctamente." << std::endl;
-    } else {
+    }
+    else
+    {
         std::cout << "Error al guardar los pacientes." << std::endl;
     }
 
     int cantidad = archivo.CantidadRegistros();
 
-    for (int i = 0; i < cantidad; i++) {
+    for (int i = 0; i < cantidad; i++)
+    {
         Paciente paciente = archivo.Leer(i);
         std::cout << paciente.toCSV() << std::endl;
     }
 }
 
 
-void ejecutarBuscarPacientePorNombre(const std::string& nombreBuscado) {
+void ejecutarBuscarPacientePorNombre(const std::string& nombreBuscado)
+{
     ArchivoPaciente archivo("pacientes.dat");
     int cantidad = archivo.CantidadRegistros();
     bool encontrado = false;
 
-    for (int i = 0; i < cantidad; ++i) {
+    for (int i = 0; i < cantidad; ++i)
+    {
         Paciente paciente = archivo.Leer(i);
-        if (paciente.get_nombre() == nombreBuscado) {
+        if (paciente.get_nombre() == nombreBuscado)
+        {
             std::cout << "Paciente encontrado:\n";
             std::cout << paciente.toCSV() << std::endl;
             encontrado = true;
@@ -136,7 +158,8 @@ void ejecutarBuscarPacientePorNombre(const std::string& nombreBuscado) {
         }
     }
 
-    if (!encontrado) {
+    if (!encontrado)
+    {
         std::cout << "Paciente con nombre '" << nombreBuscado << "' no encontrado." << std::endl;
     }
 }
@@ -144,36 +167,42 @@ void ejecutarBuscarPacientePorNombre(const std::string& nombreBuscado) {
 
 // prueba de creacion y muestra medico especialidad.
 
-void ejecutarSandboxMedicoEspecialidad(){
+void ejecutarSandboxMedicoEspecialidad()
+{
     MedicoEspecialidad me1(1, 101, 201);
     MedicoEspecialidad me2(2, 102, 202);
 
     ArchivoMedicoEspecialidad archivo("medicoespecialidades.dat");
 
 
-    if (archivo.Guardar(me1) && archivo.Guardar(me2)) {
+    if (archivo.Guardar(me1) && archivo.Guardar(me2))
+    {
         std::cout << "MedicoEspecialidad guardados correctamente." << std::endl;
-    } else {
+    }
+    else
+    {
         std::cout << "Error al guardar MedicoEspecialidad." << std::endl;
         return;
     }
 
 
     int cantidad = archivo.CantidadRegistros();
-    for (int i = 0; i < cantidad; ++i) {
+    for (int i = 0; i < cantidad; ++i)
+    {
         MedicoEspecialidad m = archivo.Leer(i);
         std::cout
-            << "Registro " << i << ": "
-            << "ID=" << m.getId()
-            << ", IdEspecialidad=" << m.getIdEspecialidad()
-            << ", IdMedico=" << m.getIdMedico()
-            << std::endl;
+                << "Registro " << i << ": "
+                << "ID=" << m.getId()
+                << ", IdEspecialidad=" << m.getIdEspecialidad()
+                << ", IdMedico=" << m.getIdMedico()
+                << std::endl;
     }
 }
 
 //turnos
 
-void ejecutarSandboxTurno() {
+void ejecutarSandboxTurno()
+{
     // Crear fecha y hora de ejemplo
     Fecha fechaTurno(25, 5, 2025);
     Hora horaTurno(10, 30);
@@ -196,9 +225,12 @@ void ejecutarSandboxTurno() {
 
     ArchivoTurno archivo("turnos.dat");
 
-    if (archivo.Guardar(turnoTest)) {
+    if (archivo.Guardar(turnoTest))
+    {
         std::cout << "Turno guardado correctamente." << std::endl;
-    } else {
+    }
+    else
+    {
         std::cout << "Error al guardar el turno." << std::endl;
     }
 
@@ -207,7 +239,8 @@ void ejecutarSandboxTurno() {
 }
 
 
-void imprimirTurno(const Turno& t) {
+void imprimirTurno(const Turno& t)
+{
     std::cout << "ID Turno: " << t.getId() << std::endl;
     std::cout << "ID Paciente: " << t.getIdPaciente() << std::endl;
     std::cout << "ID MedicoEspecialidad: " << t.getIdMedicoEspecialidad() << std::endl;
@@ -223,23 +256,285 @@ void imprimirTurno(const Turno& t) {
 }
 
 
-void ejecutarBuscarTurnoPorId(int idBuscado) {
+void ejecutarBuscarTurnoPorId(int idBuscado)
+{
     ArchivoTurno archivo("turnos.dat");
     int posicion = archivo.Buscar(idBuscado);
 
-    if (posicion == -1) {
+    if (posicion == -1)
+    {
         std::cout << "Turno con ID " << idBuscado << " no encontrado." << std::endl;
         return;
     }
 
     Turno turnoEncontrado;
 
-    if (turnoEncontrado.getId() != -1) { // Suponiendo que si no existe devuelve Turno con id=0
+    if (turnoEncontrado.getId() != -1)   // Suponiendo que si no existe devuelve Turno con id=0
+    {
         imprimirTurno(turnoEncontrado);
-    } else {
+    }
+    else
+    {
         std::cout << "Error al leer el turno desde el archivo." << std::endl;
     }
 }
 
+//facturacion mensual
 
+void ejecutarSandboxFacturacionMensual()
+{
+    // Generar algunos turnos de prueba
+    ArchivoTurno archivo("turnos.dat");
+
+    Turno t1;
+    t1.setId(2001);
+    t1.setIdPaciente(10);
+    t1.setIdMedicoEspecialidad(101);
+    t1.setFechaAtencion(Fecha(10, 6, 2025));  // Junio 2025
+    t1.setHoraAtencion(Hora(9, 0));
+    t1.setImporteConsulta(5000.0f);
+    t1.setCancelado(false);
+    t1.setSobreturno(false);
+    t1.setDuracionTurno(Hora(0, 15));
+    t1.setObservaciones("Consulta general");
+
+    Turno t2;
+    t2.setId(2002);
+    t2.setIdPaciente(11);
+    t2.setIdMedicoEspecialidad(102);
+    t2.setFechaAtencion(Fecha(20, 6, 2025));  // Junio 2025
+    t2.setHoraAtencion(Hora(10, 30));
+    t2.setImporteConsulta(7000.0f);
+    t2.setCancelado(false);
+    t2.setSobreturno(false);
+    t2.setDuracionTurno(Hora(0, 15));
+    t2.setObservaciones("Especialidad");
+
+    Turno t3;
+    t3.setId(2003);
+    t3.setIdPaciente(12);
+    t3.setIdMedicoEspecialidad(103);
+    t3.setFechaAtencion(Fecha(5, 7, 2025));  // Julio 2025
+    t3.setHoraAtencion(Hora(11, 0));
+    t3.setImporteConsulta(6000.0f);
+    t3.setCancelado(false);
+    t3.setSobreturno(false);
+    t3.setDuracionTurno(Hora(0, 15));
+    t3.setObservaciones("Chequeo");
+
+    archivo.Guardar(t1);
+    archivo.Guardar(t2);
+    archivo.Guardar(t3);
+
+    std::cout << "Turnos de prueba generados.\n";
+
+    // Llamar al cálculo de facturación
+    ManagerAdministrativo manager;
+    float facturacion = manager.obtenerFacturacionDelMes();
+
+    std::cout << "Facturación total de Junio 2025: $" << facturacion << std::endl;
+
+    system("pause");
+}
+
+// Función auxiliar para crear datos de prueba en medicoespecialidad.dat
+void crearDatosPruebaMedicoEspecialidad()
+{
+    ArchivoMedicoEspecialidad archivoMedicoEspecialidad("medicoespecialidad.dat");
+
+    MedicoEspecialidad me1;
+    me1.setId(201);
+    me1.setIdMedico(1001);
+    me1.setIdEspecialidad(201);
+
+    MedicoEspecialidad me2;
+    me2.setId(202);
+    me2.setIdMedico(1002);
+    me2.setIdEspecialidad(202);
+
+    archivoMedicoEspecialidad.Guardar(me1);
+    archivoMedicoEspecialidad.Guardar(me2);
+}
+
+void ejecutarSandboxListarPacientesAtendidosPorEspecialidadYMes()
+{
+    // Borramos archivos para datos limpios
+    remove("paciente.dat");
+    remove("turnos.dat");
+    remove("medicoespecialidad.dat");
+
+    // Crear pacientes de prueba
+    Paciente p1, p2, p3;
+
+    p1.set_id(10);
+    p1.set_nombre("Luis");
+    p1.set_apellido("Perez");
+    p1.set_enabled(true);
+
+    p2.set_id(11);
+    p2.set_nombre("Ana");
+    p2.set_apellido("Gomez");
+    p2.set_enabled(true);
+
+    p3.set_id(12);
+    p3.set_nombre("Carlos");
+    p3.set_apellido("Lopez");
+    p3.set_enabled(true);
+
+    ArchivoPaciente archiPac("paciente.dat");
+    archiPac.Guardar(p1);
+    archiPac.Guardar(p2);
+    archiPac.Guardar(p3);
+
+    // Crear datos médico-especialidad
+    crearDatosPruebaMedicoEspecialidad();
+
+    // Crear turnos de prueba
+    Turno t1, t2, t3;
+
+    t1.setId(2001);
+    t1.setIdPaciente(10);
+    t1.setIdMedicoEspecialidad(201);
+    t1.setFechaAtencion(Fecha(5, 6, 2025));
+    t1.setHoraAtencion(Hora(9, 0));
+    t1.setCancelado(false);
+    t1.setAsistio(true);
+
+    t2.setId(2002);
+    t2.setIdPaciente(11);
+    t2.setIdMedicoEspecialidad(201);
+    t2.setFechaAtencion(Fecha(15, 6, 2025));
+    t2.setHoraAtencion(Hora(10, 0));
+    t2.setCancelado(false);
+    t2.setAsistio(true);
+
+    t3.setId(2003);
+    t3.setIdPaciente(12);
+    t3.setIdMedicoEspecialidad(202);
+    t3.setFechaAtencion(Fecha(20, 7, 2025));
+    t3.setHoraAtencion(Hora(11, 0));
+    t3.setCancelado(false);
+    t3.setAsistio(true);
+
+    ArchivoTurno archiTurno("turnos.dat");
+    archiTurno.Guardar(t1);
+    archiTurno.Guardar(t2);
+    archiTurno.Guardar(t3);
+
+    std::cout << "\n>>> Datos de prueba generados correctamente.\n\n";
+
+    ManagerAdministrativo manager;
+    manager.listarPacientesAtendidosPorEspecialidadYMes();
+
+    system("pause");
+}
+//sandoboxes para medico submenues
+
+void ejecutarSandboxOcupacionPorDiaDeMedico()
+{
+    // Borro archivos para datos limpios
+    remove("medico.dat");
+    remove("turnos.dat");
+
+    // Creo un médico de prueba
+    Medico m1;
+    m1.set_id(1001);
+    m1.set_dni("20976055");  // DNI de ejemplo
+    m1.set_nombre("Valeria");
+    m1.set_apellido("Morandi");
+    m1.set_enabled(true);
+
+    ArchivoMedico archivoMedico("medico.dat");
+    archivoMedico.Guardar(m1);
+
+    // Creo turnos de prueba para ese médico
+    ArchivoTurno archivoTurno("turnos.dat");
+
+    Turno t1;
+    t1.setId(1);
+    t1.setIdMedicoEspecialidad(1001);
+    t1.setFechaAtencion(Fecha(20, 6, 2025));
+    t1.setHoraAtencion(Hora(9, 0));
+    t1.setAsistio(true);
+    t1.setCancelado(false);
+    archivoTurno.Guardar(t1);
+
+    Turno t2;
+    t2.setId(2);
+    t2.setIdMedicoEspecialidad(1001);
+    t2.setFechaAtencion(Fecha(20, 6, 2025));
+    t2.setHoraAtencion(Hora(10, 0));
+    t2.setAsistio(true);
+    t2.setCancelado(false);
+    archivoTurno.Guardar(t2);
+
+    Turno t3;
+    t3.setId(3);
+    t3.setIdMedicoEspecialidad(1001);
+    t3.setFechaAtencion(Fecha(21, 6, 2025));
+    t3.setHoraAtencion(Hora(9, 0));
+    t3.setAsistio(true);
+    t3.setCancelado(false);
+    archivoTurno.Guardar(t3);
+
+    // Creo instancia del manager y ejecuto método
+    ManagerAdministrativo manager;
+    manager.ocupacionPorDiaDeMedico();
+
+    system("pause");
+}
+
+void ejecutarSandboxOcupacionPorMesDeMedico()
+{
+    // Borro archivos para datos limpios
+    remove("medico.dat");
+    remove("turnos.dat");
+
+    // Creo un médico de prueba
+    Medico m1;
+    m1.set_id(1001);
+    m1.set_dni("20976055");  // DNI de ejemplo
+    m1.set_nombre("Valeria");
+    m1.set_apellido("Morandi");
+    m1.set_enabled(true);
+
+    ArchivoMedico archivoMedico("medico.dat");
+    archivoMedico.Guardar(m1);
+
+    // Creo turnos de prueba para ese médico
+    ArchivoTurno archivoTurno("turnos.dat");
+
+    Turno t1;
+    t1.setId(1);
+    t1.setIdMedicoEspecialidad(1001);
+    t1.setFechaAtencion(Fecha(20, 6, 2025));
+    t1.setHoraAtencion(Hora(9, 0));
+    t1.setAsistio(true);
+    t1.setCancelado(false);
+    archivoTurno.Guardar(t1);
+
+    Turno t2;
+    t2.setId(2);
+    t2.setIdMedicoEspecialidad(1001);
+    t2.setFechaAtencion(Fecha(21, 6, 2025));
+    t2.setHoraAtencion(Hora(10, 0));
+    t2.setAsistio(true);
+    t2.setCancelado(false);
+    archivoTurno.Guardar(t2);
+
+    Turno t3;
+    t3.setId(3);
+    t3.setIdMedicoEspecialidad(1001);
+    t3.setFechaAtencion(Fecha(15, 7, 2025));
+    t3.setHoraAtencion(Hora(11, 0));
+    t3.setAsistio(true);
+    t3.setCancelado(false);
+    archivoTurno.Guardar(t3);
+
+    // Creo instancia del manager y ejecuto método
+    ManagerAdministrativo manager;
+    manager.ocupacionPorMesDeMedico();
+
+    system("pause");
+}
 

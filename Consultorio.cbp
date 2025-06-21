@@ -55,6 +55,8 @@
 		<Unit filename="Fecha.h" />
 		<Unit filename="Hora.cpp" />
 		<Unit filename="Hora.h" />
+		<Unit filename="ManagerAdministrativo.cpp" />
+		<Unit filename="ManagerAdministrativo.h" />
 		<Unit filename="ManagerEspecialidad.cpp" />
 		<Unit filename="ManagerEspecialidad.h" />
 		<Unit filename="ManagerMedico.cpp" />

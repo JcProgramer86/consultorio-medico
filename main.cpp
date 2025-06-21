@@ -6,7 +6,8 @@
 
 using namespace std;
 
-int main() {
+int main()
+{
 
     setlocale(LC_ALL, "Spanish");
     //ejecutarSandboxMedico();
@@ -15,6 +16,10 @@ int main() {
     //ejecutarBuscarPacientePorNombre("luis");
     //ejecutarSandboxMedicoEspecialidad();
     //ejecutarSandboxPrestador();
+    //ejecutarSandboxFacturacionMensual();
+   //ejecutarSandboxListarPacientesAtendidosPorEspecialidadYMes();
+  // ejecutarSandboxOcupacionPorDiaDeMedico();
+     ejecutarSandboxOcupacionPorMesDeMedico();
 
     Menu menu;
     menu.menuPrincipal();

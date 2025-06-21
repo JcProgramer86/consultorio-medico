@@ -5,7 +5,7 @@
 #include "ManagerTurno.h"
 #include "ManagerEspecialidad.h"
 #include "ManagerMedicoEspecialidad.h"
-
+#include "ManagerAdministrativo.h"
 using namespace std;
 
 // Menu principal del sistema
@@ -20,6 +20,7 @@ void Menu::menuPrincipal()
         cout << "  1) Pacientes\n";
         cout << "  2) Medicos\n";
         cout << "  3) Turnos\n";
+        cout << "  4) Administrativo\n";
         cout << "----------------------------------------\n";
         cout << "  0) Salir\n";
         cout << "----------------------------------------\n";
@@ -36,6 +37,11 @@ void Menu::menuPrincipal()
             break;
         case 3:
             menuTurnos();
+            break;
+        case 4:
+            system("cls");
+            menuHeader();
+            menuAdministrativo();
             break;
         case 0:
             cout << "Saliendo del sistema..." << endl;
@@ -73,30 +79,35 @@ void Menu::menuPaciente()
         cout << endl;
         cin >> opcion;
 
-        switch (opcion) {
-            case 1: managerPaciente.crearNuevoPaciente();
-                break;
+        switch (opcion)
+        {
+        case 1:
+            managerPaciente.crearNuevoPaciente();
+            break;
 
-            case 2: managerPaciente.ListarTodos();
-                break;
+        case 2:
+            managerPaciente.ListarTodos();
+            break;
 
-            case 3: managerPaciente.EditarPaciente();
-                break;
+        case 3:
+            managerPaciente.EditarPaciente();
+            break;
 
-            case 4: managerPaciente.MostrarPorDni();
-                break;
+        case 4:
+            managerPaciente.MostrarPorDni();
+            break;
 
-            case 5:
-                  managerTurno.sacarTurno();
-                break;
-            case 6:
-                 managerTurno.mostrarAgendaSemanal();
-                break;
-            case 0:
-                cout << "Volviendo al menu principal..." << endl;
-                break;
-            default:
-                cout << "Opcion no valida. Intente de nuevo." << endl;
+        case 5:
+            managerTurno.sacarTurno();
+            break;
+        case 6:
+            managerTurno.mostrarAgendaSemanal();
+            break;
+        case 0:
+            cout << "Volviendo al menu principal..." << endl;
+            break;
+        default:
+            cout << "Opcion no valida. Intente de nuevo." << endl;
 
         }
         cout << endl;
@@ -196,12 +207,15 @@ void Menu::menuMedico()
     while (opcion != 0);
 }
 
-void Menu::menuTurnos() {
+void Menu::menuTurnos()
+{
     ManagerTurno manager;
     int opcion;
+
     do {
         system("cls");
         menuHeader();
+
         cout << "\n----------------- TURNOS ----------------\n";
         cout << "  1) Sacar nuevo turno\n";
         cout << "  2) Ver agenda semanal\n";
@@ -213,33 +227,176 @@ void Menu::menuTurnos() {
         cout << "Seleccione una opcion: ";
         cin >> opcion;
 
-        switch (opcion) {
-            case 1:
-                manager.sacarTurno();
-                break;
-            case 2:
-                manager.mostrarAgendaSemanal();
-                break;
-            case 3: {
-                int id;
-                cout << "Ingrese el ID del turno a buscar: ";
-                cin >> id;
-                break;
-            }
-            case 4: manager.listarTurnos() ;
-                break;
-            case 0:
-                cout << "Volviendo al menu principal..." << endl;
-                break;
-            default:
-                cout << "Opcion no valida. Intente de nuevo." << endl;
+        switch (opcion)
+        {
+        case 1:
+            manager.sacarTurno();
+            break;
+        case 2:
+            manager.mostrarAgendaSemanal();
+            break;
+        case 3:
+        {
+            int id;
+            cout << "Ingrese el ID del turno a buscar: ";
+            cin >> id;
+            break;
         }
+        case 4:
+            manager.listarTurnos() ;
+            break;
+        case 0:
+            cout << "Volviendo al menu principal..." << endl;
+            break;
+        default:
+            cout << "Opcion no valida. Intente de nuevo." << endl;
+        }
+        cout << endl;
+    }
+    while (opcion != 0);
+}
+
+void Menu::menuHeader()
+{
+    cout << "\n========================================\n";
+    cout << "           SISTEMA DE CONSULTORIO        \n";
+    cout << "========================================\n";
+}
+
+
+void Menu::menuAdministrativo() {
+    ManagerAdministrativo managerAdministrativo;  // Instancia local del manager
+
+    int opcion;
+    do {
+        cout << "\n=========== MENU ADMINISTRATIVO ===========\n";
+        cout << "  1) Listar pacientes por especialidad y mes\n";
+        cout << "  2) Facturacion mensual\n";
+        cout << "  3) Ocupacion medica\n";
+        cout << "  4) Turnos cancelados\n";
+        cout << "  5) Pacientes atendidos\n";
+        cout << "-------------------------------------------\n";
+        cout << "  0) Volver al menu principal\n";
+        cout << "-------------------------------------------\n";
+        cout << "Seleccione una opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+        case 1:
+            managerAdministrativo.listarPacientesAtendidosPorEspecialidadYMes();
+            break;
+        case 2:
+            managerAdministrativo.obtenerFacturacionDelMes();
+            break;
+        case 3:
+            mostrarSubmenuOcupacionMedica(managerAdministrativo);//tengo que pasarlo para acceda a sus metodos
+            break;
+        case 4:
+            mostrarSubmenuTurnosCancelados();
+            break;
+        case 5:
+            mostrarSubmenuPacientesAtendidos();
+            break;
+        case 0:
+            cout << "Volviendo al menu principal..." << endl;
+            break;
+        default:
+            cout << "Opcion no valida. Intente de nuevo." << endl;
+        }
+
         cout << endl;
     } while (opcion != 0);
 }
+///desarrollo de submenues
 
-void Menu::menuHeader(){
-        cout << "\n========================================\n";
-        cout << "           SISTEMA DE CONSULTORIO        \n";
-        cout << "========================================\n";
-};
+void Menu::mostrarSubmenuOcupacionMedica(ManagerAdministrativo& managerAdministrativo) {
+    int opcion;
+    do {
+        cout << "\n---- OCUPACION MEDICA ----\n";
+        cout << "  1) Ocupación por día (de un médico)\n";
+        cout << "  2) Ocupación por mes (de un médico)\n";
+        cout << "  3) Ocupación por especialidad\n";
+        cout << "  4) Ocupación total de todos los médicos (en un mes)\n";
+        cout << "  0) Volver\n";
+        cout << "Seleccione una opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+        case 1:
+             managerAdministrativo.ocupacionPorDiaDeMedico();
+            break;
+        case 2:
+             managerAdministrativo.ocupacionPorMesDeMedico();
+            break;
+        case 3:
+            // managerAdministrativo.ocupacionPorEspecialidad();
+            break;
+        case 4:
+            // managerAdministrativo.ocupacionTotalPorMes();
+            break;
+        case 0:
+            break;
+        default:
+            cout << "Opcion invalida.\n";
+        }
+    } while (opcion != 0);
+}
+
+void Menu::mostrarSubmenuTurnosCancelados() {
+    int opcion;
+    do {
+        cout << "\n---- TURNOS CANCELADOS ----\n";
+        cout << "  1) Cancelaciones por médico en rango de fechas\n";
+        cout << "  2) Cancelaciones por especialidad\n";
+        cout << "  3) Porcentaje cancelaciones vs. asistencias por mes\n";
+        cout << "  0) Volver\n";
+        cout << "Seleccione una opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+        case 1:
+            // managerAdministrativo.cancelacionesPorMedico();
+            break;
+        case 2:
+            // managerAdministrativo.cancelacionesPorEspecialidad();
+            break;
+        case 3:
+            // managerAdministrativo.porcentajeCancelacionesVsAsistencias();
+            break;
+        case 0:
+            break;
+        default:
+            cout << "Opcion invalida.\n";
+        }
+    } while (opcion != 0);
+}
+
+void Menu::mostrarSubmenuPacientesAtendidos() {
+    int opcion;
+    do {
+        cout << "\n---- PACIENTES ATENDIDOS ----\n";
+        cout << "  1) Por mes y especialidad\n";
+        cout << "  2) Por médico\n";
+        cout << "  3) Por obra social\n";
+        cout << "  0) Volver\n";
+        cout << "Seleccione una opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+        case 1:
+            // managerAdministrativo.atendidosPorMesYEspecialidad();
+            break;
+        case 2:
+            // managerAdministrativo.atendidosPorMedico();
+            break;
+        case 3:
+            // managerAdministrativo.atendidosPorObraSocial();
+            break;
+        case 0:
+            break;
+        default:
+            cout << "Opcion invalida.\n";
+        }
+    } while (opcion != 0);
+}
+
