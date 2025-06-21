@@ -19,7 +19,9 @@ int main()
     //ejecutarSandboxFacturacionMensual();
    //ejecutarSandboxListarPacientesAtendidosPorEspecialidadYMes();
   // ejecutarSandboxOcupacionPorDiaDeMedico();
-     ejecutarSandboxOcupacionPorMesDeMedico();
+     //ejecutarSandboxOcupacionPorMesDeMedico();
+     void ejecutarSandboxOcupacionPorMesEspecialidad();
+  // <<< Esto crea los datos de prueba
 
     Menu menu;
     menu.menuPrincipal();

@@ -17,3 +17,4 @@ void ejecutarSandboxListarPacientesAtendidosPorEspecialidadYMes();
 //metodos de submenues de ocupacion medica
 void ejecutarSandboxOcupacionPorDiaDeMedico();
 void ejecutarSandboxOcupacionPorMesDeMedico();
+void ejecutarSandboxOcupacionPorEspecialidad();

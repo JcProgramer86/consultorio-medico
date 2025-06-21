@@ -3,6 +3,10 @@
 #include "ArchivoMedicoEspecialidad.h"
 #include "ArchivoPaciente.h"
 #include "ArchivoMedico.h"
+#include <cstring>
+#include <cctype>
+#include "ArchivoEspecialidad.h"
+#include "Especialidad.h"
 #include <iostream>
 #include <iomanip>
 using namespace std;
@@ -22,7 +26,8 @@ float ManagerAdministrativo::obtenerFacturacionDelMes()
     cin >> anio;
 
     // Validar mes y año (día fijo 1 para validar solo mes/año)
-    if (!Fecha::esValida(1, mes, anio)) {
+    if (!Fecha::esValida(1, mes, anio))
+    {
         cout << "Mes o año inválido.\n";
         system("pause");
         return 0.0f;
@@ -38,8 +43,8 @@ float ManagerAdministrativo::obtenerFacturacionDelMes()
         Fecha fecha = turno.getFechaAtencion();
 
         if (fecha.getMes() == mes && fecha.getAnio() == anio
-            && !turno.getCancelado()
-            && turno.getAsistio())
+                && !turno.getCancelado()
+                && turno.getAsistio())
         {
             totalFacturacion += turno.getImporteConsulta();
         }
@@ -63,7 +68,8 @@ void ManagerAdministrativo::listarPacientesAtendidosPorEspecialidadYMes()
     cout << "Ingrese el ID de especialidad: ";
     cin >> idEspecialidad;
 
-    if (!Fecha::esValida(1, mes, anio)) {
+    if (!Fecha::esValida(1, mes, anio))
+    {
         cout << "Mes o año inválido.\n";
         system("pause");
         return;
@@ -84,7 +90,7 @@ void ManagerAdministrativo::listarPacientesAtendidosPorEspecialidadYMes()
         Fecha fecha = turno.getFechaAtencion();
 
         if (turno.getAsistio() && !turno.getCancelado() &&
-            fecha.getMes() == mes && fecha.getAnio() == anio)
+                fecha.getMes() == mes && fecha.getAnio() == anio)
         {
             int posMedicoEsp = archivoMedicoEspecialidad.Buscar(turno.getIdMedicoEspecialidad());
             if (posMedicoEsp != -1)
@@ -176,11 +182,11 @@ void ManagerAdministrativo::ocupacionPorDiaDeMedico()
         Fecha fecha = turno.getFechaAtencion();
 
         if (turno.getIdMedicoEspecialidad() == idMedico &&
-            fecha.getDia() == dia &&
-            fecha.getMes() == mes &&
-            fecha.getAnio() == anio &&
-            !turno.getCancelado() &&
-            turno.getAsistio())
+                fecha.getDia() == dia &&
+                fecha.getMes() == mes &&
+                fecha.getAnio() == anio &&
+                !turno.getCancelado() &&
+                turno.getAsistio())
         {
             turnosEnElDia++;
         }
@@ -253,10 +259,10 @@ void ManagerAdministrativo::ocupacionPorMesDeMedico()
         Fecha fecha = turno.getFechaAtencion();
 
         if (turno.getIdMedicoEspecialidad() == idMedico &&
-            fecha.getMes() == mes &&
-            fecha.getAnio() == anio &&
-            !turno.getCancelado() &&
-            turno.getAsistio())
+                fecha.getMes() == mes &&
+                fecha.getAnio() == anio &&
+                !turno.getCancelado() &&
+                turno.getAsistio())
         {
             turnosEnElMes++;
         }
@@ -267,4 +273,143 @@ void ManagerAdministrativo::ocupacionPorMesDeMedico()
     cout << left << setw(30) << "Turnos Atendidos:" << turnosEnElMes << "\n" << endl;
 
     system("pause");
+}
+
+//Opcion 3  del menu buscando la especialidad x nombre y no por id
+// Función auxiliar para comparar strings sin distinguir mayúsculas/minúsculas
+bool ManagerAdministrativo::compararStringsCaseInsensitive(const std::string& str1, const std::string& str2)
+{
+    // Primero verifico que tengan la misma longitud
+    if ((int)str1.length() != (int)str2.length())
+    {
+        return false;
+    }
+
+    for (int i = 0; i < (int)str1.length(); i++)
+    {
+        char c1 = str1[i];
+        char c2 = str2[i];
+
+        // Convertir c1 a minúscula si es mayúscula
+        if (c1 >= 'A' && c1 <= 'Z')
+        {
+            c1 = c1 + 32;
+        }
+
+        // Convertir c2 a minúscula si es mayúscula
+        if (c2 >= 'A' && c2 <= 'Z')
+        {
+            c2 = c2 + 32;
+        }
+
+        if (c1 != c2)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+
+int ManagerAdministrativo::buscarEspecialidadPorNombre(const char* nombreEspecialidad)
+{
+    ArchivoEspecialidad archivo("especialidad.dat");
+    int cantidad = archivo.cantidadRegistros();
+    Especialidad esp;
+
+    for (int i = 0; i < cantidad; i++)
+    {
+        esp = archivo.leer(i);
+        if (compararStringsCaseInsensitive(esp.get_nombreEspecialidad(), nombreEspecialidad))
+        {
+            return i;  // Retorna la posición si encontró la especialidad
+        }
+    }
+    return -1; // No encontró la especialidad
+}
+
+
+
+void ManagerAdministrativo::ocupacionPorMesEspecialidad()
+{
+    int mes, anio;
+    cout << "Ingrese el mes (1-12): ";
+    cin >> mes;
+    cout << "Ingrese el año (ej. 2025): ";
+    cin >> anio;
+
+    // Validar mes y añoion 3
+    if (!Fecha::esValida(1, mes, anio))
+    {
+        cout << "Mes o año inválido.\n";
+        return;
+    }
+
+    ArchivoTurno archivoTurno("turnos.dat");
+    int cantidadTurnos = archivoTurno.CantidadRegistros();
+    if (cantidadTurnos == 0)
+    {
+        cout << "No hay turnos registrados.\n";
+        return;
+    }
+
+    ArchivoMedicoEspecialidad archivoMedEsp("medicoespecialidad.dat");
+    ArchivoEspecialidad archivoEsp("especialidad.dat");
+
+    // Contador de turnos por especialidad (asumiendo hasta 100 especialidades)
+    const int MAX_ESPECIALIDADES = 100;
+    int turnosPorEspecialidad[MAX_ESPECIALIDADES] = {0};
+
+    int cantEspecialidades = archivoEsp.cantidadRegistros();
+    if (cantEspecialidades == 0)
+    {
+        cout << "No hay especialidades registradas.\n";
+        return;
+    }
+
+    // Recorro todos los turnos para contar los que coincidan con mes y año y no estén cancelados
+    for (int i = 0; i < cantidadTurnos; i++)
+    {
+        Turno turno = archivoTurno.Leer(i);
+        Fecha fecha = turno.getFechaAtencion();
+
+        if (fecha.getMes() == mes && fecha.getAnio() == anio && !turno.getCancelado() && turno.getAsistio())
+        {
+            int idMedEsp = turno.getIdMedicoEspecialidad();
+            // Busco la especialidad correspondiente a ese id medico-especialidad
+            int cantMedEsp = archivoMedEsp.CantidadRegistros();
+            for (int j = 0; j < cantMedEsp; j++)
+            {
+                MedicoEspecialidad medEsp = archivoMedEsp.Leer(j);
+                if (medEsp.getId() == idMedEsp)
+                {
+                    int idEsp = medEsp.getIdEspecialidad();
+                    // Incremento contador del id de especialidad si está dentro del rango
+                    if (idEsp > 0 && idEsp <= MAX_ESPECIALIDADES)
+                    {
+                        turnosPorEspecialidad[idEsp - 1]++;
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    cout << "\nOcupación médica por especialidad para "
+         << setw(2) << setfill('0') << mes << "/" << anio << ":\n";
+    cout << setfill(' ') << left;
+    cout << setw(30) << "Especialidad" << "Turnos\n";
+    cout << "-------------------------------------------\n";
+
+    // Muestro sólo las especialidades con al menos un turno
+    for (int k = 0; k < cantEspecialidades; k++)
+    {
+        if (turnosPorEspecialidad[k] > 0)
+        {
+            Especialidad esp = archivoEsp.leer(k);
+            cout << left << setw(30) << esp.get_nombreEspecialidad()
+                 << turnosPorEspecialidad[k] << "\n";
+        }
+    }
 }

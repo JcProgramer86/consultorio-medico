@@ -315,7 +315,7 @@ void Menu::mostrarSubmenuOcupacionMedica(ManagerAdministrativo& managerAdministr
         cout << "\n---- OCUPACION MEDICA ----\n";
         cout << "  1) Ocupación por día (de un médico)\n";
         cout << "  2) Ocupación por mes (de un médico)\n";
-        cout << "  3) Ocupación por especialidad\n";
+        cout << "  3) Ocupación por especialidad (por mes)\n";
         cout << "  4) Ocupación total de todos los médicos (en un mes)\n";
         cout << "  0) Volver\n";
         cout << "Seleccione una opcion: ";
@@ -329,7 +329,7 @@ void Menu::mostrarSubmenuOcupacionMedica(ManagerAdministrativo& managerAdministr
              managerAdministrativo.ocupacionPorMesDeMedico();
             break;
         case 3:
-            // managerAdministrativo.ocupacionPorEspecialidad();
+             managerAdministrativo.ocupacionPorMesEspecialidad();
             break;
         case 4:
             // managerAdministrativo.ocupacionTotalPorMes();

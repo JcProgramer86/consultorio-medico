@@ -9,6 +9,7 @@
 #include "ArchivoMedicoEspecialidad.h"
 #include "ManagerAdministrativo.h"
 #include "ArchivoPrestador.h"
+#include "ArchivoEspecialidad.h"
 #include <cstdio>
 
 using namespace std;
@@ -537,4 +538,55 @@ void ejecutarSandboxOcupacionPorMesDeMedico()
 
     system("pause");
 }
+void ejecutarSandboxOcupacionPorMesEspecialidad() {
+    // Borrar archivos para datos limpios
+    remove("especialidad.dat");
+    remove("turnos.dat");
+    remove("medicoespecialidad.dat");
 
+    // Crear especialidades de prueba
+    Especialidad e1(1, "Cardiologia");
+    Especialidad e2(2, "Neumonologia");
+    Especialidad e3(3, "Dermatologia");
+
+    ArchivoEspecialidad archivoEsp("especialidad.dat");
+    archivoEsp.guardar(e1);
+    archivoEsp.guardar(e2);
+    archivoEsp.guardar(e3);
+
+    // Crear médicos y médico-especialidad
+    Medico m1; m1.set_id(100); m1.set_nombre("Juan"); m1.set_apellido("Perez"); m1.set_enabled(true);
+    Medico m2; m2.set_id(101); m2.set_nombre("Ana"); m2.set_apellido("Lopez"); m2.set_enabled(true);
+
+    ArchivoMedico archivoMed("medico.dat");
+    archivoMed.Guardar(m1);
+    archivoMed.Guardar(m2);
+
+    MedicoEspecialidad me1(200, 1, 100); // Cardiologia - Juan
+    MedicoEspecialidad me2(201, 2, 101); // Neumonologia - Ana
+
+    ArchivoMedicoEspecialidad archivoMedEsp("medicoespecialidad.dat");
+    archivoMedEsp.Guardar(me1);
+    archivoMedEsp.Guardar(me2);
+
+    // Crear turnos para diferentes días y meses
+    Turno t1; t1.setId(1); t1.setIdPaciente(1); t1.setIdMedicoEspecialidad(200);
+    t1.setFechaAtencion(Fecha(5, 6, 2025)); t1.setHoraAtencion(Hora(9, 0)); t1.setCancelado(false); t1.setAsistio(true);
+
+    Turno t2; t2.setId(2); t2.setIdPaciente(2); t2.setIdMedicoEspecialidad(201);
+    t2.setFechaAtencion(Fecha(10, 6, 2025)); t2.setHoraAtencion(Hora(10, 0)); t2.setCancelado(false); t2.setAsistio(true);
+
+    Turno t3; t3.setId(3); t3.setIdPaciente(3); t3.setIdMedicoEspecialidad(200);
+    t3.setFechaAtencion(Fecha(15, 7, 2025)); t3.setHoraAtencion(Hora(11, 0)); t3.setCancelado(false); t3.setAsistio(true);
+
+    ArchivoTurno archivoTurno("turnos.dat");
+    archivoTurno.Guardar(t1);
+    archivoTurno.Guardar(t2);
+    archivoTurno.Guardar(t3);
+
+    // Ejecutar método del manager
+    ManagerAdministrativo manager;
+    manager.ocupacionPorMesEspecialidad();
+
+    system("pause");
+}
