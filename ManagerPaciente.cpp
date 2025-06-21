@@ -1,73 +1,134 @@
 #include "ManagerPaciente.h"
 #include "Paciente.h"
 #include "ArchivoPaciente.h"
+#include "ArchivoPrestador.h"
 #include "Fecha.h"
 #include "Utils.h"
 #include <iostream>
+#include <iomanip>
 #include "Menu.h"
 
 using namespace std;
 
+Menu menu;
+
 void ManagerPaciente::crearNuevoPaciente() {
-    Paciente paciente;
-    ArchivoPaciente aPaciente("paciente.dat") ;
-    Menu menu;
-    string nombre,apellido,dni,telefono,email;
-    int idPrestador,id,dia,mes,anio;
-    bool bandera = false;
     system("cls");
     menu.menuHeader();
 
+    Paciente paciente;
+    ArchivoPaciente aPaciente("paciente.dat") ;
+    ArchivoPrestador archivoPrestador("prestadores.dat");
+
+
+    string nombre, apellido, dni, telefono, email;
+    int idPrestador, id;
+    int cantidadPrestadores = archivoPrestador.CantidadRegistros();
+
+    if (cantidadPrestadores == 0) {
+        cout << "\n[!] Para poder crear un paciente debe existir al menos un prestador cargado." << endl;
+        cout << "Presione Enter para volver al menú de pacientes...";
+        cin.ignore();
+        cin.get();
+        return;
+    }
+
     cout << "\n========================================" << endl;
-    cout << "          ALTA DE NUEVO PACIENTE          " << endl;
+    cout << "          ALTA DE NUEVO PACIENTE        " << endl;
     cout << "========================================" << endl;
 
-    while(bandera == false){
-
-        bandera = true;
-
-        cout << "\nIngrese el numero de documento: ";
+    do {
+        cout << "\nIngrese el numero de DNI (0 para cancelar): ";
         cin >> dni;
-        if(!aPaciente.checkDni(dni)){
-            bandera = false;
+        if (dni == "0") {
+            cout << "\n[!] Registro cancelado." << endl;
+            return;
         }
-    }
+        if (!paciente.validarDNI(dni)) {
+            cout << "[!] El DNI ingresado es erroneo." << endl;
+            continue;
+        }
+        if (!aPaciente.checkDni(dni)) {
+            cout << "[!] El DNI ya está registrado para otro paciente." << endl;
+            continue;
+        }
+        break;
+    } while (true);
 
     cout << "Ingrese el nombre del paciente: ";
     cin.ignore();
-    getline(cin,nombre);
+    getline(cin, nombre);
+    while (!Paciente::validarTexto(nombre)) {
+    cout << "[!] El nombre solo debe contener letras. Intente nuevamente: ";
+    getline(cin, nombre);
+}
 
     cout << "Ingrese el apellido del paciente: ";
-    getline(cin,apellido);
+    getline(cin, apellido);
+    while (!Paciente::validarTexto(apellido)) {
+    cout << "[!] El apellido solo debe contener letras. Intente nuevamente: ";
+    getline(cin, apellido);
+}
 
     cout << "Ingrese el numero de telefono: ";
-    getline(cin,telefono);
+    getline(cin, telefono);
+    while (!paciente.validarTelefono(telefono)) {
+        cout << "El telefono ingresado es incorrecto." << endl;
+        cout << "Ingrese el numero de telefono: ";
+        getline(cin, telefono);
+    }
 
     cout << "Ingrese el email: ";
-    getline(cin,email);
+    getline(cin, email);
+    while (!paciente.validarEmail(email)) {
+        cout << "El email ingresado es incorrecto." << endl;
+        cout << "Ingrese el email: ";
+        getline(cin, email);
+    }
 
-    cout << "Ingrese el dia de nacimiento: ";
-    cin >> dia;
+    Fecha fechaNacimiento = Fecha::leerFechaValida("Ingrese la fecha de nacimiento (dd/mm/aaaa): ", true, false);
 
-    cout << "Ingrese el mes de nacimiento: ";
-    cin >> mes;
+    cout << "\n--------------------------------------" << endl;
+    cout << "LISTADO DE PRESTADORES DISPONIBLES:\n" << endl;
 
-    cout << "Ingrese el anio de nacimiento: ";
-    cin >> anio;
+    cout << left << setw(5) << "ID" << setw(30) << "Nombre" << endl;
+    cout << string(35, '-') << endl;
 
-    cout << "Ingrese el ID del prestador: ";
-    cin >> idPrestador;
+    for(int i = 0; i < cantidadPrestadores; ++i) {
+        Prestador p = archivoPrestador.Leer(i);
+        cout << left << setw(5) << p.getId() << setw(30) << p.getNombrePrestador() << endl;
+    }
+    cout << string(35, '-') << endl;
 
-    Fecha fechaNacimiento(dia,mes,anio);
+
+    bool idValido = false;
+    do {
+        cout << "Ingrese el ID del prestador: ";
+        cin >> idPrestador;
+
+        idValido = false;
+        for(int i = 0; i < cantidadPrestadores; ++i) {
+            Prestador p = archivoPrestador.Leer(i);
+            if(p.getId() == idPrestador) {
+                idValido = true;
+                break;
+            }
+        }
+        if(!idValido) {
+            cout << "[!] ID de prestador no válido. Seleccione uno de la lista." << endl;
+        }
+    } while(!idValido);
 
     id = aPaciente.generarNuevoId();
 
-    paciente = Paciente(id,dni,nombre,apellido,telefono,email,idPrestador,fechaNacimiento);
+    paciente = Paciente(id, dni, nombre, apellido, telefono, email, idPrestador, fechaNacimiento);
 
     cout << "\n--------------------------------------" << endl;
     if(aPaciente.Guardar(paciente)){
         cout << "[OK] Paciente guardado correctamente." << endl;
-        esperarEnter();
+        cout << "Presione Enter para continuar...";
+        cin.ignore();
+        cin.get();
     } else {
         cout << "[ERROR] Ocurrio un problema inesperado. Contacte a sistemas." << endl;
     }
@@ -75,7 +136,11 @@ void ManagerPaciente::crearNuevoPaciente() {
 }
 
 
+
 void ManagerPaciente::ListarTodos(){
+    system("cls");
+    menu.menuHeader();
+
     Paciente paciente;
     ArchivoPaciente aPaciente("paciente.dat");
     int cant = aPaciente.CantidadRegistros();
@@ -83,6 +148,7 @@ void ManagerPaciente::ListarTodos(){
     cout << "\n==============================================================" << endl;
     cout << "                  LISTADO DE PACIENTES ACTIVOS                " << endl;
     cout << "==============================================================" << endl;
+    cout << endl;
 
     if (cant == 0) {
         cout << "\nNo hay pacientes registrados." << endl;
@@ -91,17 +157,17 @@ void ManagerPaciente::ListarTodos(){
 
     // Encabezado de columnas (sin la columna Activo)
     cout << left
-         << setw(4)  << "ID"
-         << setw(12) << "Documento"
-         << setw(15) << "Nombre"
-         << setw(15) << "Apellido"
-         << setw(15) << "Telefono"
-         << setw(40) << "Email"
-         << setw(12) << "F.Nac."
-         << setw(10) << "Prestador"
+         << setw(4)  << "|ID"
+         << setw(12) << "|Documento"
+         << setw(15) << "|Nombre"
+         << setw(15) << "|Apellido"
+         << setw(15) << "|Telefono"
+         << setw(35) << "|Email"
+         << setw(12) << "|F.Nac."
+         << setw(10) << "|Prestador"
          << endl;
 
-    cout << string(108, '-') << endl;
+    cout << string(130, '-') << endl;
 
     // Filtrar e imprimir solo los activos
     int encontrados = 0;
@@ -119,20 +185,27 @@ void ManagerPaciente::ListarTodos(){
              << setw(15) << paciente.get_nombre()
              << setw(15) << paciente.get_apellido()
              << setw(15) << paciente.get_telefono()
-             << setw(40) << paciente.get_email()
+             << setw(35) << paciente.get_email()
              << setw(12) << paciente.get_fechaNacimiento().toString()
              << setw(10) << paciente.get_idPrestador()
              << endl;
     }
 
-    cout << string(108, '=') << endl << endl;
+    cout << string(130, '=') << endl << endl;
     if (encontrados == 0) {
         cout << "No hay pacientes activos para mostrar." << endl << endl;
     }
+
+    cout << "Presione Enter para continuar...";
+    cin.ignore();
+    cin.get();
 }
 
 
 void ManagerPaciente::MostrarPorDni(){
+    system("cls");
+    menu.menuHeader();
+
     Paciente paciente;
     ArchivoPaciente aPaciente("paciente.dat");
     string dni;
@@ -166,6 +239,9 @@ void ManagerPaciente::MostrarPorDni(){
 }
 
 void ManagerPaciente::EditarPaciente() {
+    system("cls");
+    menu.menuHeader();
+
     ArchivoPaciente aPaciente("paciente.dat");
     string dni;
 

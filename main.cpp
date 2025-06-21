@@ -19,7 +19,7 @@ int main()
     //ejecutarSandboxFacturacionMensual();
    //ejecutarSandboxListarPacientesAtendidosPorEspecialidadYMes();
   // ejecutarSandboxOcupacionPorDiaDeMedico();
-     ejecutarSandboxOcupacionPorMesDeMedico();
+     //ejecutarSandboxOcupacionPorMesDeMedico();
 
     Menu menu;
     menu.menuPrincipal();
