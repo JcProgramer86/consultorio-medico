@@ -15,13 +15,15 @@ public:
 
     void menuTurnos();
 
+    void menuPrestador();
+
     void menuAdministrativo();
 
-   void mostrarSubmenuOcupacionMedica(ManagerAdministrativo& managerAdministrativo);
-//lo pasopor ref para evitar copi y que se modifique ahi directamente
+    void SubmenuOcupacionMedica(ManagerAdministrativo& managerAdministrativo);
+    //lo pasopor ref para evitar copi y que se modifique ahi directamente
 
-    void mostrarSubmenuTurnosCancelados();
-    void mostrarSubmenuPacientesAtendidos();
+    void SubmenuTurnosCancelados();
+    void SubmenuPacientesAtendidos();
 
 
     void menuHeader();

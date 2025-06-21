@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 
+using namespace std;
 
 class Fecha {
 private:
@@ -27,7 +28,12 @@ public:
     static bool esValida(int dia, int mes, int anio);
     void sumarDias(int dias);
     bool operator==(const Fecha& otra) const;
-    std::string toString() const;
+    std::string toString();
+    static bool esFechaNacimientoValida(int dia, int mes, int anio);
+    bool esFechaTurnoValida();
+    static Fecha leerFechaValida(std::string mensaje = "Ingrese la fecha (dd/mm/aaaa): ",bool validarNacimiento = false,bool validarTurno = false
+);
+
 
 };
 
