@@ -105,13 +105,31 @@ void ManagerEspecialidad::editarEspecialidad() {
     if (!sinEspacios.empty()) {
         esp.set_nombreEspecialidad(nombre);  // solo un argumento
 
-        // usamos el ID actual de la especialidad para generar el nuevo código
         int idEspecialidad = esp.get_id();
         codigo = esp.generarCodigoEspecialidad(nombre, idEspecialidad);
         esp.set_codEspecialidad(codigo);
 
         cout << "El nuevo codigo de especialidad asignado es: " << codigo << endl;
     }
+
+    // NUEVA PARTE: editar campo enabled
+    std::string entradaEstado;
+    bool entradaValida = false;
+
+    do {
+        cout << "Estado actual: " << (esp.get_enabled() ? "Activa" : "Inactiva") << ". ¿Desea habilitar esta especialidad? (si/no): ";
+        getline(cin, entradaEstado);
+
+        if (entradaEstado == "si") {
+            esp.set_enabled(true);
+            entradaValida = true;
+        } else if (entradaEstado == "no") {
+            esp.set_enabled(false);
+            entradaValida = true;
+        } else {
+            cout << "[!] Entrada inválida. Debe escribir exactamente 'si' o 'no'. Intente nuevamente.\n";
+        }
+    } while (!entradaValida);
 
     cout << "\n--------------------------------------" << endl;
     if (archivo.guardar(esp, pos)) {
@@ -125,6 +143,7 @@ void ManagerEspecialidad::editarEspecialidad() {
     cin.get();
 }
 
+
 void ManagerEspecialidad::eliminarEspecialidad() {
     system("cls");
     ArchivoEspecialidad archivo("especialidad.dat");
@@ -134,8 +153,8 @@ void ManagerEspecialidad::eliminarEspecialidad() {
     cout << "         ELIMINAR ESPECIALIDAD          " << endl;
     cout << "========================================" << endl;
 
-
     int id;
+    listarEspecialidades(false);
     cout << "Ingrese el ID de la especialidad a eliminar: ";
     cin >> id;
 
@@ -148,11 +167,12 @@ void ManagerEspecialidad::eliminarEspecialidad() {
         return;
     }
 
+    // Verificar si hay médicos asociados
     int totalMedEsp = archivoMedEsp.CantidadRegistros();
     for (int i = 0; i < totalMedEsp; ++i) {
         MedicoEspecialidad medEsp = archivoMedEsp.Leer(i);
         if (medEsp.getIdEspecialidad() == id) {
-            cout << "[!] No se puede eliminar: la especialidad esta asociada a medicos." << endl;
+            cout << "\n[!] No se puede eliminar: la especialidad está asociada a al menos un médico." << endl;
             cout << "\nPresione Enter para continuar...";
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cin.get();
@@ -160,25 +180,21 @@ void ManagerEspecialidad::eliminarEspecialidad() {
         }
     }
 
-    int total = archivo.cantidadRegistros();
-    Especialidad* todas = new Especialidad[total];
-    archivo.leer(total, todas);
+    // Si no está asociada, borrado lógico (enabled = false)
+    Especialidad esp = archivo.leer(pos);
+    esp.set_enabled(false);
 
-    FILE* pArchivo = fopen("especialidad.dat", "wb");
-    for (int i = 0; i < total; ++i) {
-        if (todas[i].get_id() != id) {
-            fwrite(&todas[i], sizeof(Especialidad), 1, pArchivo);
-        }
+    if (archivo.guardar(esp, pos)) {
+        cout << "\n[OK] Especialidad deshabilitada correctamente." << endl;
+    } else {
+        cout << "\n[ERROR] No se pudo deshabilitar la especialidad." << endl;
     }
-    fclose(pArchivo);
-    delete[] todas;
-
-    cout << "\n[OK] Especialidad eliminada correctamente." << endl;
 
     cout << "\nPresione Enter para continuar...";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin.get();
 }
+
 
 void ManagerEspecialidad::listarEspecialidades(bool titulo ) {
     ArchivoEspecialidad archivo("especialidad.dat");
@@ -194,22 +210,26 @@ void ManagerEspecialidad::listarEspecialidades(bool titulo ) {
         cout << "No hay especialidades registradas." << endl;
     } else {
         cout << left
-             << setw(6)  << "ID"
-             << setw(12) << "Codigo"
-             << setw(30) << "Nombre"
+             << setw(6)  << "|ID"
+             << setw(12) << "|Codigo"
+             << setw(30) << "|Nombre"
+             << setw(12) << "|Habilitado"
              << endl;
-        cout << string(48, '-') << endl;
+        cout << string(60, '-') << endl;
 
         for (int i = 0; i < cantidad; i++) {
             Especialidad esp = archivo.leer(i);
+            if(esp.get_enabled() || !titulo){
             cout << left
                  << setw(6)  << esp.get_id()
                  << setw(12) << esp.get_codEspecialidad()
                  << setw(30) << esp.get_nombreEspecialidad()
+                 << setw(12) << (esp.get_enabled() ? "Si" : "No")
                  << endl;
+            }
         }
 
-        cout << string(48, '-') << endl;
+        cout << string(60, '-') << endl;
     }
     if(titulo){
     cout << "\nPresione Enter para volver al menu...";

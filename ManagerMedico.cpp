@@ -18,23 +18,29 @@ void ManagerMedico::registrarNuevoMedico()
 
     Medico medico;
     ArchivoMedico aMedico("medicos.dat");
-    ManagerEspecialidad managerEsp;  // NUEVO
+    ArchivoMedicoEspecialidad archivoRel("medicoespecialidades.dat"); // NUEVO
+    ManagerEspecialidad managerEsp;
 
     int id, idEspecialidad = 0, dia, mes, anio;
     string dni, nombre, apellido, telefono, email, matricula;
 
     cout << "\nIngrese el numero de DNI (0 para cancelar): ";
     cin >> dni;
+    if (!medico.validarDNI(dni)) cout << "El DNI ingresado es erroneo" << endl;
 
-    while (dni != "0" && !aMedico.checkDni(dni))
-    {
+    while (!medico.validarDNI(dni)) {
+        cout << "\nIngrese el numero de DNI (0 para cancelar): ";
+        cin >> dni;
+        if (!medico.validarDNI(dni)) cout << "El DNI ingresado es erroneo" << endl;
+    }
+
+    while (dni != "0" && !aMedico.checkDni(dni)) {
         cout << "[!] El DNI ya esta registrado para otro medico." << endl;
         cout << "Ingrese el numero de DNI (0 para cancelar): ";
         cin >> dni;
     }
 
-    if (dni == "0")
-    {
+    if (dni == "0") {
         cout << "\n[!] Registro cancelado." << endl;
         return;
     }
@@ -46,11 +52,24 @@ void ManagerMedico::registrarNuevoMedico()
     cout << "Ingrese el apellido del medico: ";
     getline(cin, apellido);
 
-    cout << "Ingrese el numero de telefono: ";
+       cout << "Ingrese el numero de telefono: ";
+    cin.ignore(); // IMPORTANTE para limpiar el '\n' que queda de cin >> dni
     getline(cin, telefono);
 
+    while (!medico.validarTelefono(telefono)) {
+        cout << "El telefono ingresado es incorrecto" << endl;
+        cout << "Ingrese el numero de telefono: ";
+        getline(cin, telefono);
+    }
+
+    // Email
     cout << "Ingrese el email: ";
     getline(cin, email);
+    while (!medico.validarEmail(email)) {
+        cout << "El email ingresado es incorrecto" << endl;
+        cout << "Ingrese el email: ";
+        getline(cin, email);
+    }
 
     cout << "Ingrese la matricula del medico: ";
     getline(cin, matricula);
@@ -58,8 +77,9 @@ void ManagerMedico::registrarNuevoMedico()
     // Mostrar especialidades para elegir
     cout << "\n--------------------------------------" << endl;
     cout << "LISTADO DE ESPECIALIDADES DISPONIBLES:" << endl;
+    cout << endl;
 
-    managerEsp.listarEspecialidades();
+    managerEsp.listarEspecialidades(false);
 
     cout << "--------------------------------------" << endl;
     cout << "Ingrese el ID de especialidad del medico: ";
@@ -84,18 +104,33 @@ void ManagerMedico::registrarNuevoMedico()
     bool enabled = true;
     id = aMedico.generarNuevoId();
 
-    medico = Medico(id, dni, nombre, apellido, telefono, email, fechaNacimiento, idEspecialidad, fechaInicioActividad, matricula, enabled);
+    medico = Medico(id, dni, nombre, apellido, telefono, email,
+                    fechaNacimiento, idEspecialidad, fechaInicioActividad,
+                    matricula, enabled);
 
     cout << "\n--------------------------------------" << endl;
-    if (aMedico.Guardar(medico))
-    {
+    if (aMedico.Guardar(medico)) {
         cout << "[OK] Medico guardado correctamente." << endl;
-    }
-    else
-    {
+
+        // Crear la relación médico-especialidad
+        int nuevoIdRelacion = archivoRel.CantidadRegistros() > 0 ?
+                              archivoRel.Leer(archivoRel.CantidadRegistros() - 1).getId() + 1 : 1;
+
+        MedicoEspecialidad nuevaRelacion(nuevoIdRelacion, idEspecialidad, id);
+        if (archivoRel.Guardar(nuevaRelacion)) {
+            cout << "[OK] Relación medico-especialidad registrada correctamente." << endl;
+        } else {
+            cout << "[ERROR] No se pudo guardar la relación medico-especialidad." << endl;
+        }
+
+    } else {
         cout << "[ERROR] Hubo un problema inesperado. Contacte a sistemas." << endl;
     }
     cout << "--------------------------------------\n" << endl;
+
+    cout << "Presione Enter para continuar...";
+    cin.ignore();
+    cin.get();
 }
 
 
