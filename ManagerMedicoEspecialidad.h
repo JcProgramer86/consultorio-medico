@@ -4,7 +4,7 @@ class ManagerMedicoEspecialidad {
 public:
     void cargarMedicoEspecialidad();
     void eliminarMedicoEspecialidad();
-    void listarMedicoEspecialidad();
+    void listarMedicoEspecialidad(bool titulo = true);
     void buscarPorIdMedico();
     void buscarPorIdEspecialidad();
 };
