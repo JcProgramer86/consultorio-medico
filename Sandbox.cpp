@@ -590,3 +590,59 @@ void ejecutarSandboxOcupacionPorMesEspecialidad() {
 
     system("pause");
 }
+void ejecutarSandboxOcupacionTotalPorMes()
+{
+    // Inicializar archivos
+    ArchivoTurno archivoTurno("turnos.dat");
+    ArchivoMedico archivoMedico("medico.dat");
+
+    // Simulamos 2 médicos
+    Medico m1, m2;
+    m1.set_id(1);
+    m1.set_dni("20111222");
+    m1.set_nombre("Ana");
+    m1.set_apellido("Suarez");
+
+    m2.set_id(2);
+    m2.set_dni("30999888");
+    m2.set_nombre("Luis");
+    m2.set_apellido("Gomez");
+
+    archivoMedico.Guardar(m1);
+    archivoMedico.Guardar(m2);
+
+    // Simulamos 5 turnos (4 en junio 2025, 1 en mayo)
+    Turno t1, t2, t3, t4, t5;
+
+    t1.setIdMedicoEspecialidad(1);
+    t1.setIdPaciente(101);
+    t1.setFechaAtencion(Fecha(10, 6, 2025));
+    t1.setHoraAtencion(Hora(9, 0));
+    t1.setImporteConsulta(3000.0f);
+    t1.setCancelado(false);
+    t1.setAsistio(true);
+
+    t2 = t1;
+    t2.setFechaAtencion(Fecha(12, 6, 2025));
+
+    t3 = t1;
+    t3.setIdMedicoEspecialidad(2);
+    t3.setFechaAtencion(Fecha(15, 6, 2025));
+
+    t4 = t1;
+    t4.setIdMedicoEspecialidad(2);
+    t4.setFechaAtencion(Fecha(20, 6, 2025));
+
+    t5 = t1;
+    t5.setFechaAtencion(Fecha(30, 5, 2025)); // No debe contarse
+
+    archivoTurno.Guardar(t1);
+    archivoTurno.Guardar(t2);
+    archivoTurno.Guardar(t3);
+    archivoTurno.Guardar(t4);
+    archivoTurno.Guardar(t5);
+
+    // Ejecutar prueba
+    ManagerAdministrativo manager;
+    manager.ocupacionTotalPorMes();
+}

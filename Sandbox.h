@@ -18,3 +18,4 @@ void ejecutarSandboxListarPacientesAtendidosPorEspecialidadYMes();
 void ejecutarSandboxOcupacionPorDiaDeMedico();
 void ejecutarSandboxOcupacionPorMesDeMedico();
 void ejecutarSandboxOcupacionPorEspecialidad();
+void ejecutarSandboxOcupacionTotalPorMes();

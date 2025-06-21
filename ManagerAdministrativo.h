@@ -21,6 +21,7 @@ public:
     int buscarEspecialidadPorNombre(const char* nombreEspecialidad);
     //para poder pedir la ocupacion por especilidad escribiendo el nombre y no el id
      void ocupacionPorMesEspecialidad();
+     void ocupacionTotalPorMes();
 
 private:
 	 // Función auxiliar para comparar strings sin importar mayúsculas/minúsculas//es privada porque la uso dentro de la clase y no es accesible desde fuera

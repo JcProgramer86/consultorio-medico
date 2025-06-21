@@ -332,7 +332,7 @@ void Menu::mostrarSubmenuOcupacionMedica(ManagerAdministrativo& managerAdministr
              managerAdministrativo.ocupacionPorMesEspecialidad();
             break;
         case 4:
-            // managerAdministrativo.ocupacionTotalPorMes();
+             managerAdministrativo.ocupacionTotalPorMes();
             break;
         case 0:
             break;

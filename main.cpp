@@ -17,11 +17,11 @@ int main()
     //ejecutarSandboxMedicoEspecialidad();
     //ejecutarSandboxPrestador();
     //ejecutarSandboxFacturacionMensual();
-   //ejecutarSandboxListarPacientesAtendidosPorEspecialidadYMes();
-  // ejecutarSandboxOcupacionPorDiaDeMedico();
-     //ejecutarSandboxOcupacionPorMesDeMedico();
-     void ejecutarSandboxOcupacionPorMesEspecialidad();
-  // <<< Esto crea los datos de prueba
+    //ejecutarSandboxListarPacientesAtendidosPorEspecialidadYMes();
+    // ejecutarSandboxOcupacionPorDiaDeMedico();
+    //ejecutarSandboxOcupacionPorMesDeMedico();
+    // ejecutarSandboxOcupacionPorMesEspecialidad();
+    ejecutarSandboxOcupacionTotalPorMes();
 
     Menu menu;
     menu.menuPrincipal();

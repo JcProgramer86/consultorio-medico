@@ -413,3 +413,96 @@ void ManagerAdministrativo::ocupacionPorMesEspecialidad()
         }
     }
 }
+//submenu 4 de ocupacion medica
+void ManagerAdministrativo::ocupacionTotalPorMes()
+{
+    int mes, anio;
+    cout << "Ingrese el mes (1-12): ";
+    cin >> mes;
+    cout << "Ingrese el año: ";
+    cin >> anio;
+
+    // Validar mes y año (día 1 para usar esValida)
+    if (!Fecha::esValida(1, mes, anio))
+    {
+        cout << "Mes o año inválido.\n";
+        system("pause");
+        return;
+    }
+
+    ArchivoTurno archivoTurno("turnos.dat");
+    int cantidadTurnos = archivoTurno.CantidadRegistros();
+    if (cantidadTurnos == 0)
+    {
+        cout << "No hay turnos registrados.\n";
+        system("pause");
+        return;
+    }
+
+    ArchivoMedico archivoMedico("medico.dat");
+    int cantidadMedicos = archivoMedico.CantidadRegistros();
+    if (cantidadMedicos == 0)
+    {
+        cout << "No hay médicos registrados.\n";
+        system("pause");
+        return;
+    }
+
+    const int MAX_MEDICOS = 1000;
+    int turnosPorMedico[MAX_MEDICOS] = {0};
+
+    // Recorro todos los turnos y acumulo los válidos por id de médico
+    for (int i = 0; i < cantidadTurnos; i++)
+    {
+        Turno turno = archivoTurno.Leer(i);
+        Fecha fecha = turno.getFechaAtencion();
+
+        if (!turno.getCancelado() &&
+            turno.getAsistio() &&
+            fecha.getMes() == mes &&
+            fecha.getAnio() == anio)
+        {
+            int idMedico = turno.getIdMedicoEspecialidad();
+            if (idMedico > 0 && idMedico <= MAX_MEDICOS)
+            {
+                turnosPorMedico[idMedico - 1]++;
+            }
+        }
+    }
+
+    cout << "\nOcupación total de todos los médicos para ";
+    cout << setw(2) << setfill('0') << mes << "/" << anio << ":\n";
+
+    cout << setfill(' ') << left;
+    cout << setw(6) << "ID"
+         << setw(15) << "DNI"
+         << setw(20) << "Nombre"
+         << setw(20) << "Apellido"
+         << right << setw(10) << "Turnos" << "\n";
+    cout << "------------------------------------------------------------------\n";
+
+    bool hayDatos = false;
+    for (int i = 0; i < cantidadMedicos; i++)
+    {
+        Medico medico = archivoMedico.Leer(i);
+        int idMedico = medico.get_id();
+
+        if (idMedico > 0 && idMedico <= MAX_MEDICOS && turnosPorMedico[idMedico - 1] > 0)
+        {
+            cout << left << setw(6) << idMedico
+                 << setw(15) << medico.get_dni()
+                 << setw(20) << medico.get_nombre()
+                 << setw(20) << medico.get_apellido()
+                 << right << setw(10) << turnosPorMedico[idMedico - 1] << "\n";
+            hayDatos = true;
+        }
+    }
+
+    if (!hayDatos)
+    {
+        cout << "No hubo turnos registrados para ningún médico en ese mes.\n";
+    }
+
+    cout << endl;
+    system("pause");
+}
