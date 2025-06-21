@@ -6,6 +6,8 @@
 #include "ManagerEspecialidad.h"
 #include "ManagerMedicoEspecialidad.h"
 #include "ManagerAdministrativo.h"
+#include "ManagerPrestador.h"
+
 using namespace std;
 
 // Menu principal del sistema
@@ -20,7 +22,8 @@ void Menu::menuPrincipal()
         cout << "  1) Pacientes\n";
         cout << "  2) Medicos\n";
         cout << "  3) Turnos\n";
-        cout << "  4) Administrativo\n";
+        cout << "  4) Prestadores\n";
+        cout << "  5) Administrativo\n";
         cout << "----------------------------------------\n";
         cout << "  0) Salir\n";
         cout << "----------------------------------------\n";
@@ -30,15 +33,26 @@ void Menu::menuPrincipal()
         switch (opcion)
         {
         case 1:
+            system("cls");
+            menuHeader();
             menuPaciente();
             break;
         case 2:
+            system("cls");
+            menuHeader();
             menuMedico();
             break;
         case 3:
+            system("cls");
+            menuHeader();
             menuTurnos();
             break;
         case 4:
+            system("cls");
+            menuHeader();
+            menuPrestador();
+            break;
+        case 5:
             system("cls");
             menuHeader();
             menuAdministrativo();
@@ -82,25 +96,37 @@ void Menu::menuPaciente()
         switch (opcion)
         {
         case 1:
+            system("cls");
+            menuHeader();
             managerPaciente.crearNuevoPaciente();
             break;
 
         case 2:
+            system("cls");
+            menuHeader();
             managerPaciente.ListarTodos();
             break;
 
         case 3:
+            system("cls");
+            menuHeader();
             managerPaciente.EditarPaciente();
             break;
 
         case 4:
+            system("cls");
+            menuHeader();
             managerPaciente.MostrarPorDni();
             break;
 
         case 5:
+            system("cls");
+            menuHeader();
             managerTurno.sacarTurno();
             break;
         case 6:
+            system("cls");
+            menuHeader();
             managerTurno.mostrarAgendaSemanal();
             break;
         case 0:
@@ -149,15 +175,23 @@ void Menu::menuMedico()
         switch (opcion)
         {
         case 1:
+            system("cls");
+            menuHeader();
             manager.registrarNuevoMedico();
             break;
         case 2:
+            system("cls");
+            menuHeader();
             manager.listarMedicos();
             break;
         case 3:
+            system("cls");
+            menuHeader();
             manager.modificarMedicoPorDni();
             break;
         case 4:
+            system("cls");
+            menuHeader();
             manager.buscarYMostrarMedicoPorDni();
             break;
         case 5:
@@ -263,6 +297,61 @@ void Menu::menuHeader()
     cout << "========================================\n";
 }
 
+void Menu::menuPrestador()
+{
+    ManagerPrestador manager;
+    int opcion;
+
+    do {
+        system("cls");
+        menuHeader();
+        cout << "\n------------ PRESTADORES ---------------\n";
+        cout << "  1) Cargar nuevo prestador\n";
+        cout << "  2) Listar prestadores\n";
+        cout << "  3) Modificar prestador\n";
+        cout << "  4) Dar de baja prestador\n";
+        cout << "----------------------------------------\n";
+        cout << "  0) Volver al menu principal\n";
+        cout << "----------------------------------------\n";
+        cout << "Seleccione una opcion: ";
+        cin >> opcion;
+
+        switch (opcion)
+        {
+        case 1:
+            system("cls");
+            menuHeader();
+            manager.cargarNuevoPrestador();
+            break;
+        case 2:
+            system("cls");
+            menuHeader();
+            manager.listarPrestadores();
+            break;
+        case 3:
+            system("cls");
+            menuHeader();
+            manager.modificarPrestadorPorId();
+            break;
+        case 4:
+            system("cls");
+            menuHeader();
+            manager.eliminarPrestadorPorId();
+            break;
+        case 0:
+            cout << "Volviendo al menu principal..." << endl;
+            break;
+        default:
+            cout << "Opcion no valida. Intente de nuevo." << endl;
+            cin.ignore();
+            cin.get();
+        }
+
+        cout << endl;
+    }
+    while (opcion != 0);
+}
+
 
 void Menu::menuAdministrativo() {
     ManagerAdministrativo managerAdministrativo;  // Instancia local del manager
@@ -289,13 +378,13 @@ void Menu::menuAdministrativo() {
             managerAdministrativo.obtenerFacturacionDelMes();
             break;
         case 3:
-            mostrarSubmenuOcupacionMedica(managerAdministrativo);//tengo que pasarlo para acceda a sus metodos
+            SubmenuOcupacionMedica(managerAdministrativo);//tengo que pasarlo para acceda a sus metodos
             break;
         case 4:
-            mostrarSubmenuTurnosCancelados();
+            SubmenuTurnosCancelados();
             break;
         case 5:
-            mostrarSubmenuPacientesAtendidos();
+            SubmenuPacientesAtendidos();
             break;
         case 0:
             cout << "Volviendo al menu principal..." << endl;
@@ -309,7 +398,7 @@ void Menu::menuAdministrativo() {
 }
 ///desarrollo de submenues
 
-void Menu::mostrarSubmenuOcupacionMedica(ManagerAdministrativo& managerAdministrativo) {
+void Menu::SubmenuOcupacionMedica(ManagerAdministrativo& managerAdministrativo) {
     int opcion;
     do {
         cout << "\n---- OCUPACION MEDICA ----\n";
@@ -342,7 +431,7 @@ void Menu::mostrarSubmenuOcupacionMedica(ManagerAdministrativo& managerAdministr
     } while (opcion != 0);
 }
 
-void Menu::mostrarSubmenuTurnosCancelados() {
+void Menu::SubmenuTurnosCancelados() {
     int opcion;
     do {
         cout << "\n---- TURNOS CANCELADOS ----\n";
@@ -371,7 +460,7 @@ void Menu::mostrarSubmenuTurnosCancelados() {
     } while (opcion != 0);
 }
 
-void Menu::mostrarSubmenuPacientesAtendidos() {
+void Menu::SubmenuPacientesAtendidos() {
     int opcion;
     do {
         cout << "\n---- PACIENTES ATENDIDOS ----\n";

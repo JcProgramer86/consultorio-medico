@@ -143,7 +143,7 @@ void ejecutarSandboxPaciente()
 
 void ejecutarBuscarPacientePorNombre(const std::string& nombreBuscado)
 {
-    ArchivoPaciente archivo("pacientes.dat");
+    ArchivoPaciente archivo("paciente.dat");
     int cantidad = archivo.CantidadRegistros();
     bool encontrado = false;
 

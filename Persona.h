@@ -12,10 +12,10 @@ private:
     char _email[40];
     Fecha _fechaNacimiento;
 protected:
-    bool _enabled;  // nuevo atributo para indicar si está activo o no
+    bool _enabled;
 
 public:
-    // Constructores
+
     Persona();
     Persona(int id, std::string dni, std::string nombre, std::string apellido,
             std::string telefono, std::string email,
@@ -29,7 +29,7 @@ public:
     void set_telefono(std::string telefono);
     void set_email(std::string email);
     void set_fechaNacimiento(Fecha fechaNacimiento);
-    void set_enabled(bool enabled);  // nuevo setter
+    void set_enabled(bool enabled);
 
     // Getters
     int get_id() const;
@@ -38,11 +38,12 @@ public:
     std::string get_apellido() const;
     std::string get_telefono() const;
     std::string get_email() const;
-    Fecha get_fechaNacimiento() const;  // corregido aquí
-    bool get_enabled() const;           // nuevo getter
+    Fecha get_fechaNacimiento() const;
+    bool get_enabled() const;
 
     // Validaciones
     bool validarDNI(std::string dni);
     static bool validarTelefono(std::string telefono);
     static bool validarEmail(std::string email);
+    static bool validarTexto(std::string texto);
 };

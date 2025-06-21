@@ -6,63 +6,69 @@
 #include "ArchivoMedico.h"
 #include "ManagerEspecialidad.h"
 #include "ArchivoEspecialidad.h"
+#include "Menu.h"
 
 using namespace std;
 
+extern Menu menu;
 void ManagerMedico::registrarNuevoMedico()
 {
     system("cls");
+    menu.menuHeader();
     cout << "\n========================================" << endl;
     cout << "           ALTA DE NUEVO MEDICO         " << endl;
     cout << "========================================" << endl;
 
     Medico medico;
     ArchivoMedico aMedico("medicos.dat");
-    ArchivoMedicoEspecialidad archivoRel("medicoespecialidades.dat"); // NUEVO
+    ArchivoMedicoEspecialidad archivoRel("medicoespecialidades.dat");
     ManagerEspecialidad managerEsp;
 
-    int id, idEspecialidad = 0, dia, mes, anio;
+    int id, idEspecialidad = 0;
     string dni, nombre, apellido, telefono, email, matricula;
 
-    cout << "\nIngrese el numero de DNI (0 para cancelar): ";
-    cin >> dni;
-    if (!medico.validarDNI(dni)) cout << "El DNI ingresado es erroneo" << endl;
-
-    while (!medico.validarDNI(dni)) {
+    // --- DNI ---
+    do {
         cout << "\nIngrese el numero de DNI (0 para cancelar): ";
         cin >> dni;
-        if (!medico.validarDNI(dni)) cout << "El DNI ingresado es erroneo" << endl;
-    }
-
-    while (dni != "0" && !aMedico.checkDni(dni)) {
-        cout << "[!] El DNI ya esta registrado para otro medico." << endl;
-        cout << "Ingrese el numero de DNI (0 para cancelar): ";
-        cin >> dni;
-    }
-
-    if (dni == "0") {
-        cout << "\n[!] Registro cancelado." << endl;
-        return;
-    }
+        if (dni == "0") {
+            cout << "\n[!] Registro cancelado." << endl;
+            return;
+        }
+        if (!medico.validarDNI(dni)) {
+            cout << "[!] El DNI ingresado es erroneo." << endl;
+            continue;
+        }
+        if (!aMedico.checkDni(dni)) {
+            cout << "[!] El DNI ya esta registrado para otro medico." << endl;
+            continue;
+        }
+        break;
+    } while (true);
 
     cout << "Ingrese el nombre del medico: ";
     cin.ignore();
     getline(cin, nombre);
+    while (!Persona::validarTexto(nombre)) {
+        cout << "[!] El nombre solo debe contener letras. Intente nuevamente: ";
+        getline(cin, nombre);
+    }
 
     cout << "Ingrese el apellido del medico: ";
     getline(cin, apellido);
+    while (!Persona::validarTexto(apellido)) {
+        cout << "[!] El apellido solo debe contener letras. Intente nuevamente: ";
+        getline(cin, apellido);
+    }
 
-       cout << "Ingrese el numero de telefono: ";
-    cin.ignore(); // IMPORTANTE para limpiar el '\n' que queda de cin >> dni
+    cout << "Ingrese el numero de telefono: ";
     getline(cin, telefono);
-
     while (!medico.validarTelefono(telefono)) {
         cout << "El telefono ingresado es incorrecto" << endl;
         cout << "Ingrese el numero de telefono: ";
         getline(cin, telefono);
     }
 
-    // Email
     cout << "Ingrese el email: ";
     getline(cin, email);
     while (!medico.validarEmail(email)) {
@@ -74,32 +80,16 @@ void ManagerMedico::registrarNuevoMedico()
     cout << "Ingrese la matricula del medico: ";
     getline(cin, matricula);
 
-    // Mostrar especialidades para elegir
     cout << "\n--------------------------------------" << endl;
-    cout << "LISTADO DE ESPECIALIDADES DISPONIBLES:" << endl;
-    cout << endl;
-
+    cout << "LISTADO DE ESPECIALIDADES DISPONIBLES:" << endl << endl;
     managerEsp.listarEspecialidades(false);
-
     cout << "--------------------------------------" << endl;
     cout << "Ingrese el ID de especialidad del medico: ";
     cin >> idEspecialidad;
 
-    cout << "Ingrese el dia de nacimiento: ";
-    cin >> dia;
-    cout << "Ingrese el mes de nacimiento: ";
-    cin >> mes;
-    cout << "Ingrese el anio de nacimiento: ";
-    cin >> anio;
-    Fecha fechaNacimiento(dia, mes, anio);
+    Fecha fechaNacimiento = Fecha::leerFechaValida("Ingrese la fecha de nacimiento (dd/mm/aaaa): ", true, false);
 
-    cout << "Ingrese el dia de inicio de actividad: ";
-    cin >> dia;
-    cout << "Ingrese el mes de inicio de actividad: ";
-    cin >> mes;
-    cout << "Ingrese el anio de inicio de actividad: ";
-    cin >> anio;
-    Fecha fechaInicioActividad(dia, mes, anio);
+    Fecha fechaInicioActividad = Fecha::leerFechaValida("Ingrese el inicio de actividad (dd/mm/aaaa): ", false, true);
 
     bool enabled = true;
     id = aMedico.generarNuevoId();
@@ -112,7 +102,6 @@ void ManagerMedico::registrarNuevoMedico()
     if (aMedico.Guardar(medico)) {
         cout << "[OK] Medico guardado correctamente." << endl;
 
-        // Crear la relación médico-especialidad
         int nuevoIdRelacion = archivoRel.CantidadRegistros() > 0 ?
                               archivoRel.Leer(archivoRel.CantidadRegistros() - 1).getId() + 1 : 1;
 
@@ -147,6 +136,8 @@ void ManagerMedico::buscarYMostrarMedicoPorDni()
     if (posicion != -1)
     {
         system("cls");
+        menu.menuHeader();
+
         Medico medicoEncontrado = aMedico.Leer(posicion);
         ArchivoEspecialidad archivoEsp("especialidad.dat");
 
@@ -196,6 +187,8 @@ void ManagerMedico::buscarYMostrarMedicoPorDni()
 
 
 void ManagerMedico::modificarMedicoPorDni() {
+    system("cls");
+    menu.menuHeader();
     ArchivoMedico aMedico("medicos.dat");
     string dni;
 
@@ -342,6 +335,7 @@ void ManagerMedico::modificarMedicoPorDni() {
 void ManagerMedico::listarMedicos()
 {
     system("cls");
+    menu.menuHeader();
     cout << "\n==============================================================" << endl;
     cout << "                    LISTADO DE MEDICOS ACTIVOS                " << endl;
     cout << "==============================================================" << endl;

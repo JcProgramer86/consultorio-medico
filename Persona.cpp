@@ -2,6 +2,7 @@
 #include "Fecha.h"
 #include <cstring>
 #include <iostream>
+#include <regex>
 
 // Constructor por defecto
 Persona::Persona() {
@@ -116,5 +117,9 @@ bool Persona::validarEmail(std::string email) {
     return puntoMail;
 }
 
+bool Persona::validarTexto(std::string texto) {
+    std::regex patron("^[A-Za-zÁÉÍÓÚáéíóúÑñüÜ'\\- ]+$");
+    return std::regex_match(texto, patron) && !texto.empty();
+}
 
 
