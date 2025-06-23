@@ -10,20 +10,20 @@ class ManagerAdministrativo
 public:
     ManagerAdministrativo();
 
-    /// Método que calcula la facturación total del mes indicado (mes y año)
     float obtenerFacturacionDelMes();
-    // metodo que listas los pacientes por especialidad x mes
     void listarPacientesAtendidosPorEspecialidadYMes();
-    //Inicio submenu de ocupacion medica
     void ocupacionPorDiaDeMedico();
-     void ocupacionPorMesDeMedico();
-    ///
+    void ocupacionPorMesDeMedico();
+
     int buscarEspecialidadPorNombre(const char* nombreEspecialidad);
-    //para poder pedir la ocupacion por especilidad escribiendo el nombre y no el id
-     void ocupacionPorMesEspecialidad();
-     void ocupacionTotalPorMes();
+    void ocupacionPorMesEspecialidad();
+    void ocupacionTotalPorMes();
 
 private:
-	 // Función auxiliar para comparar strings sin importar mayúsculas/minúsculas//es privada porque la uso dentro de la clase y no es accesible desde fuera
     bool compararStringsCaseInsensitive(const std::string& str1, const std::string& str2);
+
+    // Funciones privadas para validar entradas con opción a salir
+     // Función para pedir mes y año con validación y opción a cancelar
+    bool pedirMesAnio(int &mes, int &anio);
+    bool pedirDNI(std::string &dni);
 };

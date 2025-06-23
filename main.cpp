@@ -3,7 +3,7 @@
 #include "Menu.h"
 #include "Sandbox.h"
 #include <clocale>
-#include "CargarDatosPrueba.h"
+
 using namespace std;
 
 int main()
@@ -23,7 +23,7 @@ int main()
     //ejecutarSandboxOcupacionPorMesDeMedico();
     // ejecutarSandboxOcupacionPorMesEspecialidad();
     // ejecutarSandboxOcupacionTotalPorMes();
-   // ejecutarCargaDatosPrueba();
+
 
 
     Menu menu;
