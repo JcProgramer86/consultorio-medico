@@ -358,12 +358,12 @@ void Menu::menuAdministrativo() {
 
     int opcion;
     do {
+
+            system("cls");  // Limpia la consola antes de mostrar el menú
         cout << "\n=========== MENU ADMINISTRATIVO ===========\n";
         cout << "  1) Listar pacientes por especialidad y mes\n";
         cout << "  2) Facturacion mensual\n";
         cout << "  3) Ocupacion medica\n";
-        cout << "  4) Turnos cancelados\n";
-        cout << "  5) Pacientes atendidos\n";
         cout << "-------------------------------------------\n";
         cout << "  0) Volver al menu principal\n";
         cout << "-------------------------------------------\n";
@@ -380,12 +380,7 @@ void Menu::menuAdministrativo() {
         case 3:
             SubmenuOcupacionMedica(managerAdministrativo);//tengo que pasarlo para acceda a sus metodos
             break;
-        case 4:
-            SubmenuTurnosCancelados();
-            break;
-        case 5:
-            SubmenuPacientesAtendidos();
-            break;
+
         case 0:
             cout << "Volviendo al menu principal..." << endl;
             break;
@@ -401,10 +396,12 @@ void Menu::menuAdministrativo() {
 void Menu::SubmenuOcupacionMedica(ManagerAdministrativo& managerAdministrativo) {
     int opcion;
     do {
+
+         system("cls");  // Limpia la consola antes de mostrar el menú
         cout << "\n---- OCUPACION MEDICA ----\n";
         cout << "  1) Ocupación por día (de un médico)\n";
         cout << "  2) Ocupación por mes (de un médico)\n";
-        cout << "  3) Ocupación por especialidad\n";
+        cout << "  3) Ocupación por especialidad (por mes)\n";
         cout << "  4) Ocupación total de todos los médicos (en un mes)\n";
         cout << "  0) Volver\n";
         cout << "Seleccione una opcion: ";
@@ -418,68 +415,10 @@ void Menu::SubmenuOcupacionMedica(ManagerAdministrativo& managerAdministrativo) 
              managerAdministrativo.ocupacionPorMesDeMedico();
             break;
         case 3:
-            // managerAdministrativo.ocupacionPorEspecialidad();
+             managerAdministrativo.ocupacionPorMesEspecialidad();
             break;
         case 4:
-            // managerAdministrativo.ocupacionTotalPorMes();
-            break;
-        case 0:
-            break;
-        default:
-            cout << "Opcion invalida.\n";
-        }
-    } while (opcion != 0);
-}
-
-void Menu::SubmenuTurnosCancelados() {
-    int opcion;
-    do {
-        cout << "\n---- TURNOS CANCELADOS ----\n";
-        cout << "  1) Cancelaciones por médico en rango de fechas\n";
-        cout << "  2) Cancelaciones por especialidad\n";
-        cout << "  3) Porcentaje cancelaciones vs. asistencias por mes\n";
-        cout << "  0) Volver\n";
-        cout << "Seleccione una opcion: ";
-        cin >> opcion;
-
-        switch (opcion) {
-        case 1:
-            // managerAdministrativo.cancelacionesPorMedico();
-            break;
-        case 2:
-            // managerAdministrativo.cancelacionesPorEspecialidad();
-            break;
-        case 3:
-            // managerAdministrativo.porcentajeCancelacionesVsAsistencias();
-            break;
-        case 0:
-            break;
-        default:
-            cout << "Opcion invalida.\n";
-        }
-    } while (opcion != 0);
-}
-
-void Menu::SubmenuPacientesAtendidos() {
-    int opcion;
-    do {
-        cout << "\n---- PACIENTES ATENDIDOS ----\n";
-        cout << "  1) Por mes y especialidad\n";
-        cout << "  2) Por médico\n";
-        cout << "  3) Por obra social\n";
-        cout << "  0) Volver\n";
-        cout << "Seleccione una opcion: ";
-        cin >> opcion;
-
-        switch (opcion) {
-        case 1:
-            // managerAdministrativo.atendidosPorMesYEspecialidad();
-            break;
-        case 2:
-            // managerAdministrativo.atendidosPorMedico();
-            break;
-        case 3:
-            // managerAdministrativo.atendidosPorObraSocial();
+             managerAdministrativo.ocupacionTotalPorMes();
             break;
         case 0:
             break;

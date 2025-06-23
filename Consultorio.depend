@@ -1,0 +1,297 @@
+# depslib dependency file v1.0
+1750094476 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\archivomedico.cpp
+	"Fecha.h"
+	"ArchivoMedico.h"
+	<iostream>
+
+1750524805 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\fecha.h
+	<string>
+
+1750094476 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\archivomedico.h
+	<string>
+	"Medico.h"
+
+1750259443 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\medico.h
+	"Persona.h"
+	"Fecha.h"
+
+1750524805 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\persona.h
+	<string>
+	"Fecha.h"
+
+1750094476 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\archivopaciente.cpp
+	"Fecha.h"
+	"ArchivoPaciente.h"
+	<iostream>
+
+1750094476 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\archivopaciente.h
+	<string>
+	"Paciente.h"
+
+1749159878 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\paciente.h
+	"Persona.h"
+	"Fecha.h"
+
+1750524805 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\fecha.cpp
+	"Fecha.h"
+	<iostream>
+	<string>
+	<vector>
+	<ctime>
+	<regex>
+
+1750094476 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\hora.cpp
+	"Hora.h"
+	<sstream>
+
+1750094476 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\hora.h
+	<sstream>
+
+1750259443 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\medico.cpp
+	"Medico.h"
+	<cstring>
+
+1750531722 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\menu.cpp
+	"Menu.h"
+	"ManagerPaciente.h"
+	<iostream>
+	"ManagerMedico.h"
+	"ManagerTurno.h"
+	"ManagerEspecialidad.h"
+	"ManagerMedicoEspecialidad.h"
+	"ManagerAdministrativo.h"
+	"ManagerPrestador.h"
+
+1750701736 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\menu.h
+	"Paciente.h"
+	"Medico.h"
+	"ManagerAdministrativo.h"
+
+1750524805 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\persona.cpp
+	"Persona.h"
+	"Fecha.h"
+	<cstring>
+	<iostream>
+	<regex>
+
+1750524972 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\sandbox.cpp
+	<iostream>
+	"Medico.h"
+	"ArchivoMedico.h"
+	"Fecha.h"
+	"Paciente.h"
+	"ArchivoPaciente.h"
+	"Turnos.h"
+	"ArchivoTurno.h"
+	"ArchivoMedicoEspecialidad.h"
+	"ManagerAdministrativo.h"
+	"ArchivoPrestador.h"
+	"ArchivoEspecialidad.h"
+	<cstdio>
+
+1750259443 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\turnos.cpp
+	"Turnos.h"
+	<cstring>
+	<string>
+
+1750259443 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\turnos.h
+	"Fecha.h"
+	"Hora.h"
+	<string>
+	<cstring>
+
+1750701532 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\main.cpp
+	<iostream>
+	"Menu.h"
+	"Sandbox.h"
+	<clocale>
+
+1750524535 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\sandbox.h
+
+1750094476 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\paciente.cpp
+	"Paciente.h"
+	<iomanip>
+
+1750094476 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\archivoturno.cpp
+	"ArchivoTurno.h"
+	<cstdio>
+	<iostream>
+
+1750094476 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\archivoturno.h
+	<string>
+	"Turnos.h"
+
+1748635596 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\archivomedicoespecialidad.cpp
+	"Fecha.h"
+	"ArchivoMedicoEspecialidad.h"
+
+1748635596 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\archivomedicoespecialidad.h
+	<string>
+	"MedicoEspecialidad.h"
+
+1748635596 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\medicoespecialidad.h
+
+1750515287 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\especialidad.cpp
+	"Especialidad.h"
+	<iostream>
+	<cstring>
+	<cctype>
+
+1750515287 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\especialidad.h
+	<string>
+
+1748635596 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\medicoespecialidad.cpp
+	"MedicoEspecialidad.h"
+
+1748635596 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\archivoprestador.h
+	<string>
+	"Prestador.h"
+
+1748635596 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\prestador.h
+	<string>
+
+1748787960 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\archivoespecialidad.cpp
+	"ArchivoEspecialidad.h"
+	<cstdio>
+	<iostream>
+	<cstring>
+
+1748787960 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\archivoespecialidad.h
+	"Especialidad.h"
+	<string>
+
+1748635596 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\archivoprestador.cpp
+	"Fecha.h"
+	"ArchivoPrestador.h"
+
+1748635596 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\prestador.cpp
+	"Prestador.h"
+	<cstring>
+	<iostream>
+
+1750524805 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\managerpaciente.cpp
+	"ManagerPaciente.h"
+	"Paciente.h"
+	"ArchivoPaciente.h"
+	"ArchivoPrestador.h"
+	"Fecha.h"
+	"Utils.h"
+	<iostream>
+	<iomanip>
+	"Menu.h"
+
+1750094476 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\managerpaciente.h
+
+1750524805 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\managermedico.cpp
+	<iostream>
+	<iomanip>
+	"Medico.h"
+	"Fecha.h"
+	"ManagerMedico.h"
+	"ArchivoMedico.h"
+	"ManagerEspecialidad.h"
+	"ArchivoEspecialidad.h"
+	"Menu.h"
+
+1750094476 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\managermedico.h
+
+1750094476 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\managerturno.cpp
+	"ManagerTurno.h"
+	<iomanip>
+	<iostream>
+	<vector>
+	<string>
+	<cstdio>
+	"ArchivoPaciente.h"
+	"ArchivoTurno.h"
+	"ArchivoMedico.h"
+	"ArchivoMedicoEspecialidad.h"
+	"ArchivoEspecialidad.h"
+	"Paciente.h"
+	"Turnos.h"
+	"Medico.h"
+	"MedicoEspecialidad.h"
+	"Especialidad.h"
+	"Fecha.h"
+	"Hora.h"
+
+1750094476 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\managerturno.h
+
+1750259443 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\managerespecialidad.h
+	"ArchivoEspecialidad.h"
+	"ArchivoMedicoEspecialidad.h"
+
+1750524805 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\utils.h
+
+1750515287 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\managerespecialidad.cpp
+	"ManagerEspecialidad.h"
+	<iostream>
+	<cstring>
+	<iomanip>
+	<string>
+	<limits>
+	<algorithm>
+
+1750515287 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\managermedicoespecialidad.cpp
+	"ManagerMedicoEspecialidad.h"
+	"ArchivoMedicoEspecialidad.h"
+	"Menu.h"
+	"ArchivoMedico.h"
+	"ArchivoEspecialidad.h"
+	<iostream>
+	<iomanip>
+
+1750515287 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\managermedicoespecialidad.h
+
+1750622341 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\manageradministrativo.cpp
+	"ManagerAdministrativo.h"
+	"ArchivoTurno.h"
+	"ArchivoMedicoEspecialidad.h"
+	"ArchivoPaciente.h"
+	"ArchivoMedico.h"
+	"ArchivoEspecialidad.h"
+	"Especialidad.h"
+	"Fecha.h"
+	"Persona.h"
+	<iostream>
+	<iomanip>
+	<cstring>
+
+1750622341 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\manageradministrativo.h
+	<string>
+	"Especialidad.h"
+	"Turnos.h"
+	"ArchivoTurno.h"
+	"Fecha.h"
+
+1750529678 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\cargardatosprueba.h
+
+1750524805 c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\managerprestador.h
+
+1750621172 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\cargardatosprueba.cpp
+	<iostream>
+	<cstdio>
+	<string>
+	<regex>
+	<sstream>
+	"ArchivoMedico.h"
+	"ArchivoPaciente.h"
+	"ArchivoEspecialidad.h"
+	"ArchivoMedicoEspecialidad.h"
+	"ArchivoTurno.h"
+	"Medico.h"
+	"Paciente.h"
+	"Especialidad.h"
+	"MedicoEspecialidad.h"
+	"Turnos.h"
+	"Fecha.h"
+
+1750524805 source:c:\users\valeriamorandi\onedrive - intramed\escritorio\proyecto_integrador\consultorio-medico\managerprestador.cpp
+	"ManagerPrestador.h"
+	"ArchivoPrestador.h"
+	"Prestador.h"
+	"Persona.h"
+	"Menu.h"
+	<iostream>
+	<iomanip>
+

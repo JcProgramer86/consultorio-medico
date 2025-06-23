@@ -22,10 +22,6 @@ public:
     void SubmenuOcupacionMedica(ManagerAdministrativo& managerAdministrativo);
     //lo pasopor ref para evitar copi y que se modifique ahi directamente
 
-    void SubmenuTurnosCancelados();
-    void SubmenuPacientesAtendidos();
-
-
     void menuHeader();
 
 };

@@ -9,6 +9,7 @@
 #include "ArchivoMedicoEspecialidad.h"
 #include "ManagerAdministrativo.h"
 #include "ArchivoPrestador.h"
+#include "ArchivoEspecialidad.h"
 #include <cstdio>
 
 using namespace std;
@@ -142,7 +143,7 @@ void ejecutarSandboxPaciente()
 
 void ejecutarBuscarPacientePorNombre(const std::string& nombreBuscado)
 {
-    ArchivoPaciente archivo("pacientes.dat");
+    ArchivoPaciente archivo("paciente.dat");
     int cantidad = archivo.CantidadRegistros();
     bool encontrado = false;
 
@@ -537,4 +538,111 @@ void ejecutarSandboxOcupacionPorMesDeMedico()
 
     system("pause");
 }
+void ejecutarSandboxOcupacionPorMesEspecialidad() {
+    // Borrar archivos para datos limpios
+    remove("especialidad.dat");
+    remove("turnos.dat");
+    remove("medicoespecialidad.dat");
 
+    // Crear especialidades de prueba
+    Especialidad e1(1, "Cardiologia");
+    Especialidad e2(2, "Neumonologia");
+    Especialidad e3(3, "Dermatologia");
+
+    ArchivoEspecialidad archivoEsp("especialidad.dat");
+    archivoEsp.guardar(e1);
+    archivoEsp.guardar(e2);
+    archivoEsp.guardar(e3);
+
+    // Crear médicos y médico-especialidad
+    Medico m1; m1.set_id(100); m1.set_nombre("Juan"); m1.set_apellido("Perez"); m1.set_enabled(true);
+    Medico m2; m2.set_id(101); m2.set_nombre("Ana"); m2.set_apellido("Lopez"); m2.set_enabled(true);
+
+    ArchivoMedico archivoMed("medico.dat");
+    archivoMed.Guardar(m1);
+    archivoMed.Guardar(m2);
+
+    MedicoEspecialidad me1(200, 1, 100); // Cardiologia - Juan
+    MedicoEspecialidad me2(201, 2, 101); // Neumonologia - Ana
+
+    ArchivoMedicoEspecialidad archivoMedEsp("medicoespecialidad.dat");
+    archivoMedEsp.Guardar(me1);
+    archivoMedEsp.Guardar(me2);
+
+    // Crear turnos para diferentes días y meses
+    Turno t1; t1.setId(1); t1.setIdPaciente(1); t1.setIdMedicoEspecialidad(200);
+    t1.setFechaAtencion(Fecha(5, 6, 2025)); t1.setHoraAtencion(Hora(9, 0)); t1.setCancelado(false); t1.setAsistio(true);
+
+    Turno t2; t2.setId(2); t2.setIdPaciente(2); t2.setIdMedicoEspecialidad(201);
+    t2.setFechaAtencion(Fecha(10, 6, 2025)); t2.setHoraAtencion(Hora(10, 0)); t2.setCancelado(false); t2.setAsistio(true);
+
+    Turno t3; t3.setId(3); t3.setIdPaciente(3); t3.setIdMedicoEspecialidad(200);
+    t3.setFechaAtencion(Fecha(15, 7, 2025)); t3.setHoraAtencion(Hora(11, 0)); t3.setCancelado(false); t3.setAsistio(true);
+
+    ArchivoTurno archivoTurno("turnos.dat");
+    archivoTurno.Guardar(t1);
+    archivoTurno.Guardar(t2);
+    archivoTurno.Guardar(t3);
+
+    // Ejecutar método del manager
+    ManagerAdministrativo manager;
+    manager.ocupacionPorMesEspecialidad();
+
+    system("pause");
+}
+void ejecutarSandboxOcupacionTotalPorMes()
+{
+    // Inicializar archivos
+    ArchivoTurno archivoTurno("turnos.dat");
+    ArchivoMedico archivoMedico("medico.dat");
+
+    // Simulamos 2 médicos
+    Medico m1, m2;
+    m1.set_id(1);
+    m1.set_dni("20111222");
+    m1.set_nombre("Ana");
+    m1.set_apellido("Suarez");
+
+    m2.set_id(2);
+    m2.set_dni("30999888");
+    m2.set_nombre("Luis");
+    m2.set_apellido("Gomez");
+
+    archivoMedico.Guardar(m1);
+    archivoMedico.Guardar(m2);
+
+    // Simulamos 5 turnos (4 en junio 2025, 1 en mayo)
+    Turno t1, t2, t3, t4, t5;
+
+    t1.setIdMedicoEspecialidad(1);
+    t1.setIdPaciente(101);
+    t1.setFechaAtencion(Fecha(10, 6, 2025));
+    t1.setHoraAtencion(Hora(9, 0));
+    t1.setImporteConsulta(3000.0f);
+    t1.setCancelado(false);
+    t1.setAsistio(true);
+
+    t2 = t1;
+    t2.setFechaAtencion(Fecha(12, 6, 2025));
+
+    t3 = t1;
+    t3.setIdMedicoEspecialidad(2);
+    t3.setFechaAtencion(Fecha(15, 6, 2025));
+
+    t4 = t1;
+    t4.setIdMedicoEspecialidad(2);
+    t4.setFechaAtencion(Fecha(20, 6, 2025));
+
+    t5 = t1;
+    t5.setFechaAtencion(Fecha(30, 5, 2025)); // No debe contarse
+
+    archivoTurno.Guardar(t1);
+    archivoTurno.Guardar(t2);
+    archivoTurno.Guardar(t3);
+    archivoTurno.Guardar(t4);
+    archivoTurno.Guardar(t5);
+
+    // Ejecutar prueba
+    ManagerAdministrativo manager;
+    manager.ocupacionTotalPorMes();
+}

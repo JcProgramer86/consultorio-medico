@@ -17,9 +17,14 @@ int main()
     //ejecutarSandboxMedicoEspecialidad();
     //ejecutarSandboxPrestador();
     //ejecutarSandboxFacturacionMensual();
-   //ejecutarSandboxListarPacientesAtendidosPorEspecialidadYMes();
-  // ejecutarSandboxOcupacionPorDiaDeMedico();
-     //ejecutarSandboxOcupacionPorMesDeMedico();
+
+    //ejecutarSandboxListarPacientesAtendidosPorEspecialidadYMes();
+    // ejecutarSandboxOcupacionPorDiaDeMedico();
+    //ejecutarSandboxOcupacionPorMesDeMedico();
+    // ejecutarSandboxOcupacionPorMesEspecialidad();
+    // ejecutarSandboxOcupacionTotalPorMes();
+
+
 
     Menu menu;
     menu.menuPrincipal();
