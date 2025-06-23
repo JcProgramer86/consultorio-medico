@@ -65,6 +65,8 @@
 		<Unit filename="ManagerMedicoEspecialidad.h" />
 		<Unit filename="ManagerPaciente.cpp" />
 		<Unit filename="ManagerPaciente.h" />
+		<Unit filename="ManagerPrestador.cpp" />
+		<Unit filename="ManagerPrestador.h" />
 		<Unit filename="ManagerTurno.cpp" />
 		<Unit filename="ManagerTurno.h" />
 		<Unit filename="Medico.cpp" />

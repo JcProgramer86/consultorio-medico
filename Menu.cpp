@@ -84,8 +84,6 @@ void Menu::menuPaciente()
         cout << "  2) Listar pacientes\n";
         cout << "  3) Modificar paciente\n";
         cout << "  4) Buscar paciente por documento\n";
-        cout << "  5) Sacar turno\n";
-        cout << "  6) Ver turnos\n";
         cout << "----------------------------------------\n";
         cout << "  0) Volver al menu principal\n";
         cout << "----------------------------------------\n";
@@ -117,17 +115,6 @@ void Menu::menuPaciente()
             system("cls");
             menuHeader();
             managerPaciente.MostrarPorDni();
-            break;
-
-        case 5:
-            system("cls");
-            menuHeader();
-            managerTurno.sacarTurno();
-            break;
-        case 6:
-            system("cls");
-            menuHeader();
-            managerTurno.mostrarAgendaSemanal();
             break;
         case 0:
             cout << "Volviendo al menu principal..." << endl;
