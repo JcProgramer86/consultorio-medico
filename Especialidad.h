@@ -5,7 +5,7 @@ class Especialidad {
 private:
     int _id;
     char _codEspecialidad[100];
-    char _nombreEspecialidad[100];
+    char _nombreEspecialidad[150];
     bool _enabled;
 
 public:

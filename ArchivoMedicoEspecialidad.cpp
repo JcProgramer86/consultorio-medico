@@ -47,6 +47,25 @@ int ArchivoMedicoEspecialidad::Buscar(int IDMedicoEspecialidad){
     return -1;
 }
 
+MedicoEspecialidad ArchivoMedicoEspecialidad::BuscarPorIdMedico(int idMedico) {
+    FILE *pArchivo = fopen(_nombreArchivo.c_str(), "rb");
+    if (pArchivo == NULL) {
+        return MedicoEspecialidad();
+    }
+
+    MedicoEspecialidad rel;
+
+    while (fread(&rel, sizeof(MedicoEspecialidad), 1, pArchivo)) {
+        if (rel.getIdMedico() == idMedico) {
+            fclose(pArchivo);
+            return rel;
+        }
+    }
+
+    fclose(pArchivo);
+    return MedicoEspecialidad();
+}
+
 
 MedicoEspecialidad ArchivoMedicoEspecialidad::Leer(int posicion){
     FILE *pArchivo = fopen(_nombreArchivo.c_str(), "rb");

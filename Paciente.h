@@ -15,7 +15,7 @@ public:
              int idPrestador, Fecha fechaNacimiento,
              bool enabled = true);
 
-    int get_idPrestador() const;           // agregado const
+    int get_idPrestador() const;
     void set_idPrestador(int idPrestador);
-    std::string toCSV() const;             // agregado const
+    std::string toCSV() const;
 };

@@ -16,4 +16,5 @@ public:
     Especialidad leer(int posicion);
     void leer(int cantidadRegistros, Especialidad* vector);
     int cantidadRegistros();
+    Especialidad leerPorId(int id);
 };

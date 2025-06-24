@@ -14,4 +14,5 @@ class ArchivoMedicoEspecialidad{
         MedicoEspecialidad Leer(int posicion);
         int CantidadRegistros();
         void Leer(int cantidadRegistros, MedicoEspecialidad *vector);
+        MedicoEspecialidad BuscarPorIdMedico(int idMedico);
 };
