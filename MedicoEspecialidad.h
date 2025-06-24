@@ -20,5 +20,6 @@ public:
     void setId(int id);
     void setIdEspecialidad(int idEsp);
     void setIdMedico(int idMed);
+
 };
 

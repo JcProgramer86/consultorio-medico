@@ -142,6 +142,7 @@ void ManagerPaciente::ListarTodos(){
     menu.menuHeader();
 
     Paciente paciente;
+    ArchivoPrestador aPrestador("prestadores.dat");
     ArchivoPaciente aPaciente("paciente.dat");
     int cant = aPaciente.CantidadRegistros();
 
@@ -179,6 +180,18 @@ void ManagerPaciente::ListarTodos(){
         }
         encontrados++;
 
+        int idPrestador = paciente.get_idPrestador();
+        std::string nombrePrestador = "N/A";
+
+        int cantPrestadores = aPrestador.CantidadRegistros();
+        for (int i = 0; i < cantPrestadores; i++) {
+            Prestador prestador = aPrestador.Leer(i);
+            if (prestador.getId() == idPrestador) {
+                nombrePrestador = prestador.getNombrePrestador();
+                break;
+            }
+        }
+
         cout << left
              << setw(4)  << paciente.get_id()
              << setw(12) << paciente.get_dni()
@@ -187,7 +200,7 @@ void ManagerPaciente::ListarTodos(){
              << setw(15) << paciente.get_telefono()
              << setw(35) << paciente.get_email()
              << setw(12) << paciente.get_fechaNacimiento().toString()
-             << setw(10) << paciente.get_idPrestador()
+             << setw(10) << nombrePrestador
              << endl;
     }
 

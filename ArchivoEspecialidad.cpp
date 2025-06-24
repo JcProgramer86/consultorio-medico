@@ -104,6 +104,25 @@ Especialidad ArchivoEspecialidad::leer(int posicion) {
     return especialidad; // Devuelvo el registro leído
 }
 
+Especialidad ArchivoEspecialidad::leerPorId(int id) {
+    FILE *pArchivo = fopen(_nombreArchivo.c_str(), "rb");
+    if (pArchivo == NULL) {
+        return Especialidad(); // objeto vacío
+    }
+
+    Especialidad esp;
+    while (fread(&esp, sizeof(Especialidad), 1, pArchivo)) {
+        if (esp.get_id() == id) {
+            fclose(pArchivo);
+            return esp;
+        }
+    }
+
+    fclose(pArchivo);
+    return Especialidad(); // si no lo encuentra
+}
+
+
 int ArchivoEspecialidad::cantidadRegistros() {
     // Abro el archivo para lectura binaria
     FILE* pArchivo = fopen(_nombreArchivo.c_str(), "rb");

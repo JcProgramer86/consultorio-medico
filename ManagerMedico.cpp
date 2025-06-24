@@ -342,7 +342,9 @@ void ManagerMedico::listarMedicos()
     cout << endl;
 
     ArchivoMedico archivo("medicos.dat");
-    ArchivoEspecialidad Especialidad("especialidad.dat");
+    ArchivoMedicoEspecialidad archivoRel("medicoespecialidades.dat");
+    ArchivoEspecialidad archivoEsp("especialidad.dat");
+
     int cantidad = archivo.CantidadRegistros();
 
     if (cantidad == 0)
@@ -351,7 +353,6 @@ void ManagerMedico::listarMedicos()
         return;
     }
 
-    // Encabezado de columnas
     cout << left
          << setw(4)  << "|ID"
          << setw(12) << "|DNI"
@@ -359,14 +360,15 @@ void ManagerMedico::listarMedicos()
          << setw(15) << "|Apellido"
          << setw(15) << "|Telefono"
          << setw(25) << "|Email"
-         << setw(8) << "|Matri."
+         << setw(8)  << "|Matri."
          << setw(12) << "|F.Nac."
-         << setw(15) << "|Esp."
+         << setw(30) << "|Esp." // ancho mayor
          << setw(12) << "|Inicio Act."
          << endl;
-    cout << string(135, '-') << endl;
+    cout << string(156, '-') << endl;
 
     bool hayActivos = false;
+
     for (int i = 0; i < cantidad; i++)
     {
         Medico medico = archivo.Leer(i);
@@ -374,6 +376,40 @@ void ManagerMedico::listarMedicos()
         if (medico.get_enabled())
         {
             hayActivos = true;
+
+            // Arreglo para guardar los nombres
+            char especialidades[10][100];
+            int cantEsp = 0;
+
+            int totalRel = archivoRel.CantidadRegistros();
+
+            for (int j = 0; j < totalRel; ++j)
+            {
+                MedicoEspecialidad rel = archivoRel.Leer(j);
+                if (rel.getIdMedico() == medico.get_id() && cantEsp < 10)
+                {
+                    int posEsp = archivoEsp.buscarPorId(rel.getIdEspecialidad());
+                    if (posEsp >= 0)
+                    {
+                        Especialidad esp = archivoEsp.leer(posEsp);
+                        strcpy(especialidades[cantEsp], esp.get_nombreEspecialidad());
+                        cantEsp++;
+                    }
+                }
+            }
+
+            // Concatenar nombres
+            char nombresConcatenados[300] = "";
+            for (int k = 0; k < cantEsp; k++)
+            {
+                strcat(nombresConcatenados, especialidades[k]);
+                if (k != cantEsp - 1)
+                {
+                    strcat(nombresConcatenados, ",");
+                }
+            }
+
+            // Mostrar
             cout << left
                  << setw(4)  << medico.get_id()
                  << setw(12) << medico.get_dni()
@@ -381,15 +417,15 @@ void ManagerMedico::listarMedicos()
                  << setw(15) << medico.get_apellido()
                  << setw(15) << medico.get_telefono()
                  << setw(25) << medico.get_email()
-                 << setw(8) << medico.get_matricula()
+                 << setw(8)  << medico.get_matricula()
                  << setw(12) << medico.get_fechaNacimiento().toString()
-                 << setw(15) << Especialidad.leer(medico.get_idEspecialidad()).get_nombreEspecialidad()
+                 << setw(30) << nombresConcatenados
                  << setw(12) << medico.get_fechaInicioActividad().toString()
                  << endl;
         }
     }
 
-    cout << string(135, '=') << endl << endl;
+    cout << string(156, '=') << endl << endl;
 
     if (!hayActivos)
     {
@@ -397,7 +433,6 @@ void ManagerMedico::listarMedicos()
     }
 
     cout << "\nPresione Enter para volver al menu de Medicos...";
-    cin.ignore(); // limpia cualquier entrada anterior
-    cin.get();    // espera que el usuario presione Enter
-
+    cin.ignore();
+    cin.get();
 }
