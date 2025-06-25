@@ -82,34 +82,3 @@ void ArchivoTurno::Leer(int cantidadRegistros, Turno* vector) {
     fclose(pArchivo);
 }
 
-void ArchivoTurno::ListarTurnos() {
-    int cantidad = CantidadRegistros();
-    if (cantidad == 0) {
-        std::cout << "No hay turnos registrados." << std::endl;
-        return;
-    }
-
-    for (int i = 0; i < cantidad; ++i) {
-        Turno t = Leer(i);
-
-        std::cout << "----------------------" << std::endl;
-        std::cout << "ID: " << t.getId() << std::endl;
-        std::cout << "ID Paciente: " << t.getIdPaciente() << std::endl;
-        std::cout << "ID MedicoEspecialidad: " << t.getIdMedicoEspecialidad() << std::endl;
-        std::cout << "Fecha: "
-                  << t.getFechaAtencion().getDia() << "/"
-                  << t.getFechaAtencion().getMes() << "/"
-                  << t.getFechaAtencion().getAnio() << std::endl;
-        std::cout << "Hora: "
-                  << t.getHoraAtencion().getHora() << ":"
-                  << (t.getHoraAtencion().getMinuto() < 10 ? "0" : "")
-                  << t.getHoraAtencion().getMinuto() << std::endl;
-        std::cout << "Importe: $" << t.getImporteConsulta() << std::endl;
-        std::cout << "Cancelado: " << (t.getCancelado() ? "Si" : "No") << std::endl;
-        std::cout << "Sobreturno: " << (t.getSobreturno() ? "Si" : "No") << std::endl;
-        std::cout << "Duración: "
-                  << t.getDuracionTurno().getHora() << "h "
-                  << t.getDuracionTurno().getMinuto() << "min" << std::endl;
-        std::cout << "Observaciones: " << t.getObservaciones() << std::endl;
-    }
-}

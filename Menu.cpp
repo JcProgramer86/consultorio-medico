@@ -240,8 +240,8 @@ void Menu::menuTurnos()
         cout << "\n----------------- TURNOS ----------------\n";
         cout << "  1) Sacar nuevo turno\n";
         cout << "  2) Ver agenda semanal\n";
-        cout << "  3) Buscar turno por ID\n";
-        cout << "  4) Listar todos los turnos\n";
+        cout << "  3) Ver turnos de un paciente\n";
+        cout << "  4) Listar turnos por fecha (día / semana / mes)\n";
         cout << "----------------------------------------\n";
         cout << "  0) Volver al menu principal\n";
         cout << "----------------------------------------\n";
@@ -257,25 +257,23 @@ void Menu::menuTurnos()
             manager.mostrarAgendaSemanal();
             break;
         case 3:
-        {
-            int id;
-            cout << "Ingrese el ID del turno a buscar: ";
-            cin >> id;
+            manager.listarTurnosPorPaciente();
             break;
-        }
         case 4:
-            manager.listarTurnos() ;
+            submenuListarTurnosPorFecha();
             break;
         case 0:
             cout << "Volviendo al menu principal..." << endl;
             break;
         default:
             cout << "Opcion no valida. Intente de nuevo." << endl;
+            system("pause");
         }
-        cout << endl;
-    }
-    while (opcion != 0);
+
+    } while (opcion != 0);
 }
+
+
 
 void Menu::menuHeader()
 {
@@ -414,4 +412,39 @@ void Menu::SubmenuOcupacionMedica(ManagerAdministrativo& managerAdministrativo) 
         }
     } while (opcion != 0);
 }
+
+void Menu::submenuListarTurnosPorFecha() {
+    ManagerTurno managerTurno;
+
+    int opcion;
+    do {
+        system("cls");
+        cout << "\n---- LISTADO DE TURNOS POR FECHA ----\n";
+        cout << "  1) Ver turnos por día\n";
+        cout << "  2) Ver turnos por semana\n";
+        cout << "  3) Ver turnos por mes\n";
+        cout << "  0) Volver\n";
+        cout << "Seleccione una opción: ";
+        cin >> opcion;
+
+        switch (opcion) {
+        case 1:
+            managerTurno.listarTurnosPorDia();
+            break;
+        case 2:
+            managerTurno.listarTurnosPorSemana();
+            break;
+        case 3:
+            managerTurno.listarTurnosPorMes();
+            break;
+        case 0:
+            break;
+        default:
+            cout << "Opción inválida.\n";
+            system("pause");
+        }
+
+    } while (opcion != 0);
+}
+
 
