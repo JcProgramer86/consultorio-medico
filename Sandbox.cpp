@@ -236,7 +236,7 @@ void ejecutarSandboxTurno()
     }
 
     std::cout << "\nListado de turnos registrados:" << std::endl;
-    archivo.ListarTurnos();
+    //archivo.ListarTurnos();
 }
 
 

@@ -3,7 +3,6 @@
 #include "ArchivoPaciente.h"
 #include "ArchivoPrestador.h"
 #include "Fecha.h"
-#include "Utils.h"
 #include <iostream>
 #include <iomanip>
 #include "Menu.h"

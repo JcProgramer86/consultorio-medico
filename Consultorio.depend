@@ -295,17 +295,17 @@
 	<iostream>
 	<iomanip>
 
-1750803611 source:c:\users\calvo\desktop\consultorio-medico\archivoespecialidad.cpp
+1750806038 source:c:\users\calvo\desktop\consultorio-medico\archivoespecialidad.cpp
 	"ArchivoEspecialidad.h"
 	<cstdio>
 	<iostream>
 	<cstring>
 
-1750803611 c:\users\calvo\desktop\consultorio-medico\archivoespecialidad.h
+1750806038 c:\users\calvo\desktop\consultorio-medico\archivoespecialidad.h
 	"Especialidad.h"
 	<string>
 
-1750801537 c:\users\calvo\desktop\consultorio-medico\especialidad.h
+1750806038 c:\users\calvo\desktop\consultorio-medico\especialidad.h
 	<string>
 
 1750096573 source:c:\users\calvo\desktop\consultorio-medico\archivomedico.cpp
@@ -328,15 +328,15 @@
 	<string>
 	"Fecha.h"
 
-1750802558 source:c:\users\calvo\desktop\consultorio-medico\archivomedicoespecialidad.cpp
+1750806038 source:c:\users\calvo\desktop\consultorio-medico\archivomedicoespecialidad.cpp
 	"Fecha.h"
 	"ArchivoMedicoEspecialidad.h"
 
-1750802558 c:\users\calvo\desktop\consultorio-medico\archivomedicoespecialidad.h
+1750806038 c:\users\calvo\desktop\consultorio-medico\archivomedicoespecialidad.h
 	<string>
 	"MedicoEspecialidad.h"
 
-1750802558 c:\users\calvo\desktop\consultorio-medico\medicoespecialidad.h
+1750806038 c:\users\calvo\desktop\consultorio-medico\medicoespecialidad.h
 
 1749772785 source:c:\users\calvo\desktop\consultorio-medico\archivopaciente.cpp
 	"Fecha.h"
@@ -347,7 +347,7 @@
 	<string>
 	"Paciente.h"
 
-1750805475 c:\users\calvo\desktop\consultorio-medico\paciente.h
+1750806038 c:\users\calvo\desktop\consultorio-medico\paciente.h
 	"Persona.h"
 	"Fecha.h"
 
@@ -362,7 +362,7 @@
 1748572043 c:\users\calvo\desktop\consultorio-medico\prestador.h
 	<string>
 
-1749604673 source:c:\users\calvo\desktop\consultorio-medico\archivoturno.cpp
+1750807241 source:c:\users\calvo\desktop\consultorio-medico\archivoturno.cpp
 	"ArchivoTurno.h"
 	<cstdio>
 	<iostream>
@@ -414,7 +414,7 @@
 
 1750464993 c:\users\calvo\desktop\consultorio-medico\managermedicoespecialidad.h
 
-1750704223 c:\users\calvo\desktop\consultorio-medico\menu.h
+1750808244 c:\users\calvo\desktop\consultorio-medico\menu.h
 	"Paciente.h"
 	"Medico.h"
 	"ManagerAdministrativo.h"
@@ -426,7 +426,7 @@
 	"ArchivoTurno.h"
 	"Fecha.h"
 
-1749772785 source:c:\users\calvo\desktop\consultorio-medico\managerturno.cpp
+1750820228 source:c:\users\calvo\desktop\consultorio-medico\managerturno.cpp
 	"ManagerTurno.h"
 	<iomanip>
 	<iostream>
@@ -443,10 +443,12 @@
 	"Medico.h"
 	"MedicoEspecialidad.h"
 	"Especialidad.h"
+	"ArchivoPrestador.h"
 	"Fecha.h"
 	"Hora.h"
 
-1749772785 c:\users\calvo\desktop\consultorio-medico\managerturno.h
+1750819557 c:\users\calvo\desktop\consultorio-medico\managerturno.h
+	"Turnos.h"
 
 1750464512 source:c:\users\calvo\desktop\consultorio-medico\medico.cpp
 	"Medico.h"
@@ -499,7 +501,7 @@
 	<iomanip>
 	<cstring>
 
-1750804337 source:c:\users\calvo\desktop\consultorio-medico\managermedico.cpp
+1750806038 source:c:\users\calvo\desktop\consultorio-medico\managermedico.cpp
 	<iostream>
 	<iomanip>
 	"Medico.h"
@@ -512,13 +514,12 @@
 
 1749772785 c:\users\calvo\desktop\consultorio-medico\managermedico.h
 
-1750704223 source:c:\users\calvo\desktop\consultorio-medico\managerpaciente.cpp
+1750806984 source:c:\users\calvo\desktop\consultorio-medico\managerpaciente.cpp
 	"ManagerPaciente.h"
 	"Paciente.h"
 	"ArchivoPaciente.h"
 	"ArchivoPrestador.h"
 	"Fecha.h"
-	"Utils.h"
 	<iostream>
 	<iomanip>
 	"Menu.h"
@@ -538,7 +539,7 @@
 
 1750704223 c:\users\calvo\desktop\consultorio-medico\managerprestador.h
 
-1750704223 source:c:\users\calvo\desktop\consultorio-medico\menu.cpp
+1750821324 source:c:\users\calvo\desktop\consultorio-medico\menu.cpp
 	"Menu.h"
 	"ManagerPaciente.h"
 	<iostream>
@@ -556,7 +557,7 @@
 	<iostream>
 	<regex>
 
-1750704223 source:c:\users\calvo\desktop\consultorio-medico\sandbox.cpp
+1750807269 source:c:\users\calvo\desktop\consultorio-medico\sandbox.cpp
 	<iostream>
 	"Medico.h"
 	"ArchivoMedico.h"
