@@ -14,61 +14,101 @@ using namespace std;
 
 ManagerAdministrativo::ManagerAdministrativo() {}
 
-bool ManagerAdministrativo::compararStringsCaseInsensitive(const std::string& str1, const std::string& str2) {
-    if (str1.length() != str2.length()) return false;
-    for (size_t i = 0; i < str1.length(); i++) {
-        char c1 = str1[i], c2 = str2[i];
-        if (c1 >= 'A' && c1 <= 'Z') c1 += 32;
-        if (c2 >= 'A' && c2 <= 'Z') c2 += 32;
-        if (c1 != c2) return false;
-    }
-    return true;
-}
-
-int ManagerAdministrativo::buscarEspecialidadPorNombre(const char* nombreEspecialidad) {
-    ArchivoEspecialidad archivo("especialidad.dat");
-    int cantidad = archivo.cantidadRegistros();
-    for (int i = 0; i < cantidad; i++) {
-        Especialidad esp = archivo.leer(i);
-        if (compararStringsCaseInsensitive(esp.get_nombreEspecialidad(), nombreEspecialidad)) return i;
-    }
-    return -1;
-}
 
 float ManagerAdministrativo::obtenerFacturacionDelMes() {
-    Fecha fecha = Fecha::leerFechaValida("Ingrese mes y año (01/aaaa): ");
+    system("cls");
+    cout << "==============================================" << endl;
+    cout << "         CONSULTA DE FACTURACION MENSUAL      " << endl;
+    cout << "==============================================" << endl;
+
+    // Limpiar el buffer antes de pedir la fecha
+    cin.ignore();
+    Fecha fecha = Fecha::leerMesAnioValido("Ingrese mes y anio (MM/AAAA): ");
     int mes = fecha.getMes();
     int anio = fecha.getAnio();
 
     ArchivoTurno archivo("turnos.dat");
     float total = 0;
+    int cantidad = 0;
+
     for (int i = 0; i < archivo.CantidadRegistros(); i++) {
         Turno t = archivo.Leer(i);
         Fecha f = t.getFechaAtencion();
         if (f.getMes() == mes && f.getAnio() == anio && !t.getCancelado() && t.getAsistio()) {
             total += t.getImporteConsulta();
+            cantidad++;
         }
     }
+
+    cout << "\n----------------------------------------------" << endl;
+    cout << "Mes consultado: " << (mes < 10 ? "0" : "") << mes << "/" << anio << endl;
+    cout << "Turnos facturados: " << cantidad << endl;
+    cout << "----------------------------------------------" << endl;
+
     cout << fixed << setprecision(2);
-    cout << "Facturación total para " << mes << "/" << anio << ": $ " << total << endl;
-    system("pause");
+
+    if (cantidad > 0) {
+        cout << "Facturacion total: $ " << total << endl;
+    } else {
+        cout << "No se registro facturacion para ese periodo." << endl;
+    }
+
+    cout << "----------------------------------------------" << endl;
+    cout << "\nPresione Enter para volver al menu...";
+    cin.ignore();
+    cin.get();
     return total;
 }
 
 void ManagerAdministrativo::listarPacientesAtendidosPorEspecialidadYMes() {
-    Fecha fecha = Fecha::leerFechaValida("Ingrese mes y año (01/aaaa): ");
+    system("cls");
+    cout << "==============================================" << endl;
+    cout << "      PACIENTES ATENDIDOS POR ESPECIALIDAD    " << endl;
+    cout << "==============================================" << endl;
+
+    // Limpiar buffer por si venimos de un cin anterior
+    cin.ignore();
+
+    // Usar el método profesional de fecha por mes
+    Fecha fecha = Fecha::leerMesAnioValido("Ingrese mes y anio (MM/AAAA): ");
     int mes = fecha.getMes();
     int anio = fecha.getAnio();
+
+    // Mostrar especialidades disponibles
+    ArchivoEspecialidad aEspecialidad("especialidad.dat");
+    int cantEsp = aEspecialidad.cantidadRegistros();
+    cout << "\nEspecialidades disponibles:\n";
+    cout << left << setw(6) << "ID" << setw(30) << "Especialidad" << endl;
+    cout << string(36, '-') << endl;
+    for (int i = 0; i < cantEsp; ++i) {
+        Especialidad esp = aEspecialidad.leer(i);
+        cout << left << setw(6) << esp.get_id()
+             << setw(30) << esp.get_nombreEspecialidad() << endl;
+    }
+
     int idEsp;
-    cout << "Ingrese el ID de especialidad: ";
-    cin >> idEsp;
+    bool idValido = false;
+    do {
+        cout << "\nIngrese el ID de especialidad: ";
+        cin >> idEsp;
+        for (int i = 0; i < cantEsp; ++i) {
+            if (aEspecialidad.leer(i).get_id() == idEsp) {
+                idValido = true;
+                break;
+            }
+        }
+        if (!idValido) cout << "[!] ID de especialidad no valido. Intente nuevamente.\n";
+    } while (!idValido);
 
     ArchivoTurno aTurno("turnos.dat");
-    ArchivoMedicoEspecialidad aME("medicoespecialidad.dat");
+    ArchivoMedicoEspecialidad aME("medicoespecialidades.dat");
     ArchivoPaciente aPaciente("paciente.dat");
 
     bool hayPacientes = false;
-    cout << "\nPacientes atendidos en " << mes << "/" << anio << " para especialidad ID " << idEsp << ":\n";
+    cout << "\n==============================================" << endl;
+    cout << "Pacientes atendidos en " << (mes < 10 ? "0" : "") << mes << "/" << anio
+         << " para la especialidad: " << aEspecialidad.leer(idEsp-1).get_nombreEspecialidad() << endl;
+    cout << "----------------------------------------------" << endl;
 
     for (int i = 0; i < aTurno.CantidadRegistros(); i++) {
         Turno t = aTurno.Leer(i);
@@ -88,209 +128,288 @@ void ManagerAdministrativo::listarPacientesAtendidosPorEspecialidadYMes() {
             }
         }
     }
-    if (!hayPacientes) cout << "No se encontraron pacientes atendidos.\n";
-    system("pause");
+
+    if (!hayPacientes) {
+        cout << "\nNo se encontraron pacientes atendidos en ese periodo para esa especialidad.\n";
+    }
+
+    cout << "----------------------------------------------" << endl;
+    cout << "\nPresione Enter para volver al menu...";
+    cin.ignore();
+    cin.get();
 }
+
 
 void ManagerAdministrativo::ocupacionPorDiaDeMedico() {
-    string dni;
-    cout << "Ingrese el DNI del médico: ";
-    cin >> dni;
+    system("cls");
+    cout << "==============================================" << endl;
+    cout << "         OCUPACION POR DIA DE MEDICO          " << endl;
+    cout << "==============================================" << endl;
 
-    // Limpiar buffer para que getline funcione correctamente en leerFechaValida
-    string salto;
-    getline(cin, salto);
+    string dni;
+    cout << "\nIngrese el DNI del medico: ";
+    cin >> dni;
+    cin.ignore();
 
     Persona personaAux;
     if (!personaAux.validarDNI(dni)) {
-        cout << "DNI inválido.\n";
-        system("pause");
+        cout << "[!] DNI ingresado no es valido. Intente nuevamente.\n";
+        cout << "Presione Enter para continuar...";
+        cin.get();
         return;
     }
 
-    Fecha fecha = Fecha::leerFechaValida("Ingrese la fecha del turno (dd/mm/aaaa): ");
+    ArchivoMedico aMedico("medicos.dat");
+    int posMedico = aMedico.BuscarPorDni(dni);
+    if (posMedico == -1) {
+        cout << "[!] No se encontro ningun medico con ese DNI.\n";
+        cout << "Presione Enter para continuar...";
+        cin.get();
+        return;
+    }
+    Medico medico = aMedico.Leer(posMedico);
+
+    Fecha fecha = Fecha::leerFechaValida("Ingrese la fecha del turno (DD/MM/AAAA): ");
+
+    cout << "\n----------------------------------------------\n";
+    cout << "Medico: " << medico.get_nombre() << " " << medico.get_apellido() << " | DNI: " << dni << endl;
+    cout << "Fecha:  " << fecha.toString() << endl;
+    cout << "----------------------------------------------\n";
 
     ArchivoTurno aTurno("turnos.dat");
-    ArchivoMedico aMedico("medico.dat");
+    ArchivoMedicoEspecialidad aMedEsp("medicoespecialidades.dat");
+    ArchivoPaciente aPaciente("paciente.dat");
 
-    int idMedico = -1;
-    for (int i = 0; i < aMedico.CantidadRegistros(); i++) {
-        Medico m = aMedico.Leer(i);
-        if (m.get_dni() == dni) {
-            idMedico = m.get_id();
-            break;
+    // Matriz para guardar los ids medico-especialidad
+    const int MAX_RELACIONES = 30;
+    int idsMedEsp[MAX_RELACIONES];
+    int cantIds = 0;
+    for (int i = 0; i < aMedEsp.CantidadRegistros() && cantIds < MAX_RELACIONES; ++i) {
+        MedicoEspecialidad me = aMedEsp.Leer(i);
+        if (me.getIdMedico() == medico.get_id()) {
+            idsMedEsp[cantIds++] = me.getId();
         }
     }
-    if (idMedico == -1) {
-        cout << "Médico no encontrado.\n";
-        system("pause");
-        return;
-    }
 
+    // Para mostrar resumenes de los turnos
     int cantidad = 0;
-    for (int i = 0; i < aTurno.CantidadRegistros(); i++) {
+    for (int i = 0; i < aTurno.CantidadRegistros(); ++i) {
         Turno t = aTurno.Leer(i);
         Fecha f = t.getFechaAtencion();
-        if (t.getIdMedicoEspecialidad() == idMedico && f == fecha && !t.getCancelado() && t.getAsistio()) {
+
+        // Buscar si el turno es de este medico
+        bool esDelMedico = false;
+        for (int j = 0; j < cantIds; ++j) {
+            if (t.getIdMedicoEspecialidad() == idsMedEsp[j]) {
+                esDelMedico = true;
+                break;
+            }
+        }
+
+        if (esDelMedico && f == fecha && !t.getCancelado() && t.getAsistio()) {
             cantidad++;
         }
     }
 
-    cout << "\nDNI: " << dni << " | Fecha: " << fecha.toString() << " | Turnos Atendidos: " << cantidad << endl;
-    system("pause");
-}
-bool ManagerAdministrativo::pedirMesAnio(int &mes, int &anio) {
-    char entrada[20];
-    while (true) {
-        std::cout << "Ingrese mes y año (MM/AAAA) o 0 para salir: ";
-        std::cin.getline(entrada, 20);
+    cout << "Turnos atendidos ese dia: " << cantidad << endl;
+    cout << "----------------------------------------------\n";
 
-        // Si el usuario sólo escribió '0' y enter, cancela
-        if (entrada[0] == '0' && entrada[1] == '\0') {
-            return false; // Canceló
-        }
+    // Mostrar resumenes si hay turnos
+    if (cantidad > 0) {
+        cout << "Resumen de turnos atendidos:\n";
+        cout << left
+             << setw(5) << "ID"
+             << setw(20) << "Paciente"
+             << setw(8) << "Hora"
+             << setw(12) << "Importe"
+             << setw(12) << "Sobret."
+             << setw(12) << "Asistio"
+             << setw(15) << "Obs"
+             << endl;
+        cout << string(82, '-') << endl;
 
-        // Buscar '/' manualmente
-        int posSeparador = -1;
-        for (int i = 0; entrada[i] != '\0'; i++) {
-            if (entrada[i] == '/') {
-                posSeparador = i;
-                break;
+        for (int i = 0; i < aTurno.CantidadRegistros(); ++i) {
+            Turno t = aTurno.Leer(i);
+            Fecha f = t.getFechaAtencion();
+
+            bool esDelMedico = false;
+            for (int j = 0; j < cantIds; ++j) {
+                if (t.getIdMedicoEspecialidad() == idsMedEsp[j]) {
+                    esDelMedico = true;
+                    break;
+                }
+            }
+
+            if (esDelMedico && f == fecha && !t.getCancelado() && t.getAsistio()) {
+                // Obtener paciente
+                int posPac = aPaciente.Buscar(t.getIdPaciente());
+                std::string nombrePaciente = "Desconocido";
+                if (posPac != -1) {
+                    Paciente p = aPaciente.Leer(posPac);
+                    nombrePaciente = p.get_nombre() + " " + p.get_apellido();
+                }
+
+                cout << left
+                     << setw(5) << t.getId()
+                     << setw(20) << nombrePaciente
+                     << setw(8) << t.getHoraAtencion().toString()
+                     << "$" << setw(11) << fixed << setprecision(2) << t.getImporteConsulta()
+                     << setw(12) << (t.getSobreturno() ? "Si" : "No")
+                     << setw(12) << (t.getAsistio() ? "Si" : "No")
+                     << setw(15) << t.getObservaciones()
+                     << endl;
             }
         }
-        if (posSeparador == -1) {
-            std::cout << "[!] Formato incorrecto. Debe ser MM/AAAA.\n";
-            continue;
-        }
-
-        // Separar mes y año en cadenas char
-        char mesStr[3] = {'\0', '\0', '\0'};
-        char anioStr[10] = {'\0'};
-
-        // Copiar mes (antes del separador)
-        int i;
-        for (i = 0; i < posSeparador && i < 2; i++) {
-            mesStr[i] = entrada[i];
-        }
-        mesStr[i] = '\0';
-
-        // Copiar año (después del separador)
-        int j = 0;
-        for (i = posSeparador + 1; entrada[i] != '\0' && j < 9; i++, j++) {
-            anioStr[j] = entrada[i];
-        }
-        anioStr[j] = '\0';
-
-        // Validar que mesStr y anioStr sólo tengan dígitos
-        bool mesEsNumero = true;
-        for (int k = 0; mesStr[k] != '\0'; k++) {
-            if (mesStr[k] < '0' || mesStr[k] > '9') {
-                mesEsNumero = false;
-                break;
-            }
-        }
-        bool anioEsNumero = true;
-        for (int k = 0; anioStr[k] != '\0'; k++) {
-            if (anioStr[k] < '0' || anioStr[k] > '9') {
-                anioEsNumero = false;
-                break;
-            }
-        }
-        if (!mesEsNumero || !anioEsNumero) {
-            std::cout << "[!] Mes y año deben ser números.\n";
-            continue;
-        }
-
-        // Convertir mesStr a int
-        mes = 0;
-        for (int k = 0; mesStr[k] != '\0'; k++) {
-            mes = mes * 10 + (mesStr[k] - '0');
-        }
-        // Convertir anioStr a int
-        anio = 0;
-        for (int k = 0; anioStr[k] != '\0'; k++) {
-            anio = anio * 10 + (anioStr[k] - '0');
-        }
-
-        // Validar rango
-        if (mes < 1 || mes > 12) {
-            std::cout << "[!] Mes inválido. Debe estar entre 1 y 12.\n";
-            continue;
-        }
-        if (anio < 1) {
-            std::cout << "[!] Año inválido. Debe ser positivo.\n";
-            continue;
-        }
-
-        return true; // Entrada válida
     }
+
+    cout << "----------------------------------------------\n";
+    cout << "Presione Enter para volver al menu...";
+    cin.get();
 }
 
-void ManagerAdministrativo::ocupacionPorMesDeMedico() {
-    string dni;
-    cout << "Ingrese el DNI del médico: ";
-    cin >> dni;
+void ManagerAdministrativo::ocupacionPorMesAnioDeMedico() {
+    system("cls");
+    cout << "==============================================" << endl;
+    cout << "      OCUPACION POR MES Y ANIO DE MEDICO      " << endl;
+    cout << "==============================================" << endl;
 
-    // Limpiar buffer para evitar que getline en pedirMesAnio tome línea vacía
-    string salto;
-    getline(cin, salto);
+    string dni;
+    cout << "\nIngrese el DNI del medico: ";
+    cin >> dni;
+    cin.ignore();
 
     Persona personaAux;
     if (!personaAux.validarDNI(dni)) {
-        cout << "DNI inválido.\n";
-        system("pause");
+        cout << "[!] DNI ingresado no es valido. Intente nuevamente.\n";
+        cout << "Presione Enter para continuar...";
+        cin.get();
         return;
     }
 
-    int mes, anio;
-    if (!pedirMesAnio(mes, anio)) {
-        cout << "Operación cancelada.\n";
-        system("pause");
+    ArchivoMedico aMedico("medicos.dat");
+    int posMedico = aMedico.BuscarPorDni(dni);
+    if (posMedico == -1) {
+        cout << "[!] No se encontro ningun medico con ese DNI.\n";
+        cout << "Presione Enter para continuar...";
+        cin.get();
         return;
     }
+    Medico medico = aMedico.Leer(posMedico);
+
+    // Pide mes y año con tu método
+    Fecha fecha = Fecha::leerMesAnioValido("Ingrese mes y anio (MM/AAAA): ");
+    int mes = fecha.getMes();
+    int anio = fecha.getAnio();
+
+    cout << "\n----------------------------------------------\n";
+    cout << "Medico: " << medico.get_nombre() << " " << medico.get_apellido() << " | DNI: " << dni << endl;
+    cout << "Periodo: " << (mes < 10 ? "0" : "") << mes << "/" << anio << endl;
+    cout << "----------------------------------------------\n";
 
     ArchivoTurno aTurno("turnos.dat");
-    ArchivoMedico aMedico("medico.dat");
+    ArchivoMedicoEspecialidad aMedEsp("medicoespecialidades.dat");
+    ArchivoPaciente aPaciente("paciente.dat");
 
-    int idMedico = -1;
-    for (int i = 0; i < aMedico.CantidadRegistros(); i++) {
-        Medico m = aMedico.Leer(i);
-        if (m.get_dni() == dni) {
-            idMedico = m.get_id();
-            break;
+    const int MAX_RELACIONES = 30;
+    int idsMedEsp[MAX_RELACIONES];
+    int cantIds = 0;
+    for (int i = 0; i < aMedEsp.CantidadRegistros() && cantIds < MAX_RELACIONES; ++i) {
+        MedicoEspecialidad me = aMedEsp.Leer(i);
+        if (me.getIdMedico() == medico.get_id()) {
+            idsMedEsp[cantIds++] = me.getId();
         }
-    }
-    if (idMedico == -1) {
-        cout << "Médico no encontrado.\n";
-        system("pause");
-        return;
     }
 
     int cantidad = 0;
-    for (int i = 0; i < aTurno.CantidadRegistros(); i++) {
+    for (int i = 0; i < aTurno.CantidadRegistros(); ++i) {
         Turno t = aTurno.Leer(i);
         Fecha f = t.getFechaAtencion();
-        if (t.getIdMedicoEspecialidad() == idMedico && f.getMes() == mes && f.getAnio() == anio && !t.getCancelado() && t.getAsistio()) {
+        bool esDelMedico = false;
+        for (int j = 0; j < cantIds; ++j) {
+            if (t.getIdMedicoEspecialidad() == idsMedEsp[j]) {
+                esDelMedico = true;
+                break;
+            }
+        }
+        if (esDelMedico && f.getMes() == mes && f.getAnio() == anio && !t.getCancelado() && t.getAsistio()) {
             cantidad++;
         }
     }
 
-    cout << "\nDNI: " << dni << " | Mes: " << mes << "/" << anio << " | Turnos Atendidos: " << cantidad << endl;
-    system("pause");
+    cout << "Turnos atendidos en ese periodo: " << cantidad << endl;
+    cout << "----------------------------------------------\n";
+
+    // Resumen de los turnos
+    if (cantidad > 0) {
+        cout << "Resumen de turnos atendidos:\n";
+        cout << left
+             << setw(5) << "ID"
+             << setw(20) << "Paciente"
+             << setw(12) << "Fecha"
+             << setw(8) << "Hora"
+             << setw(12) << "Importe"
+             << setw(12) << "Sobret."
+             << setw(12) << "Asistio"
+             << setw(15) << "Obs"
+             << endl;
+        cout << string(94, '-') << endl;
+
+        for (int i = 0; i < aTurno.CantidadRegistros(); ++i) {
+            Turno t = aTurno.Leer(i);
+            Fecha f = t.getFechaAtencion();
+            bool esDelMedico = false;
+            for (int j = 0; j < cantIds; ++j) {
+                if (t.getIdMedicoEspecialidad() == idsMedEsp[j]) {
+                    esDelMedico = true;
+                    break;
+                }
+            }
+            if (esDelMedico && f.getMes() == mes && f.getAnio() == anio && !t.getCancelado() && t.getAsistio()) {
+                int posPac = aPaciente.Buscar(t.getIdPaciente());
+                string nombrePaciente = "Desconocido";
+                if (posPac != -1) {
+                    Paciente p = aPaciente.Leer(posPac);
+                    nombrePaciente = p.get_nombre() + " " + p.get_apellido();
+                }
+                cout << left
+                     << setw(5) << t.getId()
+                     << setw(20) << nombrePaciente
+                     << setw(12) << t.getFechaAtencion().toString()
+                     << setw(8) << t.getHoraAtencion().toString()
+                     << "$" << setw(11) << fixed << setprecision(2) << t.getImporteConsulta()
+                     << setw(12) << (t.getSobreturno() ? "Si" : "No")
+                     << setw(12) << (t.getAsistio() ? "Si" : "No")
+                     << setw(15) << t.getObservaciones()
+                     << endl;
+            }
+        }
+    }
+    cout << "----------------------------------------------\n";
+    cout << "Presione Enter para volver al menu...";
+    cin.get();
 }
+
 
 void ManagerAdministrativo::ocupacionPorMesEspecialidad() {
-    Fecha fecha = Fecha::leerFechaValida("Ingrese mes y año (01/aaaa): ");
+    system("cls");
+    cin.ignore();
+    cout << "==============================================" << endl;
+    cout << "   OCUPACION POR MES Y ESPECIALIDAD MEDICA    " << endl;
+    cout << "==============================================" << endl;
+
+    // Pide mes y año con tu método
+    Fecha fecha = Fecha::leerMesAnioValido("Ingrese mes y anio (MM/AAAA): ");
     int mes = fecha.getMes();
     int anio = fecha.getAnio();
 
     ArchivoTurno aTurno("turnos.dat");
-    ArchivoMedicoEspecialidad aME("medicoespecialidad.dat");
+    ArchivoMedicoEspecialidad aME("medicoespecialidades.dat");
     ArchivoEspecialidad aEsp("especialidad.dat");
 
     const int MAX = 100;
     int turnosPorEspecialidad[MAX] = {0};
 
+    // Cuenta turnos por especialidad
     for (int i = 0; i < aTurno.CantidadRegistros(); i++) {
         Turno t = aTurno.Leer(i);
         Fecha f = t.getFechaAtencion();
@@ -307,44 +426,76 @@ void ManagerAdministrativo::ocupacionPorMesEspecialidad() {
         }
     }
 
-    cout << "\nOcupación médica por especialidad para " << mes << "/" << anio << ":\n";
-    cout << left << setw(30) << "Especialidad" << "Turnos\n";
-    cout << "-------------------------------------------\n";
+    cout << "\n----------------------------------------------" << endl;
+    cout << "Ocupacion medica por especialidad para "
+         << (mes < 10 ? "0" : "") << mes << "/" << anio << ":" << endl;
+    cout << left << setw(30) << "Especialidad" << "Turnos" << endl;
+    cout << string(44, '-') << endl;
 
+    bool hayDatos = false;
     for (int k = 0; k < aEsp.cantidadRegistros(); k++) {
         Especialidad esp = aEsp.leer(k);
-        int idEsp = k + 1;
         if (turnosPorEspecialidad[k] > 0) {
-            cout << left << setw(30) << esp.get_nombreEspecialidad() << turnosPorEspecialidad[k] << "\n";
+            cout << left << setw(30) << esp.get_nombreEspecialidad() << turnosPorEspecialidad[k] << endl;
+            hayDatos = true;
         }
     }
-    system("pause");
+    if (!hayDatos) {
+        cout << "[!] No hubo turnos registrados para ninguna especialidad en ese periodo." << endl;
+    }
+    cout << "----------------------------------------------" << endl;
+    cout << "Presione Enter para volver al menu...";
+    cin.ignore();
+    cin.get();
 }
 
+
 void ManagerAdministrativo::ocupacionTotalPorMes() {
-    Fecha fecha = Fecha::leerFechaValida("Ingrese mes y año (01/aaaa): ");
+    system("cls");
+    cin.ignore();
+    cout << "==============================================" << endl;
+    cout << "     OCUPACION TOTAL DE MEDICOS POR MES       " << endl;
+    cout << "==============================================" << endl;
+
+    Fecha fecha = Fecha::leerMesAnioValido("Ingrese mes y anio (MM/AAAA): ");
     int mes = fecha.getMes();
     int anio = fecha.getAnio();
 
     ArchivoTurno aTurno("turnos.dat");
-    ArchivoMedico aMedico("medico.dat");
+    ArchivoMedico aMedico("medicos.dat");
+    ArchivoMedicoEspecialidad aMedEsp("medicoespecialidades.dat");
 
     const int MAX = 1000;
     int turnosPorMedico[MAX] = {0};
 
+    // Contar turnos para cada medico usando medico-especialidad
     for (int i = 0; i < aTurno.CantidadRegistros(); i++) {
         Turno t = aTurno.Leer(i);
         Fecha f = t.getFechaAtencion();
         if (f.getMes() == mes && f.getAnio() == anio && !t.getCancelado() && t.getAsistio()) {
-            int idMed = t.getIdMedicoEspecialidad();
-            if (idMed > 0 && idMed <= MAX) turnosPorMedico[idMed - 1]++;
+            int idME = t.getIdMedicoEspecialidad();
+            // Buscar el medico para ese idME
+            for (int j = 0; j < aMedEsp.CantidadRegistros(); j++) {
+                MedicoEspecialidad me = aMedEsp.Leer(j);
+                if (me.getId() == idME) {
+                    int idMed = me.getIdMedico();
+                    if (idMed > 0 && idMed <= MAX) turnosPorMedico[idMed - 1]++;
+                    break;
+                }
+            }
         }
     }
 
-    cout << "\nOcupación total de todos los médicos para " << mes << "/" << anio << ":\n";
-    cout << left << setw(6) << "ID" << setw(15) << "DNI" << setw(20) << "Nombre" << setw(20) << "Apellido" << right << setw(10) << "Turnos\n";
-    cout << "------------------------------------------------------------------\n";
+    cout << "\nOcupacion total de todos los medicos para "
+         << (mes < 10 ? "0" : "") << mes << "/" << anio << ":" << endl;
+    cout << left << setw(6) << "ID"
+         << setw(15) << "DNI"
+         << setw(20) << "Nombre"
+         << setw(20) << "Apellido"
+         << right << setw(10) << "Turnos" << endl;
+    cout << string(71, '-') << endl;
 
+    bool hayDatos = false;
     for (int i = 0; i < aMedico.CantidadRegistros(); i++) {
         Medico m = aMedico.Leer(i);
         int idMed = m.get_id();
@@ -353,8 +504,18 @@ void ManagerAdministrativo::ocupacionTotalPorMes() {
                  << setw(15) << m.get_dni()
                  << setw(20) << m.get_nombre()
                  << setw(20) << m.get_apellido()
-                 << right << setw(10) << turnosPorMedico[idMed - 1] << "\n";
+                 << right << setw(10) << turnosPorMedico[idMed - 1] << endl;
+            hayDatos = true;
         }
     }
-    system("pause");
+
+    if (!hayDatos) {
+        cout << "[!] No se registraron turnos para ningun medico en ese periodo." << endl;
+    }
+
+    cout << string(71, '-') << endl;
+    cout << "Presione Enter para volver al menu...";
+    cin.ignore();
+    cin.get();
 }
+

@@ -13,7 +13,7 @@ public:
     float obtenerFacturacionDelMes();
     void listarPacientesAtendidosPorEspecialidadYMes();
     void ocupacionPorDiaDeMedico();
-    void ocupacionPorMesDeMedico();
+    void ocupacionPorMesAnioDeMedico();
 
     int buscarEspecialidadPorNombre(const char* nombreEspecialidad);
     void ocupacionPorMesEspecialidad();
