@@ -4,7 +4,7 @@
 
 using namespace std;
 
-ArchivoPaciente::ArchivoPaciente(std::string nombreArchivo){
+ArchivoPaciente::ArchivoPaciente(const std::string nombreArchivo){
     _nombreArchivo = nombreArchivo;
 }
 
@@ -58,7 +58,7 @@ int ArchivoPaciente::Buscar(int IDPaciente){
     return -1;
 }
 
-int ArchivoPaciente::BuscarPorNombre(std::string& pacienteNombre) {
+int ArchivoPaciente::BuscarPorNombre( const std::string& pacienteNombre) {
     FILE* pArchivo = fopen(_nombreArchivo.c_str(), "rb");
     if (pArchivo == NULL) {
         return -1;
@@ -78,7 +78,7 @@ int ArchivoPaciente::BuscarPorNombre(std::string& pacienteNombre) {
     return -1;
 }
 
-int ArchivoPaciente::BuscarPorDni(std::string& dniPaciente) {
+int ArchivoPaciente::BuscarPorDni( const std::string& dniPaciente) {
     FILE* pArchivo = fopen(_nombreArchivo.c_str(), "rb");
     if (pArchivo == NULL) {
         return -1;
@@ -98,7 +98,7 @@ int ArchivoPaciente::BuscarPorDni(std::string& dniPaciente) {
     return -1;
 }
 
-bool ArchivoPaciente::checkDni(std::string& dni){
+bool ArchivoPaciente::checkDni(const std::string& dni){
     int pos = BuscarPorDni(dni);
     if (pos != -1) {
         cout << "[!] Documento ya registrado. Intente nuevamente." << endl;

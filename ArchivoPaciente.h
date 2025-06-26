@@ -14,11 +14,11 @@ public:
     bool Guardar(Paciente paciente, int posicion);
 
     int Buscar(int IDPaciente);
-    int BuscarPorNombre(std::string& pacienteNombre);
-    int BuscarPorDni(std::string& dniPaciente);
+   int BuscarPorNombre(const std::string& pacienteNombre);
+    int BuscarPorDni(const std::string& dniPaciente);
     Paciente Leer(int posicion);
     void Leer(int cantidadRegistros, Paciente* vector);
     int CantidadRegistros();
     int generarNuevoId();
-    bool checkDni(std::string& dni);
+    bool checkDni(const std::string& dni);
 };

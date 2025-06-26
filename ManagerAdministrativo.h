@@ -1,4 +1,5 @@
 #pragma once
+#include "Medico.h"
 #include <string>
 #include "Especialidad.h"
 #include "Turnos.h"
@@ -14,16 +15,19 @@ public:
     void listarPacientesAtendidosPorEspecialidadYMes();
     void ocupacionPorDiaDeMedico();
     void ocupacionPorMesDeMedico();
-
-    int buscarEspecialidadPorNombre(const char* nombreEspecialidad);
     void ocupacionPorMesEspecialidad();
     void ocupacionTotalPorMes();
 
+    int buscarEspecialidadPorNombre(const char* nombreEspecialidad);
+    int pedirEspecialidad();
+
 private:
     bool compararStringsCaseInsensitive(const std::string& str1, const std::string& str2);
+    bool pedirMesAnio(int& mes, int& anio);
+    int obtenerIdMedicoPorDni(const std::string& dni);
+    int obtenerIdPacientePorDni(const std::string& dni);
 
-    // Funciones privadas para validar entradas con opción a salir
-     // Función para pedir mes y año con validación y opción a cancelar
-    bool pedirMesAnio(int &mes, int &anio);
-    bool pedirDNI(std::string &dni);
+    void mostrarEspecialidades();
+
+
 };
