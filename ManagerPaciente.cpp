@@ -228,14 +228,14 @@ void ManagerPaciente::MostrarPorDni(){
     cout << "Ingrese el documento del paciente a buscar: ";
     cin >> dni;
 
-    int idPaciente = aPaciente.BuscarPorDni(dni);
+    int posPaciente = aPaciente.BuscarPorDni(dni);
 
-    if (idPaciente == -1) {
+    if (posPaciente == -1) {
         cout << "\n[!] Paciente no encontrado." << endl;
         return;
     }
 
-    paciente = aPaciente.Leer(idPaciente);
+    paciente = aPaciente.Leer(posPaciente);
 
     cout << "\n------------- DATOS DEL PACIENTE -------------" << endl<<endl;
     cout << "ID: " << paciente.get_id() << endl;
