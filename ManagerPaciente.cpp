@@ -235,7 +235,7 @@ void ManagerPaciente::MostrarPorDni(){
         return;
     }
 
-    paciente = aPaciente.Leer(idPaciente-1);
+    paciente = aPaciente.Leer(idPaciente);
 
     cout << "\n------------- DATOS DEL PACIENTE -------------" << endl<<endl;
     cout << "ID: " << paciente.get_id() << endl;
@@ -248,6 +248,10 @@ void ManagerPaciente::MostrarPorDni(){
     cout << "ID del prestador: " << paciente.get_idPrestador() << endl;
     cout << "Habilitado" << paciente.get_enabled() << endl;
     cout << "----------------------------------------------\n" << endl;
+
+    cout << "Presione Enter para volver al menu...";
+    cin.ignore();
+    cin.get();
 }
 
 void ManagerPaciente::EditarPaciente() {
