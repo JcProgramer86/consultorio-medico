@@ -138,5 +138,42 @@ Fecha Fecha::leerFechaValida(std::string mensaje, bool validarNacimiento, bool v
 
         return Fecha(dia, mes, anio);
     }
+
+
+}
+Fecha Fecha::leerMesAnioValido(std::string mensaje) {
+    std::string fechaStr;
+    int mes, anio;
+    std::regex formato(R"(^\d{1,2}/\d{4}$)");
+
+    time_t t = time(nullptr);
+    struct tm* now = localtime(&t);
+    int mesHoy = now->tm_mon + 1;
+    int anioHoy = now->tm_year + 1900;
+
+    while (true) {
+        std::cout << mensaje;
+        std::getline(std::cin, fechaStr);
+
+        if (!std::regex_match(fechaStr, formato)) {
+            std::cout << "[!] Formato incorrecto. Ejemplo valido: 06/2025" << std::endl;
+            continue;
+        }
+        std::replace(fechaStr.begin(), fechaStr.end(), '/', ' ');
+        std::istringstream iss(fechaStr);
+        iss >> mes >> anio;
+
+        if (mes < 1 || mes > 12 || anio < 1900) {
+            std::cout << "[!] Mes o anio invalido." << std::endl;
+            continue;
+        }
+        if (anio > anioHoy || (anio == anioHoy && mes > mesHoy)) {
+            std::cout << "[!] No puede ingresar un mes/anio futuro." << std::endl;
+            continue;
+        }
+
+        return Fecha(1, mes, anio);
+    }
+
 }
 

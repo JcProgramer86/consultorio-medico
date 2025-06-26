@@ -31,8 +31,8 @@ public:
     std::string toString();
     static bool esFechaNacimientoValida(int dia, int mes, int anio);
     bool esFechaTurnoValida();
-    static Fecha leerFechaValida(std::string mensaje = "Ingrese la fecha (dd/mm/aaaa): ",bool validarNacimiento = false,bool validarTurno = false
-);
+    static Fecha leerFechaValida(std::string mensaje = "Ingrese la fecha (dd/mm/aaaa): ",bool validarNacimiento = false,bool validarTurno = false);
+    static Fecha leerMesAnioValido(std::string mensaje = "Ingrese el mes y anio (MM/AAAA): ");
 
 
 };

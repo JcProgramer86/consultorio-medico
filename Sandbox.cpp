@@ -534,7 +534,7 @@ void ejecutarSandboxOcupacionPorMesDeMedico()
 
     // Creo instancia del manager y ejecuto método
     ManagerAdministrativo manager;
-    manager.ocupacionPorMesDeMedico();
+    manager.ocupacionPorMesAnioDeMedico();
 
     system("pause");
 }
