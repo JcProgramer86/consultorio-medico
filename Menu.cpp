@@ -73,7 +73,7 @@ void Menu::menuPrincipal()
 void Menu::menuPaciente()
 {
     ManagerPaciente managerPaciente;
-    ManagerTurno managerTurno;
+    //ManagerTurno managerTurno;
     int opcion;
     do
     {
